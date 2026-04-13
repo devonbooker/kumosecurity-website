@@ -1,0 +1,1300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kumo Security - Cloud Security Engineering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy:       #0B1A3E;
+      --navy-card:  #1E2D50;
+      --navy-hover: #253460;
+      --white:      #FFFFFF;
+      --body-text:  #E0E6ED;
+      --muted:      #8A9BB8;
+      --border:     rgba(255,255,255,0.08);
+      --border-solid: #1E2D50;
+      --font-sans:  "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --font-mono:  "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html {
+      font-family: var(--font-sans);
+      background: var(--navy);
+      color: var(--body-text);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    /* NAV */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      height: 64px;
+      background: rgba(11,26,62,0.90);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+    }
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+    }
+    .nav-logo img {
+      height: 26px;
+      width: auto;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 13.5px;
+      color: var(--muted);
+      padding: 6px 10px;
+      border-radius: 3px;
+      transition: color 0.15s, background 0.15s;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+    }
+    .nav-links a:hover {
+      color: var(--white);
+      background: var(--navy-card);
+    }
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .nav-right a.nav-link-plain {
+      font-size: 13.5px;
+      color: var(--muted);
+      padding: 6px 10px;
+      border-radius: 3px;
+      transition: color 0.15s;
+    }
+    .nav-right a.nav-link-plain:hover { color: var(--white); }
+
+    /* BUTTONS */
+    .btn-primary {
+      background: var(--white);
+      color: var(--navy);
+      font-size: 13.5px;
+      font-weight: 600;
+      padding: 7px 14px;
+      border-radius: 3px;
+      border: 1px solid var(--white);
+      cursor: pointer;
+      transition: opacity 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      letter-spacing: -0.01em;
+    }
+    .btn-primary:hover { opacity: 0.85; }
+    .btn-secondary {
+      background: transparent;
+      color: var(--white);
+      font-size: 13.5px;
+      font-weight: 500;
+      padding: 7px 14px;
+      border-radius: 3px;
+      border: 1px solid rgba(255,255,255,0.3);
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      letter-spacing: -0.01em;
+    }
+    .btn-secondary:hover {
+      border-color: rgba(255,255,255,0.6);
+      background: rgba(255,255,255,0.05);
+    }
+
+    /* HERO */
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 80px 24px 0;
+      overflow: hidden;
+      position: relative;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--navy-card);
+      border: 1px solid var(--border-solid);
+      border-radius: 3px;
+      padding: 5px 12px 5px 10px;
+      font-size: 12px;
+      font-family: var(--font-mono);
+      color: var(--muted);
+      margin-bottom: 28px;
+    }
+    .hero-badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #22c55e;
+      flex-shrink: 0;
+    }
+    .hero h1 {
+      font-size: clamp(36px, 5.5vw, 66px);
+      font-weight: 600;
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+      color: var(--white);
+      max-width: 820px;
+      margin-bottom: 20px;
+    }
+    .hero h1 span { color: var(--muted); }
+    .hero p {
+      font-size: 17px;
+      color: var(--body-text);
+      max-width: 500px;
+      line-height: 1.65;
+      margin-bottom: 32px;
+      font-weight: 400;
+    }
+    .hero-ctas {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 64px;
+    }
+    .hero-ctas .btn-primary {
+      font-size: 14px;
+      padding: 10px 20px;
+    }
+    .hero-ctas .btn-secondary {
+      font-size: 14px;
+      padding: 10px 20px;
+    }
+
+    /* TERMINAL VISUAL */
+    .terminal-wrapper {
+      width: 100%;
+      max-width: 780px;
+      margin: 0 auto;
+      background: #060e21;
+      border: 1px solid var(--border-solid);
+      border-radius: 4px;
+      overflow: hidden;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.4);
+    }
+    .terminal-header {
+      padding: 11px 16px;
+      border-bottom: 1px solid var(--border-solid);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #0a1630;
+    }
+    .terminal-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+    .terminal-title {
+      margin-left: 8px;
+      font-size: 12px;
+      font-family: var(--font-mono);
+      color: var(--muted);
+    }
+    .terminal-body {
+      padding: 20px 24px;
+      font-family: var(--font-mono);
+      font-size: 12.5px;
+      color: var(--body-text);
+      line-height: 1.9;
+      text-align: left;
+    }
+    .t-prompt { color: #22c55e; }
+    .t-cmd { color: var(--white); }
+    .t-comment { color: #4a5f80; }
+    .t-key { color: #7ec8e3; }
+    .t-val { color: #a8e6cf; }
+    .t-success { color: #22c55e; }
+    .t-info { color: var(--muted); }
+    .t-blank { display: block; height: 0.5em; }
+
+    /* TECH STACK STRIP */
+    .stack-section {
+      padding: 40px 24px;
+      text-align: center;
+      border-top: 1px solid var(--border);
+    }
+    .stack-section p {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-bottom: 20px;
+      font-weight: 500;
+    }
+    .stack-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 48px;
+      flex-wrap: wrap;
+    }
+    .stack-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      opacity: 0.6;
+      transition: opacity 0.2s;
+    }
+    .stack-item:hover { opacity: 1; }
+    .stack-item img {
+      width: 52px;
+      height: 52px;
+      object-fit: contain;
+    }
+    .stack-item span {
+      font-size: 11px;
+      font-family: var(--font-mono);
+      color: var(--muted);
+      letter-spacing: 0.03em;
+    }
+
+    /* DIVIDER */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+    }
+
+    /* SECTION STYLES */
+    .section {
+      padding: 80px 24px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .section-label {
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-bottom: 12px;
+      font-family: var(--font-mono);
+    }
+    .section-title {
+      font-size: clamp(26px, 3.2vw, 42px);
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      color: var(--white);
+      max-width: 560px;
+      margin-bottom: 16px;
+    }
+    .section-title span { color: var(--muted); }
+    .section-desc {
+      font-size: 15px;
+      color: var(--body-text);
+      line-height: 1.7;
+      max-width: 480px;
+    }
+
+    /* FEATURE GRID */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border-solid);
+      border: 1px solid var(--border-solid);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-top: 48px;
+    }
+    .feature-card {
+      background: var(--navy);
+      padding: 32px;
+      position: relative;
+      transition: background 0.15s;
+    }
+    .feature-card:hover { background: var(--navy-card); }
+    .feature-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 3px;
+      background: var(--navy-card);
+      border: 1px solid var(--border-solid);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+    .feature-card h3 {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: -0.015em;
+      margin-bottom: 6px;
+      color: var(--white);
+    }
+    .feature-card p {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    /* METRICS SECTION */
+    .metrics-section {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: var(--navy-card);
+      padding: 64px 24px;
+    }
+    .metrics-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+    .metrics-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+    }
+    .metric-number {
+      font-size: 44px;
+      font-weight: 600;
+      letter-spacing: -0.04em;
+      color: var(--white);
+      line-height: 1;
+      margin-bottom: 4px;
+      font-family: var(--font-mono);
+    }
+    .metric-label {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* PROJECTS SECTION */
+    .products-section {
+      padding: 80px 24px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .products-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 48px;
+      align-items: end;
+    }
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1px;
+      background: var(--border-solid);
+      border: 1px solid var(--border-solid);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .product-card {
+      background: var(--navy);
+      padding: 40px;
+      position: relative;
+      min-height: 200px;
+      transition: background 0.15s;
+    }
+    .product-card:hover { background: var(--navy-card); }
+    .product-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 10px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      background: var(--navy-card);
+      border: 1px solid var(--border-solid);
+      padding: 3px 8px;
+      border-radius: 2px;
+      margin-bottom: 16px;
+      font-family: var(--font-mono);
+    }
+    .product-card h3 {
+      font-size: 19px;
+      font-weight: 600;
+      letter-spacing: -0.025em;
+      margin-bottom: 8px;
+      color: var(--white);
+    }
+    .product-card p {
+      font-size: 13.5px;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+    .product-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 16px;
+      font-size: 12.5px;
+      color: var(--body-text);
+      font-weight: 500;
+      transition: color 0.15s;
+    }
+    .product-link:hover { color: var(--white); }
+
+    /* WORKFLOW / DETECTION SECTION */
+    .speed-section {
+      padding: 80px 24px;
+      background: #060e21;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .speed-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .speed-section .section-label { color: var(--muted); }
+    .speed-section .section-title { color: var(--white); }
+    .speed-section .section-title span { color: var(--muted); }
+    .speed-section .section-desc { color: var(--body-text); }
+    .speed-visual {
+      background: #0a1630;
+      border: 1px solid var(--border-solid);
+      border-radius: 4px;
+      padding: 28px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+    }
+    .speed-bar-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .speed-bar-row:last-child { margin-bottom: 0; }
+    .speed-bar-label {
+      width: 100px;
+      font-size: 11px;
+      color: var(--muted);
+      flex-shrink: 0;
+    }
+    .speed-bar-track {
+      flex: 1;
+      height: 5px;
+      background: var(--navy-card);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .speed-bar-fill {
+      height: 100%;
+      border-radius: 2px;
+      background: var(--white);
+    }
+    .speed-bar-value {
+      font-size: 11px;
+      color: var(--body-text);
+      width: 44px;
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    /* WORKFLOW CARD */
+    .workflow-section {
+      padding: 80px 24px;
+      background: var(--navy);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .workflow-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .workflow-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .workflow-step {
+      display: flex;
+      gap: 16px;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+    }
+    .workflow-step:last-child { border-bottom: none; }
+    .step-num {
+      width: 22px;
+      height: 22px;
+      border-radius: 2px;
+      background: var(--navy-card);
+      border: 1px solid var(--border-solid);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 600;
+      font-family: var(--font-mono);
+      color: var(--muted);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .step-content h3 {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: -0.015em;
+      margin-bottom: 4px;
+      color: var(--white);
+    }
+    .step-content p {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    /* CODE BLOCK */
+    .code-block {
+      background: #060e21;
+      border: 1px solid var(--border-solid);
+      border-radius: 4px;
+      padding: 20px;
+      font-family: var(--font-mono);
+      font-size: 12.5px;
+      color: var(--body-text);
+      line-height: 1.75;
+    }
+    .code-comment { color: #3a4f70; }
+    .code-keyword { color: #7ec8e3; }
+    .code-string { color: #a8e6cf; }
+    .code-fn { color: #e0d68a; }
+
+    /* FOCUS AREAS / CAPABILITIES */
+    .customers-section {
+      padding: 32px 24px 80px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .customers-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border-solid);
+      border: 1px solid var(--border-solid);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-top: 28px;
+    }
+    .customer-card {
+      background: var(--navy);
+      padding: 32px;
+      transition: background 0.15s;
+    }
+    .customer-card:hover { background: var(--navy-card); }
+    .customer-logo {
+      font-size: 12px;
+      font-weight: 500;
+      font-family: var(--font-mono);
+      margin-bottom: 16px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .customer-quote {
+      font-size: 14px;
+      color: var(--body-text);
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+    .customer-author {
+      font-size: 12px;
+      color: var(--muted);
+      font-family: var(--font-mono);
+    }
+
+    /* DEPLOY CTA */
+    .cta-section {
+      padding: 100px 24px;
+      text-align: center;
+      border-top: 1px solid var(--border);
+    }
+    .cta-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      background: var(--navy-card);
+      border: 1px solid var(--border-solid);
+      border-radius: 3px;
+      margin-bottom: 24px;
+    }
+    .cta-section h2 {
+      font-size: clamp(28px, 3.5vw, 48px);
+      font-weight: 600;
+      letter-spacing: -0.035em;
+      color: var(--white);
+      margin-bottom: 16px;
+    }
+    .cta-section p {
+      font-size: 16px;
+      color: var(--muted);
+      margin-bottom: 32px;
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      background: #060e21;
+      padding: 48px 24px 32px;
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 220px repeat(4, 1fr);
+      gap: 32px;
+      padding-bottom: 40px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 28px;
+    }
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .footer-logo img {
+      height: 18px;
+      width: auto;
+    }
+    .footer-brand-desc {
+      font-size: 12px;
+      font-family: var(--font-mono);
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    .footer-col h4 {
+      font-size: 11px;
+      font-weight: 600;
+      font-family: var(--font-mono);
+      color: var(--white);
+      margin-bottom: 14px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .footer-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .footer-col ul li a {
+      font-size: 12.5px;
+      color: var(--muted);
+      transition: color 0.15s;
+    }
+    .footer-col ul li a:hover { color: var(--white); }
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .footer-bottom p {
+      font-size: 12px;
+      font-family: var(--font-mono);
+      color: var(--muted);
+    }
+    .footer-bottom-links {
+      display: flex;
+      gap: 20px;
+    }
+    .footer-bottom-links a {
+      font-size: 12px;
+      color: var(--muted);
+      transition: color 0.15s;
+    }
+    .footer-bottom-links a:hover { color: var(--white); }
+
+    /* SPINNER */
+    .deploy-pending {
+      width: 12px;
+      height: 12px;
+      border: 1.5px solid var(--border-solid);
+      border-top-color: var(--white);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      flex-shrink: 0;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* DEPLOY VISUAL */
+    .deploy-visual {
+      background: #060e21;
+      border: 1px solid var(--border-solid);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .deploy-header {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border-solid);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .deploy-dot { width: 10px; height: 10px; border-radius: 50%; }
+    .deploy-body {
+      padding: 16px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      background: #060e21;
+      line-height: 2;
+    }
+    .deploy-line {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .deploy-check { color: #22c55e; font-weight: 700; }
+  </style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav class="nav">
+  <div class="nav-left">
+    <a href="#" class="nav-logo">
+      <img src="brand_assets/Kumo%20Security%20Logo%20-%20White%20Text.png" alt="Kumo Security" />
+    </a>
+    <ul class="nav-links">
+      <li><a href="#">Projects</a></li>
+      <li><a href="#">Certifications</a></li>
+      <li><a href="#">Writing</a></li>
+      <li><a href="#">Stack</a></li>
+      <li><a href="#">About</a></li>
+    </ul>
+  </div>
+  <div class="nav-right">
+    <a href="#" class="nav-link-plain">GitHub</a>
+    <a href="#" class="nav-link-plain">LinkedIn</a>
+    <a href="#" class="btn-primary">
+      Contact
+      <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2.5 6h7M6.5 3l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">
+    <span class="hero-badge-dot"></span>
+    available for roles - SF / San Jose / remote
+  </div>
+  <h1>Cloud Security Infrastructure,<br><span>Built Right.</span></h1>
+  <p>Engineering secure-by-default cloud environments. Terraform-provisioned, container-hardened, detection-enabled from day one.</p>
+  <div class="hero-ctas">
+    <a href="#" class="btn-primary">
+      View Projects
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 6h7M6.5 3l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+    <a href="#" class="btn-secondary">Read the Blog</a>
+  </div>
+
+  <!-- Terminal Visual -->
+  <div class="terminal-wrapper">
+    <div class="terminal-header">
+      <div class="terminal-dot" style="background:#ff5f57"></div>
+      <div class="terminal-dot" style="background:#febc2e"></div>
+      <div class="terminal-dot" style="background:#28c840"></div>
+      <span class="terminal-title">devonbooker // cloud security</span>
+    </div>
+    <div class="terminal-body">
+      <div><span class="t-prompt">$ </span><span class="t-cmd">terraform apply -auto-approve</span></div>
+      <div class="t-blank"></div>
+      <div><span class="t-info">Plan: 14 to add, 0 to change, 0 to destroy.</span></div>
+      <div class="t-blank"></div>
+      <div><span class="t-success">✓</span> <span class="t-key">aws_vpc.main</span> <span class="t-info">created</span></div>
+      <div><span class="t-success">✓</span> <span class="t-key">aws_security_group.egress_only</span> <span class="t-info">created</span></div>
+      <div><span class="t-success">✓</span> <span class="t-key">aws_guardduty_detector.primary</span> <span class="t-info">created</span></div>
+      <div><span class="t-success">✓</span> <span class="t-key">aws_cloudtrail.audit</span> <span class="t-info">created</span></div>
+      <div><span class="t-success">✓</span> <span class="t-key">aws_kms_key.s3_encryption</span> <span class="t-info">created</span></div>
+      <div><span class="t-success">✓</span> <span class="t-key">aws_iam_policy.least_privilege_baseline</span> <span class="t-info">created</span></div>
+      <div class="t-blank"></div>
+      <div><span class="t-success">Apply complete! Resources: 14 added, 0 changed, 0 destroyed.</span></div>
+      <div class="t-blank"></div>
+      <div><span class="t-prompt">$ </span><span class="t-info">_</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- TECH STACK STRIP -->
+<div class="stack-section">
+  <p>primary stack</p>
+  <div class="stack-row">
+    <div class="stack-item">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg" alt="AWS" />
+      <span>AWS</span>
+    </div>
+    <div class="stack-item">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/terraform/terraform-original.svg" alt="Terraform" />
+      <span>Terraform</span>
+    </div>
+    <div class="stack-item">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/ansible/ansible-original.svg" alt="Ansible" />
+      <span>Ansible</span>
+    </div>
+    <div class="stack-item">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg" alt="Docker" />
+      <span>Docker</span>
+    </div>
+    <div class="stack-item">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/kubernetes/kubernetes-plain.svg" alt="Kubernetes" />
+      <span>Kubernetes</span>
+    </div>
+    <div class="stack-item">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/githubactions/githubactions-original.svg" alt="GitHub Actions" />
+      <span>GitHub Actions</span>
+    </div>
+    <div class="stack-item">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/go/go-original-wordmark.svg" alt="Golang" />
+      <span>Golang</span>
+    </div>
+    <div class="stack-item">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/grafana/grafana-original.svg" alt="Grafana" />
+      <span>Grafana</span>
+    </div>
+    <div class="stack-item">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/prometheus/prometheus-original.svg" alt="Prometheus" />
+      <span>Prometheus</span>
+    </div>
+  </div>
+</div>
+
+<hr class="divider" />
+
+<!-- CORE CAPABILITIES -->
+<section class="section">
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;">
+    <div>
+      <div class="section-label">core capabilities</div>
+      <h2 class="section-title">Secure infrastructure <span>from first commit to production</span></h2>
+      <p class="section-desc" style="margin-top:16px">Every project ships with hardened networking, encrypted storage, IAM least-privilege, and a detection pipeline. Security is not a layer - it is the foundation.</p>
+      <a href="#" style="display:inline-flex;align-items:center;gap:6px;margin-top:24px;font-size:13px;color:var(--body-text);font-weight:500;border-bottom:1px solid var(--border-solid);padding-bottom:3px;font-family:var(--font-mono)">
+        view all projects
+        <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2.5 6h7M6.5 3l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+    <div class="deploy-visual">
+      <div class="deploy-header">
+        <div class="deploy-dot" style="background:#ff5f57"></div>
+        <div class="deploy-dot" style="background:#febc2e"></div>
+        <div class="deploy-dot" style="background:#28c840"></div>
+        <span style="font-size:12px;color:var(--muted);margin-left:8px;font-family:var(--font-mono)">security baseline - applying...</span>
+      </div>
+      <div class="deploy-body">
+        <div class="deploy-line"><span class="deploy-check">✓</span><span style="color:var(--body-text)">VPC Flow Logs → CloudWatch</span></div>
+        <div class="deploy-line"><span class="deploy-check">✓</span><span style="color:var(--body-text)">Default SG: all traffic denied</span></div>
+        <div class="deploy-line"><span class="deploy-check">✓</span><span style="color:var(--body-text)">S3: server-side encryption (KMS)</span></div>
+        <div class="deploy-line"><span class="deploy-check">✓</span><span style="color:var(--body-text)">GuardDuty: threat detection active</span></div>
+        <div class="deploy-line"><div class="deploy-pending"></div><span style="color:var(--body-text)">CloudTrail: configuring log integrity</span></div>
+        <div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--border-solid)">
+          <span style="color:#22c55e;font-weight:600;font-family:var(--font-mono)">14/15 controls applied</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2L2 5v4c0 3 2.5 5.5 6 6.5C12 14.5 14 12 14 9V5L8 2z" stroke="var(--body-text)" stroke-width="1.5" stroke-linejoin="round"/></svg>
+      </div>
+      <h3>Infrastructure as Code</h3>
+      <p>Terraform-provisioned AWS environments. Repeatable, auditable, version-controlled from day one.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="10" rx="1.5" stroke="var(--body-text)" stroke-width="1.5"/><path d="M5 7h6M5 10h4" stroke="var(--body-text)" stroke-width="1.3" stroke-linecap="round"/></svg>
+      </div>
+      <h3>Detection Pipelines</h3>
+      <p>GuardDuty + CloudTrail integrated detection. Alerts routed, triaged, and documented end-to-end.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="5.5" stroke="var(--body-text)" stroke-width="1.5"/><path d="M8 5v3.5l2 2" stroke="var(--body-text)" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </div>
+      <h3>Container Security</h3>
+      <p>Docker and Kubernetes hardened to CIS benchmarks. Image scanning, RBAC, and network policy enforced.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M8 3v10" stroke="var(--body-text)" stroke-width="1.5" stroke-linecap="round"/><rect x="1.5" y="1.5" width="13" height="13" rx="2" stroke="var(--body-text)" stroke-width="1.3"/></svg>
+      </div>
+      <h3>IAM & Access Control</h3>
+      <p>Least-privilege IAM policies. No wildcard actions, no broad resource ARNs. Conditions enforced.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M14 8A6 6 0 112 8a6 6 0 0112 0z" stroke="var(--body-text)" stroke-width="1.5"/><path d="M8 2c-1.5 2-2 4-2 6s.5 4 2 6M2 8h12" stroke="var(--body-text)" stroke-width="1.4" stroke-linecap="round"/></svg>
+      </div>
+      <h3>Network Hardening</h3>
+      <p>No public subnets by default. Private-only routing, NACLs, security groups with explicit deny.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 10l3-5 3 4 2-3 4 4" stroke="var(--body-text)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <h3>Observability</h3>
+      <p>Prometheus metrics, Grafana dashboards, and structured logging tied to GitHub Actions CI/CD pipelines.</p>
+    </div>
+  </div>
+</section>
+
+<!-- METRICS -->
+<div class="metrics-section">
+  <div class="metrics-inner">
+    <div>
+      <div class="section-label">by the numbers</div>
+      <h2 class="section-title">Depth over breadth.<br><span>Production-grade output.</span></h2>
+      <p class="section-desc" style="margin-top:16px">Every project is built to run in production - not to look good in a README. Architecture decisions are documented, tradeoffs are explicit.</p>
+    </div>
+    <div class="metrics-stats">
+      <div class="metric-item">
+        <div class="metric-number">12+</div>
+        <div class="metric-label">Projects shipped end-to-end</div>
+      </div>
+      <div class="metric-item">
+        <div class="metric-number">8</div>
+        <div class="metric-label">AWS services secured in production</div>
+      </div>
+      <div class="metric-item">
+        <div class="metric-number">5K+</div>
+        <div class="metric-label">Lines of Terraform written</div>
+      </div>
+      <div class="metric-item">
+        <div class="metric-number">SOC 2</div>
+        <div class="metric-label">Compliance controls studied & applied</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WORKFLOW SECTION -->
+<div class="workflow-section">
+  <div class="workflow-inner">
+    <div>
+      <div class="section-label">how I work</div>
+      <h2 class="section-title">Architecture first. Code second.</h2>
+      <p class="section-desc" style="margin-top:16px">Security decisions made during design cost nothing. Made during remediation, they cost everything. Every project follows the same discipline.</p>
+      <div class="workflow-steps" style="margin-top:36px">
+        <div class="workflow-step">
+          <div class="step-num">01</div>
+          <div class="step-content">
+            <h3>Define the threat model</h3>
+            <p>What are we protecting? Who is the adversary? What's the blast radius of a breach? Documented before a line of code is written.</p>
+          </div>
+        </div>
+        <div class="workflow-step">
+          <div class="step-num">02</div>
+          <div class="step-content">
+            <h3>Design the architecture</h3>
+            <p>Network topology, IAM boundaries, encryption decisions, and data flows. Diagrammed in Excalidraw or Mermaid.</p>
+          </div>
+        </div>
+        <div class="workflow-step">
+          <div class="step-num">03</div>
+          <div class="step-content">
+            <h3>Write infrastructure as code</h3>
+            <p>Terraform modules for every resource. No ClickOps. State in S3 with DynamoDB locking.</p>
+          </div>
+        </div>
+        <div class="workflow-step">
+          <div class="step-num">04</div>
+          <div class="step-content">
+            <h3>Harden, test, and monitor</h3>
+            <p>CIS benchmarks applied. Detection rules validated. Dashboards live before the project is called done.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="code-block">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border-solid)">
+        <div style="width:10px;height:10px;border-radius:50%;background:#ff5f57"></div>
+        <div style="width:10px;height:10px;border-radius:50%;background:#febc2e"></div>
+        <div style="width:10px;height:10px;border-radius:50%;background:#28c840"></div>
+        <span style="margin-left:8px;color:var(--muted);font-size:11px">vpc_security.tf</span>
+      </div>
+      <div><span class="code-comment"># private subnets only - no public egress by default</span></div>
+      <div><span class="code-keyword">resource</span> <span class="code-string">"aws_vpc"</span> <span class="code-string">"main"</span> {</div>
+      <div>&nbsp;&nbsp;cidr_block           = <span class="code-string">"10.0.0.0/16"</span></div>
+      <div>&nbsp;&nbsp;enable_dns_hostnames = <span class="code-keyword">true</span></div>
+      <div>&nbsp;&nbsp;enable_dns_support   = <span class="code-keyword">true</span></div>
+      <div>}</div>
+      <div>&nbsp;</div>
+      <div><span class="code-comment"># deny all inbound/outbound on default security group</span></div>
+      <div><span class="code-keyword">resource</span> <span class="code-string">"aws_default_security_group"</span> <span class="code-string">"default"</span> {</div>
+      <div>&nbsp;&nbsp;vpc_id = <span class="code-fn">aws_vpc.main.id</span></div>
+      <div>&nbsp;&nbsp;<span class="code-comment"># no ingress or egress rules</span></div>
+      <div>}</div>
+      <div>&nbsp;</div>
+      <div><span class="code-comment"># flow logs to CloudWatch for network visibility</span></div>
+      <div><span class="code-keyword">resource</span> <span class="code-string">"aws_flow_log"</span> <span class="code-string">"vpc"</span> {</div>
+      <div>&nbsp;&nbsp;vpc_id          = <span class="code-fn">aws_vpc.main.id</span></div>
+      <div>&nbsp;&nbsp;traffic_type    = <span class="code-string">"ALL"</span></div>
+      <div>&nbsp;&nbsp;iam_role_arn    = <span class="code-fn">aws_iam_role.flow_log.arn</span></div>
+      <div>&nbsp;&nbsp;log_destination = <span class="code-fn">aws_cloudwatch_log_group.vpc_flow.arn</span></div>
+      <div>}</div>
+    </div>
+  </div>
+</div>
+
+<!-- DETECTION / SECURITY POSTURE SECTION -->
+<section class="speed-section">
+  <div class="speed-inner">
+    <div>
+      <div class="section-label">security posture</div>
+      <h2 class="section-title">Detection From<br><span>Day One.</span></h2>
+      <p class="section-desc" style="margin-top:16px">Every environment ships with a detection pipeline. Threats are logged, routed, and alerted before anything reaches production. No retroactive bolting-on.</p>
+      <div style="display:flex;gap:32px;margin-top:36px">
+        <div>
+          <div style="font-size:32px;font-weight:600;letter-spacing:-0.04em;color:var(--white);line-height:1;font-family:var(--font-mono)">14</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:4px">CIS controls enforced</div>
+        </div>
+        <div>
+          <div style="font-size:32px;font-weight:600;letter-spacing:-0.04em;color:var(--white);line-height:1;font-family:var(--font-mono)">&lt;5m</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:4px">Mean detection time</div>
+        </div>
+        <div>
+          <div style="font-size:32px;font-weight:600;letter-spacing:-0.04em;color:var(--white);line-height:1;font-family:var(--font-mono)">0</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:4px">Public subnets by default</div>
+        </div>
+      </div>
+    </div>
+    <div class="speed-visual">
+      <div style="margin-bottom:20px;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em">security control coverage</div>
+      <div class="speed-bar-row">
+        <div class="speed-bar-label">Network</div>
+        <div class="speed-bar-track"><div class="speed-bar-fill" style="width:95%"></div></div>
+        <div class="speed-bar-value">CIS L2</div>
+      </div>
+      <div class="speed-bar-row">
+        <div class="speed-bar-label">IAM</div>
+        <div class="speed-bar-track"><div class="speed-bar-fill" style="width:90%"></div></div>
+        <div class="speed-bar-value">least-priv</div>
+      </div>
+      <div class="speed-bar-row">
+        <div class="speed-bar-label">Encryption</div>
+        <div class="speed-bar-track"><div class="speed-bar-fill" style="width:100%"></div></div>
+        <div class="speed-bar-value">at rest+transit</div>
+      </div>
+      <div class="speed-bar-row">
+        <div class="speed-bar-label">Detection</div>
+        <div class="speed-bar-track"><div class="speed-bar-fill" style="width:85%"></div></div>
+        <div class="speed-bar-value">GuardDuty</div>
+      </div>
+      <div class="speed-bar-row">
+        <div class="speed-bar-label">Logging</div>
+        <div class="speed-bar-track"><div class="speed-bar-fill" style="width:92%"></div></div>
+        <div class="speed-bar-value">CloudTrail</div>
+      </div>
+      <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border-solid);display:flex;align-items:center;justify-content:space-between">
+        <span style="color:var(--muted);font-size:11px">evaluated against CIS AWS Benchmark v1.5</span>
+        <span style="color:#22c55e;font-size:11px;font-weight:600">passing</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="products-section">
+  <div class="products-header">
+    <div>
+      <div class="section-label">projects</div>
+      <h2 class="section-title">Featured Work</h2>
+    </div>
+    <p class="section-desc">Real infrastructure, built and documented. Every project includes architecture decisions, tradeoffs, and what I'd change next time.</p>
+  </div>
+  <div class="products-grid">
+    <div class="product-card">
+      <div class="product-tag">
+        <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1L1 3.5v3L5 9l4-2.5v-3L5 1z" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/></svg>
+        Infrastructure
+      </div>
+      <h3>AWS Security Baseline</h3>
+      <p>Terraform module deploying a production-ready VPC with GuardDuty, CloudTrail, Config Rules, and encrypted S3. No public subnets. No NAT gateway unless required.</p>
+      <a href="#" class="product-link">
+        View project
+        <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5h6M5.5 2L8 5l-2.5 2.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+    <div class="product-card">
+      <div class="product-tag">
+        <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="3.5" stroke="currentColor" stroke-width="1.1"/><path d="M5 3v2.5l1.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        Detection
+      </div>
+      <h3>GuardDuty + CloudTrail Pipeline</h3>
+      <p>Detection pipeline from scratch - GuardDuty findings routed through EventBridge to SNS with structured alert payloads. Findings documented with MITRE ATT&CK mapping.</p>
+      <a href="#" class="product-link">
+        View project
+        <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5h6M5.5 2L8 5l-2.5 2.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+    <div class="product-card">
+      <div class="product-tag">
+        <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><rect x="1.5" y="2" width="7" height="6" rx="1" stroke="currentColor" stroke-width="1.1"/><path d="M3.5 5h3M5 3.5v3" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        Container Security
+      </div>
+      <h3>Kubernetes Hardening Playbook</h3>
+      <p>CIS Kubernetes Benchmark applied to a self-managed cluster. Network policies, RBAC least-privilege, pod security standards, and Falco runtime detection configured end-to-end.</p>
+      <a href="#" class="product-link">
+        View project
+        <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5h6M5.5 2L8 5l-2.5 2.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+    <div class="product-card">
+      <div class="product-tag">
+        <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 7l2-4 2 2 2-4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Observability
+      </div>
+      <h3>Security Dashboard - Grafana + Prometheus</h3>
+      <p>Prometheus exporters feeding security metrics into Grafana. Failed auth attempts, anomalous API call rates, and CIS compliance scores visualized in real time.</p>
+      <a href="#" class="product-link">
+        View project
+        <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5h6M5.5 2L8 5l-2.5 2.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- WRITING / FOCUS AREAS -->
+<section class="customers-section">
+  <div>
+    <div class="section-label">writing</div>
+    <h2 class="section-title">Original Analysis.<br><span>No Fluff.</span></h2>
+  </div>
+  <div class="customers-grid">
+    <div class="customer-card">
+      <div class="customer-logo">infrastructure</div>
+      <p class="customer-quote">This module deploys a VPC with three private subnets, enables VPC Flow Logs to CloudWatch, and locks down the default security group. No public subnets. No NAT gateway unless you need one.</p>
+      <div class="customer-author">terraform-provisioned aws security baseline</div>
+    </div>
+    <div class="customer-card">
+      <div class="customer-logo">detection</div>
+      <p class="customer-quote">GuardDuty fires a finding. EventBridge picks it up. SNS routes it to a Lambda that normalizes the payload and posts to PagerDuty. The whole pipeline is Terraform - no ClickOps, no drift.</p>
+      <div class="customer-author">guardduty + cloudtrail: detection pipeline from scratch</div>
+    </div>
+    <div class="customer-card">
+      <div class="customer-logo">architecture</div>
+      <p class="customer-quote">AWS-only was a deliberate call. One control plane, one permission model, one billing boundary. Multi-cloud sounds good in a blog post. In practice, it is complexity that compounds at every layer.</p>
+      <div class="customer-author">why I went AWS-only</div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="cta-section">
+  <div class="cta-icon">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 10h14M10 3l7 7-7 7" stroke="var(--white)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </div>
+  <h2>Let's Build Something.</h2>
+  <p>Looking for a security-focused engineer who ships. Based in the US, targeting SF / San Jose.</p>
+  <div style="display:flex;align-items:center;justify-content:center;gap:12px">
+    <a href="#" class="btn-primary" style="font-size:14px;padding:11px 22px">
+      Get in Touch
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 6h7M6.5 3l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+    <a href="#" class="btn-secondary" style="font-size:14px;padding:11px 22px">View Resume</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <img src="brand_assets/Kumo%20Security%20Logo%20-%20White%20Text.png" alt="Kumo Security" />
+        </div>
+        <p class="footer-brand-desc">devonbooker // cloud security<br><br>Building Secure Infrastructure<br>From First Commit to Production.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Work</h4>
+        <ul>
+          <li><a href="#">Projects</a></li>
+          <li><a href="#">Writing</a></li>
+          <li><a href="#">Architecture Diagrams</a></li>
+          <li><a href="#">Certifications</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Stack</h4>
+        <ul>
+          <li><a href="#">AWS</a></li>
+          <li><a href="#">Terraform</a></li>
+          <li><a href="#">Kubernetes</a></li>
+          <li><a href="#">Golang</a></li>
+          <li><a href="#">GitHub Actions</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="#">GitHub</a></li>
+          <li><a href="#">LinkedIn</a></li>
+          <li><a href="#">Email</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Site</h4>
+        <ul>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Contact</a></li>
+          <li><a href="#">RSS Feed</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Kumo Security. All rights reserved.</p>
+      <div class="footer-bottom-links">
+        <a href="#">Privacy</a>
+        <a href="#">Contact</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
