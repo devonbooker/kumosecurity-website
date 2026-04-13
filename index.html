@@ -789,6 +789,132 @@
       gap: 10px;
     }
     .deploy-check { color: #22c55e; font-weight: 700; }
+
+    /* HAMBURGER */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 36px;
+      height: 36px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 20px;
+      height: 1.5px;
+      background: var(--muted);
+      transition: transform 0.2s, opacity 0.2s;
+    }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    /* MOBILE DRAWER */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 64px;
+      left: 0;
+      right: 0;
+      background: rgba(11,26,62,0.98);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      z-index: 99;
+      padding: 16px 0 24px;
+    }
+    .mobile-menu.open { display: block; }
+    .mobile-menu a {
+      display: block;
+      padding: 12px 24px;
+      font-size: 14px;
+      color: var(--muted);
+      font-weight: 400;
+      transition: color 0.15s;
+    }
+    .mobile-menu a:hover { color: var(--white); }
+    .mobile-menu .mobile-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 12px 24px;
+    }
+    .mobile-menu .btn-primary {
+      margin: 4px 24px 0;
+      width: calc(100% - 48px);
+      justify-content: center;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      /* Nav */
+      .nav-links { display: none; }
+      .nav-right { display: none; }
+      .nav-hamburger { display: flex; }
+
+      /* Hero */
+      .hero { padding: 56px 20px 0; }
+      .hero h1 { font-size: 36px; }
+      .hero p { font-size: 15px; }
+      .hero-ctas { flex-direction: column; width: 100%; }
+      .hero-ctas .btn-primary,
+      .hero-ctas .btn-secondary { width: 100%; justify-content: center; }
+      .terminal-body { font-size: 11px; padding: 16px; overflow-x: auto; }
+
+      /* Stack */
+      .stack-row { gap: 28px; }
+      .stack-item img { width: 40px; height: 40px; }
+
+      /* Features grid */
+      .features-grid { grid-template-columns: 1fr; }
+      .feature-card { padding: 24px; }
+
+      /* Metrics */
+      .metrics-inner { grid-template-columns: 1fr; gap: 40px; }
+      .metrics-section { padding: 48px 20px; }
+
+      /* Products */
+      .products-header { grid-template-columns: 1fr; gap: 16px; }
+      .products-grid { grid-template-columns: 1fr; }
+      .product-card { padding: 28px 24px; }
+      .products-section { padding: 56px 20px; }
+
+      /* Speed / Detection */
+      .speed-inner { grid-template-columns: 1fr; gap: 40px; }
+      .speed-section { padding: 56px 20px; }
+
+      /* Workflow */
+      .workflow-inner { grid-template-columns: 1fr; gap: 40px; }
+      .workflow-section { padding: 56px 20px; }
+      .code-block { font-size: 11px; overflow-x: auto; }
+
+      /* Capabilities */
+      .customers-grid { grid-template-columns: 1fr; }
+      .customer-card { padding: 24px; }
+      .customers-section { padding: 24px 20px 56px; }
+
+      /* Section */
+      .section { padding: 56px 20px; }
+      .section-title { font-size: 28px; }
+
+      /* CTA */
+      .cta-section { padding: 72px 20px; }
+
+      /* Footer */
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 32px 24px; }
+      .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
+      .footer-bottom-links { justify-content: center; }
+      footer { padding: 40px 20px 28px; }
+    }
+
+    @media (max-width: 480px) {
+      .footer-top { grid-template-columns: 1fr; }
+      .metrics-stats { grid-template-columns: 1fr 1fr; }
+    }
   </style>
 </head>
 <body>
@@ -815,7 +941,23 @@
       <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2.5 6h7M6.5 3l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </a>
   </div>
+  <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#">Projects</a>
+  <a href="#">Certifications</a>
+  <a href="#">Writing</a>
+  <a href="#">Stack</a>
+  <a href="#">About</a>
+  <div class="mobile-divider"></div>
+  <a href="#">GitHub</a>
+  <a href="#">LinkedIn</a>
+  <a href="#" class="btn-primary">Contact</a>
+</div>
 
 <!-- HERO -->
 <section class="hero">
@@ -1295,6 +1437,21 @@
     </div>
   </div>
 </footer>
+
+<script>
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+  });
+  mobileMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.classList.remove('open');
+      mobileMenu.classList.remove('open');
+    });
+  });
+</script>
 
 </body>
 </html>
