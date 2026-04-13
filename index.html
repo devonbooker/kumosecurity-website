@@ -321,6 +321,14 @@
       max-width: 480px;
     }
 
+    /* CAPABILITIES INNER */
+    .capabilities-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
     /* FEATURE GRID */
     .features-grid {
       display: grid;
@@ -869,6 +877,9 @@
       .stack-row { gap: 28px; }
       .stack-item img { width: 40px; height: 40px; }
 
+      /* Capabilities inner */
+      .capabilities-inner { grid-template-columns: 1fr; gap: 32px; }
+
       /* Features grid */
       .features-grid { grid-template-columns: 1fr; }
       .feature-card { padding: 24px; }
@@ -1049,7 +1060,7 @@
 
 <!-- CORE CAPABILITIES -->
 <section class="section">
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;">
+  <div class="capabilities-inner">
     <div>
       <div class="section-label">core capabilities</div>
       <h2 class="section-title">Secure infrastructure <span>from first commit to production</span></h2>
