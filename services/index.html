@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Services - Kumo Security</title>
+  <link rel="icon" type="image/png" href="../brand_assets/Kumo%20Security%20Logo%20-%20Black%20Text.png" />
+  <link rel="stylesheet" href="../styles/brand.css" />
+  <link rel="stylesheet" href="../styles/components.css" />
+  <style>
+    /* ── PAGE-SPECIFIC ── */
+
+    .page-header {
+      padding: 72px 24px 64px;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: end;
+      border-bottom: 1px solid var(--border);
+    }
+    .page-header h1 {
+      font-size: clamp(32px, 4vw, 52px);
+      font-weight: 600;
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+      color: var(--white);
+    }
+    .page-header h1 span { color: var(--muted); }
+    .page-header-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .page-header-meta p {
+      font-size: 15px;
+      color: var(--body-text);
+      line-height: 1.75;
+    }
+
+    /* SERVICE CARDS */
+    .services-section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 72px 24px;
+      border-bottom: 1px solid var(--border);
+    }
+    .services-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      background: var(--border-solid);
+      border: 1px solid var(--border-solid);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-top: 40px;
+    }
+    .service-card {
+      background: var(--navy);
+      padding: 40px;
+      display: grid;
+      grid-template-columns: 220px 1fr 200px;
+      gap: 48px;
+      align-items: start;
+      transition: background 0.15s;
+    }
+    .service-card:hover { background: var(--navy-card); }
+    .service-identity {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .service-tag {
+      display: inline-flex;
+      align-items: center;
+      font-size: 10px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      background: var(--navy-card);
+      border: 1px solid var(--border-solid);
+      padding: 3px 8px;
+      border-radius: 2px;
+      font-family: var(--font-mono);
+      width: fit-content;
+    }
+    .service-title {
+      font-size: 19px;
+      font-weight: 600;
+      letter-spacing: -0.025em;
+      color: var(--white);
+      line-height: 1.2;
+    }
+    .service-pricing {
+      font-size: 12px;
+      font-family: var(--font-mono);
+      color: var(--muted);
+      line-height: 1.5;
+      padding-top: 12px;
+      border-top: 1px solid var(--border-solid);
+    }
+    .service-pricing strong {
+      display: block;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 4px;
+      opacity: 0.6;
+    }
+    .service-body {
+      font-size: 13.5px;
+      color: var(--body-text);
+      line-height: 1.75;
+    }
+    .service-body p { margin-bottom: 12px; }
+    .service-body p:last-child { margin-bottom: 0; }
+    .service-body ul {
+      list-style: none;
+      padding: 0;
+      margin: 8px 0 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .service-body ul li {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .service-body ul li::before {
+      content: '—';
+      color: var(--border-solid);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .service-cta {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding-top: 4px;
+    }
+    .service-cta-label {
+      font-size: 10px;
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+    }
+
+    /* WHO I WORK WITH */
+    .who-section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 72px 24px;
+      border-bottom: 1px solid var(--border);
+    }
+    .who-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border-solid);
+      border: 1px solid var(--border-solid);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-top: 40px;
+    }
+    .who-card {
+      background: var(--navy);
+      padding: 36px;
+      transition: background 0.15s;
+    }
+    .who-card:hover { background: var(--navy-card); }
+    .who-label {
+      font-size: 10px;
+      font-family: var(--font-mono);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .who-label-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #22c55e;
+      flex-shrink: 0;
+    }
+    .who-card p {
+      font-size: 13.5px;
+      color: var(--body-text);
+      line-height: 1.75;
+    }
+
+    /* BOTTOM CTA */
+    .services-cta {
+      border-top: 1px solid var(--border);
+      padding: 80px 24px;
+      text-align: center;
+    }
+    .services-cta h2 {
+      font-size: clamp(24px, 3vw, 38px);
+      font-weight: 600;
+      letter-spacing: -0.035em;
+      color: var(--white);
+      margin-bottom: 14px;
+    }
+    .services-cta p {
+      font-size: 15px;
+      color: var(--muted);
+      margin-bottom: 32px;
+      max-width: 440px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.65;
+    }
+    .cta-buttons {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .page-header { grid-template-columns: 1fr; gap: 32px; }
+      .service-card { grid-template-columns: 1fr; gap: 24px; }
+      .who-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+      .page-header { padding: 48px 20px 48px; }
+      .services-section { padding: 48px 20px; }
+      .who-section { padding: 48px 20px; }
+      .service-card { padding: 28px 24px; }
+      .who-card { padding: 28px 24px; }
+      .services-cta { padding: 56px 20px; }
+      .cta-buttons { flex-direction: column; width: 100%; max-width: 280px; margin: 0 auto; }
+      .cta-buttons .btn-primary,
+      .cta-buttons .btn-secondary { width: 100%; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav class="nav">
+  <div class="nav-left">
+    <a href="../" class="nav-logo">
+      <img src="../brand_assets/Kumo%20Security%20Logo%20-%20White%20Text.png" alt="Kumo Security" />
+    </a>
+    <ul class="nav-links">
+      <li><a href="../services/" style="color:var(--white)">Services</a></li>
+      <li><a href="../projects/">Projects</a></li>
+      <li><a href="../certifications/">Certifications</a></li>
+      <li><a href="#">Writing</a></li>
+      <li><a href="../about/">About</a></li>
+    </ul>
+  </div>
+  <div class="nav-right">
+    <a href="https://github.com/devonbooker" target="_blank" rel="noopener" class="nav-link-plain">GitHub</a>
+    <a href="https://www.linkedin.com/in/devonbookerr/" target="_blank" rel="noopener" class="nav-link-plain">LinkedIn</a>
+    <a href="mailto:devon@kumosecurity.com" class="btn-primary">
+      Contact
+      <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2.5 6h7M6.5 3l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+  <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="../services/">Services</a>
+  <a href="../projects/">Projects</a>
+  <a href="../certifications/">Certifications</a>
+  <a href="#">Writing</a>
+  <a href="../about/">About</a>
+  <div class="mobile-divider"></div>
+  <a href="https://github.com/devonbooker" target="_blank" rel="noopener">GitHub</a>
+  <a href="https://www.linkedin.com/in/devonbookerr/" target="_blank" rel="noopener">LinkedIn</a>
+  <a href="mailto:devon@kumosecurity.com" class="btn-primary">Contact</a>
+</div>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div>
+    <div class="section-label" style="margin-bottom:20px">services</div>
+    <h1>CMMC Readiness. Cloud Security.<br><span>MSPs &amp; Defense Contractors.</span></h1>
+  </div>
+  <div class="page-header-meta">
+    <p>Engagements for MSPs and defense contractors who need to get to audit-ready, not just compliant on paper. An engineer who builds the environment and documents it.</p>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<div class="services-section">
+  <div class="section-label">engagements</div>
+  <h2 class="section-title" style="margin-top:12px">What an engagement<br><span>actually looks like.</span></h2>
+
+  <div class="services-grid">
+
+    <!-- Service 1: Gap Assessment -->
+    <div class="service-card">
+      <div class="service-identity">
+        <span class="service-tag">assessment</span>
+        <div class="service-title">CMMC Gap Assessment</div>
+        <div class="service-pricing">
+          <strong>Starting at</strong>
+          $5,000<br>Scope determines final cost.
+        </div>
+      </div>
+      <div class="service-body">
+        <p>Evaluate your current environment against all 110 NIST SP 800-171 controls. Delivered as a detailed report with:</p>
+        <ul>
+          <li>Current SPRS score</li>
+          <li>Control-by-control status (implemented / partially / missing)</li>
+          <li>SSP outline</li>
+          <li>POA&amp;M with prioritized remediation items</li>
+          <li>Scoping analysis - what's in scope and what isn't</li>
+        </ul>
+        <p>What you walk away with is a roadmap. Not a checkbox. Something you can hand to a C3PAO and say "this is where we are."</p>
+      </div>
+      <div class="service-cta">
+        <div class="service-cta-label">Start here</div>
+        <a href="mailto:devon@kumosecurity.com" class="btn-primary" style="font-size:13px;padding:9px 18px">
+          Book a Call
+          <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2.5 6h7M6.5 3l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- Service 2: Remediation -->
+    <div class="service-card">
+      <div class="service-identity">
+        <span class="service-tag">implementation</span>
+        <div class="service-title">Technical Remediation</div>
+        <div class="service-pricing">
+          <strong>Pricing</strong>
+          Project-based.<br>Scoped after gap analysis.
+        </div>
+      </div>
+      <div class="service-body">
+        <p>Gap analysis delivered the map. This is the work of actually closing the gaps. That includes:</p>
+        <ul>
+          <li>CUI enclave architecture (AWS, on-prem, or hybrid)</li>
+          <li>Access control configuration and least-privilege IAM</li>
+          <li>Audit logging to CMMC AU domain requirements</li>
+          <li>Encryption at rest and in transit</li>
+          <li>MFA enforcement across CUI-touching systems</li>
+          <li>Configuration baselines (Terraform/Ansible where applicable)</li>
+          <li>Document version control and change log implementation</li>
+        </ul>
+        <p>Most consultants write a policy and stop. The policy is useless without the technical implementation behind it.</p>
+      </div>
+      <div class="service-cta">
+        <div class="service-cta-label">Follows assessment</div>
+        <a href="mailto:devon@kumosecurity.com" class="btn-secondary" style="font-size:13px;padding:9px 18px">Get in Touch</a>
+      </div>
+    </div>
+
+    <!-- Service 3: Retainer -->
+    <div class="service-card">
+      <div class="service-identity">
+        <span class="service-tag">retainer</span>
+        <div class="service-title">Ongoing Compliance Retainer</div>
+        <div class="service-pricing">
+          <strong>Monthly</strong>
+          $1,500 – $5,000<br>Depends on environment size.
+        </div>
+      </div>
+      <div class="service-body">
+        <p>Certification isn't the finish line. Controls drift. People change. New systems get added. A retainer keeps you compliant between now and your next assessment cycle.</p>
+        <p>Monthly deliverables include:</p>
+        <ul>
+          <li>Evidence collection and organization (300-500 artifacts per assessment cycle)</li>
+          <li>Control drift monitoring</li>
+          <li>SPRS score tracking and updates</li>
+          <li>POA&amp;M milestone tracking</li>
+          <li>Documentation updates as your environment changes</li>
+        </ul>
+      </div>
+      <div class="service-cta">
+        <div class="service-cta-label">Post-certification</div>
+        <a href="mailto:devon@kumosecurity.com" class="btn-secondary" style="font-size:13px;padding:9px 18px">Get in Touch</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- WHO I WORK WITH -->
+<div class="who-section">
+  <div class="section-label">who this is for</div>
+  <h2 class="section-title" style="margin-top:12px">Three types of<br><span>clients. Same problem.</span></h2>
+
+  <div class="who-grid">
+
+    <div class="who-card">
+      <div class="who-label">
+        <span class="who-label-dot"></span>
+        MSPs
+      </div>
+      <p>You manage IT for clients in the defense supply chain. CMMC requirements are flowing down from primes. You don't have the in-house expertise yet and you don't want to lose the account. I come in as a specialist - your client never knows the difference.</p>
+    </div>
+
+    <div class="who-card">
+      <div class="who-label">
+        <span class="who-label-dot"></span>
+        DIB Contractors
+      </div>
+      <p>Your team got handed CMMC with no roadmap and no support. One IT person trying to figure out 110 controls while keeping the lights on. That's where most engagements start.</p>
+    </div>
+
+    <div class="who-card">
+      <div class="who-label">
+        <span class="who-label-dot"></span>
+        Defense Tech Startups
+      </div>
+      <p>You're pursuing your first or second DoD contract. CMMC is the compliance gate blocking the pipeline. You have funding and need it done efficiently by someone who speaks both security and engineering.</p>
+    </div>
+
+  </div>
+</div>
+
+<!-- BOTTOM CTA -->
+<div class="services-cta">
+  <h2>Start with a discovery call.</h2>
+  <p>20 minutes. You tell me where you are, I tell you what it takes to get audit-ready. No pitch. If it's not a fit, I'll tell you.</p>
+  <div class="cta-buttons">
+    <a href="mailto:devon@kumosecurity.com" class="btn-primary" style="font-size:14px;padding:11px 22px">
+      Book a Call &rarr; devon@kumosecurity.com
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 6h7M6.5 3l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <img src="../brand_assets/Kumo%20Security%20Logo%20-%20White%20Text.png" alt="Kumo Security" />
+        </div>
+        <p class="footer-brand-desc">devonbooker // cloud security<br><br>CMMC Readiness &amp; Cloud Security<br>for Defense Contractors.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Work</h4>
+        <ul>
+          <li><a href="../services/">Services</a></li>
+          <li><a href="../projects/">Projects</a></li>
+          <li><a href="../certifications/">Certifications</a></li>
+          <li><a href="#">Writing</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="https://github.com/devonbooker" target="_blank" rel="noopener">GitHub</a></li>
+          <li><a href="https://www.linkedin.com/in/devonbookerr/" target="_blank" rel="noopener">LinkedIn</a></li>
+          <li><a href="mailto:devon@kumosecurity.com">Email</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Site</h4>
+        <ul>
+          <li><a href="../about/">About</a></li>
+          <li><a href="mailto:devon@kumosecurity.com">Contact</a></li>
+          <li><a href="#">RSS Feed</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Kumo Security. All rights reserved.</p>
+      <div class="footer-bottom-links">
+        <a href="#">Privacy</a>
+        <a href="mailto:devon@kumosecurity.com">Contact</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+  });
+  mobileMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.classList.remove('open');
+      mobileMenu.classList.remove('open');
+    });
+  });
+</script>
+
+</body>
+</html>
