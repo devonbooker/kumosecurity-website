@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Certifications - Kumo Security</title>
+  <link rel="stylesheet" href="../styles/brand.css" />
+  <link rel="stylesheet" href="../styles/components.css" />
+  <style>
+    /* ── PAGE-SPECIFIC ── */
+
+    .page-header {
+      padding: 72px 24px 56px;
+      max-width: 1200px;
+      margin: 0 auto;
+      border-bottom: 1px solid var(--border);
+    }
+    .page-header .section-label { margin-bottom: 16px; }
+    .page-header h1 {
+      font-size: clamp(32px, 4vw, 52px);
+      font-weight: 600;
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+      color: var(--white);
+      margin-bottom: 16px;
+    }
+    .page-header h1 span { color: var(--muted); }
+    .page-header p {
+      font-size: 15px;
+      color: var(--body-text);
+      line-height: 1.7;
+      max-width: 520px;
+    }
+
+    /* CERT GRID */
+    .certs-section {
+      padding: 56px 24px 80px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .certs-group-label {
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      font-family: var(--font-mono);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .certs-group-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+    .certs-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1px;
+      background: var(--border-solid);
+      border: 1px solid var(--border-solid);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 56px;
+    }
+    .certs-grid.three-col {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .cert-card {
+      background: var(--navy);
+      padding: 32px;
+      transition: background 0.15s;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .cert-card:hover { background: var(--navy-card); }
+
+    .cert-issuer {
+      font-size: 10px;
+      font-family: var(--font-mono);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      background: var(--navy-card);
+      border: 1px solid var(--border-solid);
+      padding: 3px 8px;
+      border-radius: 2px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 16px;
+      width: fit-content;
+    }
+    .cert-issuer-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--green, #22c55e);
+      flex-shrink: 0;
+    }
+    .cert-card h3 {
+      font-size: 17px;
+      font-weight: 600;
+      letter-spacing: -0.025em;
+      color: var(--white);
+      margin-bottom: 10px;
+      line-height: 1.2;
+    }
+    .cert-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.65;
+      margin-bottom: 20px;
+      flex: 1;
+    }
+    .cert-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+    .cert-meta-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11.5px;
+      font-family: var(--font-mono);
+      color: var(--muted);
+    }
+    .cert-meta-row svg { flex-shrink: 0; opacity: 0.5; }
+    .cert-status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 10px;
+      font-family: var(--font-mono);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 3px 8px;
+      border-radius: 2px;
+    }
+    .cert-status-badge.active {
+      background: rgba(34,197,94,0.1);
+      color: #22c55e;
+      border: 1px solid rgba(34,197,94,0.2);
+    }
+    .cert-status-badge.active::before {
+      content: '';
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #22c55e;
+    }
+
+    /* IN-PROGRESS CARDS */
+    .cert-card.in-progress {
+      background: var(--navy);
+      position: relative;
+    }
+    .cert-card.in-progress:hover { background: var(--navy-card); }
+    .cert-issuer-dot.pending {
+      background: #f59e0b;
+    }
+    .cert-status-badge.in-progress-badge {
+      background: rgba(245,158,11,0.1);
+      color: #f59e0b;
+      border: 1px solid rgba(245,158,11,0.2);
+    }
+    .cert-status-badge.in-progress-badge::before {
+      content: '';
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #f59e0b;
+    }
+
+    /* PROGRESS BAR */
+    .cert-progress {
+      margin-top: 14px;
+    }
+    .cert-progress-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 10.5px;
+      font-family: var(--font-mono);
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+    .cert-progress-track {
+      height: 3px;
+      background: var(--navy-card);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .cert-progress-fill {
+      height: 100%;
+      background: #f59e0b;
+      border-radius: 2px;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .page-header { padding: 48px 20px 40px; }
+      .certs-section { padding: 40px 20px 56px; }
+      .certs-grid { grid-template-columns: 1fr; }
+      .certs-grid.three-col { grid-template-columns: 1fr; }
+      .cert-card { padding: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav class="nav">
+  <div class="nav-left">
+    <a href="../" class="nav-logo">
+      <img src="../brand_assets/Kumo%20Security%20Logo%20-%20White%20Text.png" alt="Kumo Security" />
+    </a>
+    <ul class="nav-links">
+      <li><a href="#">Projects</a></li>
+      <li><a href="../certifications/" style="color:var(--white)">Certifications</a></li>
+      <li><a href="#">Writing</a></li>
+      <li><a href="#">Stack</a></li>
+      <li><a href="#">About</a></li>
+    </ul>
+  </div>
+  <div class="nav-right">
+    <a href="https://github.com/devonbooker" target="_blank" rel="noopener" class="nav-link-plain">GitHub</a>
+    <a href="https://www.linkedin.com/in/devonbookerr/" target="_blank" rel="noopener" class="nav-link-plain">LinkedIn</a>
+    <a href="mailto:devon@kumosecurity.com" class="btn-primary">
+      Contact
+      <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2.5 6h7M6.5 3l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+  <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#">Projects</a>
+  <a href="../certifications/">Certifications</a>
+  <a href="#">Writing</a>
+  <a href="#">Stack</a>
+  <a href="#">About</a>
+  <div class="mobile-divider"></div>
+  <a href="https://github.com/devonbooker" target="_blank" rel="noopener">GitHub</a>
+  <a href="https://www.linkedin.com/in/devonbookerr/" target="_blank" rel="noopener">LinkedIn</a>
+  <a href="mailto:devon@kumosecurity.com" class="btn-primary">Contact</a>
+</div>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="section-label">credentials</div>
+  <h1>Certifications <span>&amp; Training</span></h1>
+  <p>Validated knowledge across security operations, cloud infrastructure, networking, and IT fundamentals. Each cert connects directly to hands-on project work.</p>
+</div>
+
+<!-- COMPLETED CERTIFICATIONS -->
+<div class="certs-section">
+
+  <div class="certs-group-label">completed</div>
+
+  <div class="certs-grid three-col">
+
+    <!-- Security+ -->
+    <div class="cert-card">
+      <div class="cert-issuer">
+        <span class="cert-issuer-dot"></span>
+        CompTIA
+      </div>
+      <h3>Security+</h3>
+      <p class="cert-desc">Core security fundamentals: cryptography, PKI, threat intelligence, IAM, network security, and incident response. The baseline for all security work.</p>
+      <div class="cert-meta">
+        <div class="cert-meta-row">
+          <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><rect x="1.5" y="2.5" width="9" height="8" rx="1" stroke="currentColor" stroke-width="1.3"/><path d="M4 1v3M8 1v3M1.5 5.5h9" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+          Issued 2024
+        </div>
+        <div class="cert-meta-row">
+          <span class="cert-status-badge active">active</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- CySA+ -->
+    <div class="cert-card">
+      <div class="cert-issuer">
+        <span class="cert-issuer-dot"></span>
+        CompTIA
+      </div>
+      <h3>CySA+</h3>
+      <p class="cert-desc">Threat detection and response at the analyst level. Covers SIEM workflows, vulnerability management, behavioral analytics, and SOC operations.</p>
+      <div class="cert-meta">
+        <div class="cert-meta-row">
+          <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><rect x="1.5" y="2.5" width="9" height="8" rx="1" stroke="currentColor" stroke-width="1.3"/><path d="M4 1v3M8 1v3M1.5 5.5h9" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+          Issued 2024
+        </div>
+        <div class="cert-meta-row">
+          <span class="cert-status-badge active">active</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Network+ -->
+    <div class="cert-card">
+      <div class="cert-issuer">
+        <span class="cert-issuer-dot"></span>
+        CompTIA
+      </div>
+      <h3>Network+</h3>
+      <p class="cert-desc">TCP/IP, routing, subnetting, DNS, VPNs, and network troubleshooting. Direct foundation for VPC design and network segmentation work in AWS.</p>
+      <div class="cert-meta">
+        <div class="cert-meta-row">
+          <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><rect x="1.5" y="2.5" width="9" height="8" rx="1" stroke="currentColor" stroke-width="1.3"/><path d="M4 1v3M8 1v3M1.5 5.5h9" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+          Issued 2023
+        </div>
+        <div class="cert-meta-row">
+          <span class="cert-status-badge active">active</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- A+ -->
+    <div class="cert-card">
+      <div class="cert-issuer">
+        <span class="cert-issuer-dot"></span>
+        CompTIA
+      </div>
+      <h3>A+</h3>
+      <p class="cert-desc">Hardware, OS fundamentals, troubleshooting methodology, and support workflows. The starting point for understanding how systems behave at the physical layer.</p>
+      <div class="cert-meta">
+        <div class="cert-meta-row">
+          <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><rect x="1.5" y="2.5" width="9" height="8" rx="1" stroke="currentColor" stroke-width="1.3"/><path d="M4 1v3M8 1v3M1.5 5.5h9" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+          Issued 2022
+        </div>
+        <div class="cert-meta-row">
+          <span class="cert-status-badge active">active</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Project+ -->
+    <div class="cert-card">
+      <div class="cert-issuer">
+        <span class="cert-issuer-dot"></span>
+        CompTIA
+      </div>
+      <h3>Project+</h3>
+      <p class="cert-desc">Project lifecycle, risk management, stakeholder communication, and delivery frameworks. Applies directly to scoping and shipping infrastructure projects on schedule.</p>
+      <div class="cert-meta">
+        <div class="cert-meta-row">
+          <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><rect x="1.5" y="2.5" width="9" height="8" rx="1" stroke="currentColor" stroke-width="1.3"/><path d="M4 1v3M8 1v3M1.5 5.5h9" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+          Issued 2023
+        </div>
+        <div class="cert-meta-row">
+          <span class="cert-status-badge active">active</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Linux Essentials -->
+    <div class="cert-card">
+      <div class="cert-issuer">
+        <span class="cert-issuer-dot"></span>
+        LPI
+      </div>
+      <h3>Linux Essentials</h3>
+      <p class="cert-desc">Linux command line, file system hierarchy, process management, and basic shell scripting. Foundation for working with Linux-based servers and containers.</p>
+      <div class="cert-meta">
+        <div class="cert-meta-row">
+          <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><rect x="1.5" y="2.5" width="9" height="8" rx="1" stroke="currentColor" stroke-width="1.3"/><path d="M4 1v3M8 1v3M1.5 5.5h9" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+          Issued 2023
+        </div>
+        <div class="cert-meta-row">
+          <span class="cert-status-badge active">active</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ITIL4 -->
+    <div class="cert-card">
+      <div class="cert-issuer">
+        <span class="cert-issuer-dot"></span>
+        PeopleCert
+      </div>
+      <h3>ITIL 4 Foundation</h3>
+      <p class="cert-desc">IT service management framework: value streams, change enablement, incident management, and service delivery. Useful context for operating in enterprise environments.</p>
+      <div class="cert-meta">
+        <div class="cert-meta-row">
+          <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><rect x="1.5" y="2.5" width="9" height="8" rx="1" stroke="currentColor" stroke-width="1.3"/><path d="M4 1v3M8 1v3M1.5 5.5h9" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+          Issued 2023
+        </div>
+        <div class="cert-meta-row">
+          <span class="cert-status-badge active">active</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- BTL1 -->
+    <div class="cert-card">
+      <div class="cert-issuer">
+        <span class="cert-issuer-dot"></span>
+        Security Blue Team
+      </div>
+      <h3>Blue Team Level 1</h3>
+      <p class="cert-desc">Practical SOC analyst training: phishing analysis, threat hunting, digital forensics, SIEM investigation, and network traffic analysis. Hands-on, exam-based.</p>
+      <div class="cert-meta">
+        <div class="cert-meta-row">
+          <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><rect x="1.5" y="2.5" width="9" height="8" rx="1" stroke="currentColor" stroke-width="1.3"/><path d="M4 1v3M8 1v3M1.5 5.5h9" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+          Issued 2024
+        </div>
+        <div class="cert-meta-row">
+          <span class="cert-status-badge active">active</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- IN PROGRESS -->
+  <div class="certs-group-label">in progress</div>
+
+  <div class="certs-grid three-col">
+
+    <!-- PenTest+ -->
+    <div class="cert-card in-progress">
+      <div class="cert-issuer">
+        <span class="cert-issuer-dot pending"></span>
+        CompTIA
+      </div>
+      <h3>PenTest+</h3>
+      <p class="cert-desc">Offensive security methodology: reconnaissance, exploitation, post-exploitation, and reporting. Extends the defensive foundation into understanding how attacks actually work.</p>
+      <div class="cert-meta">
+        <div class="cert-meta-row">
+          <span class="cert-status-badge in-progress-badge">in progress</span>
+        </div>
+        <div class="cert-progress">
+          <div class="cert-progress-label">
+            <span>study progress</span>
+            <span>~60%</span>
+          </div>
+          <div class="cert-progress-track">
+            <div class="cert-progress-fill" style="width:60%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AWS SAA -->
+    <div class="cert-card in-progress">
+      <div class="cert-issuer">
+        <span class="cert-issuer-dot pending"></span>
+        Amazon Web Services
+      </div>
+      <h3>Solutions Architect - Associate</h3>
+      <p class="cert-desc">Designing resilient, cost-effective, and secure AWS architectures. Covers VPC, IAM, compute, storage, and well-architected framework principles.</p>
+      <div class="cert-meta">
+        <div class="cert-meta-row">
+          <span class="cert-status-badge in-progress-badge">in progress</span>
+        </div>
+        <div class="cert-progress">
+          <div class="cert-progress-label">
+            <span>study progress</span>
+            <span>~40%</span>
+          </div>
+          <div class="cert-progress-track">
+            <div class="cert-progress-fill" style="width:40%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Terraform Associate -->
+    <div class="cert-card in-progress">
+      <div class="cert-issuer">
+        <span class="cert-issuer-dot pending"></span>
+        HashiCorp
+      </div>
+      <h3>Terraform Associate</h3>
+      <p class="cert-desc">Infrastructure as code fundamentals using Terraform: state management, modules, providers, workspaces, and the plan/apply/destroy workflow.</p>
+      <div class="cert-meta">
+        <div class="cert-meta-row">
+          <span class="cert-status-badge in-progress-badge">in progress</span>
+        </div>
+        <div class="cert-progress">
+          <div class="cert-progress-label">
+            <span>study progress</span>
+            <span>~50%</span>
+          </div>
+          <div class="cert-progress-track">
+            <div class="cert-progress-fill" style="width:50%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <img src="../brand_assets/Kumo%20Security%20Logo%20-%20White%20Text.png" alt="Kumo Security" />
+        </div>
+        <p class="footer-brand-desc">devonbooker // cloud security<br><br>Building Secure Infrastructure<br>From First Commit to Production.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Work</h4>
+        <ul>
+          <li><a href="#">Projects</a></li>
+          <li><a href="#">Writing</a></li>
+          <li><a href="#">Architecture Diagrams</a></li>
+          <li><a href="../certifications/">Certifications</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Stack</h4>
+        <ul>
+          <li><a href="#">AWS</a></li>
+          <li><a href="#">Terraform</a></li>
+          <li><a href="#">Kubernetes</a></li>
+          <li><a href="#">Golang</a></li>
+          <li><a href="#">GitHub Actions</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="https://github.com/devonbooker" target="_blank" rel="noopener">GitHub</a></li>
+          <li><a href="https://www.linkedin.com/in/devonbookerr/" target="_blank" rel="noopener">LinkedIn</a></li>
+          <li><a href="mailto:devon@kumosecurity.com">Email</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Site</h4>
+        <ul>
+          <li><a href="#">About</a></li>
+          <li><a href="mailto:devon@kumosecurity.com">Contact</a></li>
+          <li><a href="#">RSS Feed</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Kumo Security. All rights reserved.</p>
+      <div class="footer-bottom-links">
+        <a href="#">Privacy</a>
+        <a href="mailto:devon@kumosecurity.com">Contact</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+  });
+  mobileMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.classList.remove('open');
+      mobileMenu.classList.remove('open');
+    });
+  });
+</script>
+
+</body>
+</html>
