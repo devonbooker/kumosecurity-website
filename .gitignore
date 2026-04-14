@@ -3,3 +3,7 @@ node_modules/
 serve.mjs
 screenshot.mjs
 .env
+.claude/
+package.json
+package-lock.json
+vercel.com_.png
