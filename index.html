@@ -626,9 +626,6 @@
     </a>
     <ul class="nav-links">
       <li><a href="/services/">Services</a></li>
-      <li><a href="/projects/">Projects</a></li>
-      <li><a href="/certifications/">Certifications</a></li>
-      <li><a href="#">Writing</a></li>
       <li><a href="/about/">About</a></li>
     </ul>
   </div>
@@ -648,9 +645,6 @@
 <!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobileMenu">
   <a href="/services/">Services</a>
-  <a href="/projects/">Projects</a>
-  <a href="/certifications/">Certifications</a>
-  <a href="#">Writing</a>
   <a href="/about/">About</a>
   <div class="mobile-divider"></div>
   <a href="https://github.com/devonbooker" target="_blank" rel="noopener">GitHub</a>
@@ -671,7 +665,7 @@
       Book a Discovery Call
       <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 6h7M6.5 3l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </a>
-    <a href="/projects/" class="btn-secondary">View Projects</a>
+    <a href="/services/" class="btn-secondary">View Services</a>
   </div>
 
   <!-- Terminal Visual -->
@@ -680,71 +674,30 @@
       <div class="terminal-dot" style="background:#ff5f57"></div>
       <div class="terminal-dot" style="background:#febc2e"></div>
       <div class="terminal-dot" style="background:#28c840"></div>
-      <span class="terminal-title">devonbooker // cloud security</span>
+      <span class="terminal-title">kumosecurity // gap-analysis</span>
     </div>
     <div class="terminal-body">
-      <div><span class="t-prompt">$ </span><span class="t-cmd">terraform apply -auto-approve</span></div>
+      <div><span class="t-prompt">$ </span><span class="t-cmd">cmmc-scan --framework nist-800-171 --level 2</span></div>
       <div class="t-blank"></div>
-      <div><span class="t-info">Plan: 14 to add, 0 to change, 0 to destroy.</span></div>
+      <div><span class="t-info">Loading 110 controls across 17 domains...</span></div>
       <div class="t-blank"></div>
-      <div><span class="t-success">✓</span> <span class="t-key">aws_vpc.main</span> <span class="t-info">created</span></div>
-      <div><span class="t-success">✓</span> <span class="t-key">aws_security_group.egress_only</span> <span class="t-info">created</span></div>
-      <div><span class="t-success">✓</span> <span class="t-key">aws_cloudwatch_log_group.cui_audit</span> <span class="t-info">created</span></div>
-      <div><span class="t-success">✓</span> <span class="t-key">aws_iam_policy.least_privilege_cui</span> <span class="t-info">created</span></div>
-      <div><span class="t-success">✓</span> <span class="t-key">aws_kms_key.cui_encryption</span> <span class="t-info">created</span></div>
-      <div><span class="t-success">✓</span> <span class="t-key">aws_iam_policy.least_privilege_baseline</span> <span class="t-info">created</span></div>
+      <div><span class="t-key">AC</span> <span class="t-comment">Access Control &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <span class="t-val">18 pass</span> <span class="t-info">&nbsp;14 fail</span></div>
+      <div><span class="t-key">AU</span> <span class="t-comment">Audit &amp; Accountability &nbsp;</span> <span class="t-val">&nbsp;4 pass</span> <span class="t-info">&nbsp; 5 fail</span></div>
+      <div><span class="t-key">CM</span> <span class="t-comment">Config Management &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <span class="t-val">&nbsp;6 pass</span> <span class="t-info">&nbsp; 5 fail</span></div>
+      <div><span class="t-key">IA</span> <span class="t-comment">Identification &amp; Auth &nbsp;&nbsp;</span> <span class="t-val">&nbsp;7 pass</span> <span class="t-info">&nbsp; 4 fail</span></div>
+      <div><span class="t-key">SC</span> <span class="t-comment">System &amp; Comms Protect &nbsp;</span> <span class="t-val">&nbsp;8 pass</span> <span class="t-info">&nbsp; 8 fail</span></div>
       <div class="t-blank"></div>
-      <div><span class="t-success">Apply complete! Resources: 14 added, 0 changed, 0 destroyed.</span></div>
+      <div><span class="t-info">SPRS Score: &nbsp;</span><span style="color:#f59e0b;font-weight:600">-147</span><span class="t-info"> &nbsp;[target: 110]</span></div>
+      <div><span class="t-info">Gaps found: &nbsp;</span><span class="t-val">36 controls</span></div>
+      <div><span class="t-info">POA&amp;M items: </span><span class="t-val">29 remediation tasks</span></div>
+      <div class="t-blank"></div>
+      <div><span class="t-success">Report written to gap_analysis_report.pdf</span></div>
       <div class="t-blank"></div>
       <div><span class="t-prompt">$ </span><span class="t-info">_</span></div>
     </div>
   </div>
 </section>
 
-<!-- TECH STACK STRIP -->
-<div class="stack-section">
-  <p>primary stack</p>
-  <div class="stack-row">
-    <div class="stack-item">
-      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg" alt="AWS" />
-      <span>AWS</span>
-    </div>
-    <div class="stack-item">
-      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/terraform/terraform-original.svg" alt="Terraform" />
-      <span>Terraform</span>
-    </div>
-    <div class="stack-item">
-      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/ansible/ansible-original.svg" alt="Ansible" />
-      <span>Ansible</span>
-    </div>
-    <div class="stack-item">
-      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg" alt="Docker" />
-      <span>Docker</span>
-    </div>
-    <div class="stack-item">
-      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/kubernetes/kubernetes-plain.svg" alt="Kubernetes" />
-      <span>Kubernetes</span>
-    </div>
-    <div class="stack-item">
-      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/githubactions/githubactions-original.svg" alt="GitHub Actions" />
-      <span>GitHub Actions</span>
-    </div>
-    <div class="stack-item">
-      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/go/go-original-wordmark.svg" alt="Golang" />
-      <span>Golang</span>
-    </div>
-    <div class="stack-item">
-      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/grafana/grafana-original.svg" alt="Grafana" />
-      <span>Grafana</span>
-    </div>
-    <div class="stack-item">
-      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/prometheus/prometheus-original.svg" alt="Prometheus" />
-      <span>Prometheus</span>
-    </div>
-  </div>
-</div>
-
-<hr class="divider" />
 
 <!-- CORE CAPABILITIES -->
 <section class="section">
@@ -763,16 +716,16 @@
         <div class="deploy-dot" style="background:#ff5f57"></div>
         <div class="deploy-dot" style="background:#febc2e"></div>
         <div class="deploy-dot" style="background:#28c840"></div>
-        <span style="font-size:12px;color:var(--muted);margin-left:8px;font-family:var(--font-mono)">security baseline - applying...</span>
+        <span style="font-size:12px;color:var(--muted);margin-left:8px;font-family:var(--font-mono)">cmmc-readiness // engagement checklist</span>
       </div>
       <div class="deploy-body">
-        <div class="deploy-line"><span class="deploy-check">✓</span><span style="color:var(--body-text)">VPC Flow Logs → CloudWatch</span></div>
-        <div class="deploy-line"><span class="deploy-check">✓</span><span style="color:var(--body-text)">Default SG: all traffic denied</span></div>
-        <div class="deploy-line"><span class="deploy-check">✓</span><span style="color:var(--body-text)">S3: server-side encryption (KMS)</span></div>
-        <div class="deploy-line"><span class="deploy-check">✓</span><span style="color:var(--body-text)">GuardDuty: threat detection active</span></div>
-        <div class="deploy-line"><div class="deploy-pending"></div><span style="color:var(--body-text)">CloudTrail: configuring log integrity</span></div>
+        <div class="deploy-line"><span class="deploy-check">✓</span><span style="color:var(--body-text)">CUI boundary scoped &amp; documented</span></div>
+        <div class="deploy-line"><span class="deploy-check">✓</span><span style="color:var(--body-text)">110-control gap analysis complete</span></div>
+        <div class="deploy-line"><span class="deploy-check">✓</span><span style="color:var(--body-text)">SPRS score calculated: -147 → 110</span></div>
+        <div class="deploy-line"><span class="deploy-check">✓</span><span style="color:var(--body-text)">SSP + POA&amp;M drafted</span></div>
+        <div class="deploy-line"><div class="deploy-pending"></div><span style="color:var(--body-text)">Technical remediation: in progress</span></div>
         <div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--border-solid)">
-          <span style="color:#22c55e;font-weight:600;font-family:var(--font-mono)">14/15 controls applied</span>
+          <span style="color:#22c55e;font-weight:600;font-family:var(--font-mono)">4/5 pre-assessment milestones done</span>
         </div>
       </div>
     </div>
@@ -896,174 +849,31 @@
         <div style="width:10px;height:10px;border-radius:50%;background:#ff5f57"></div>
         <div style="width:10px;height:10px;border-radius:50%;background:#febc2e"></div>
         <div style="width:10px;height:10px;border-radius:50%;background:#28c840"></div>
-        <span style="margin-left:8px;color:var(--muted);font-size:11px">vpc_security.tf</span>
+        <span style="margin-left:8px;color:var(--muted);font-size:11px">gap_analysis_report.txt</span>
       </div>
-      <div><span class="code-comment"># private subnets only - no public egress by default</span></div>
-      <div><span class="code-keyword">resource</span> <span class="code-string">"aws_vpc"</span> <span class="code-string">"main"</span> {</div>
-      <div>&nbsp;&nbsp;cidr_block           = <span class="code-string">"10.0.0.0/16"</span></div>
-      <div>&nbsp;&nbsp;enable_dns_hostnames = <span class="code-keyword">true</span></div>
-      <div>&nbsp;&nbsp;enable_dns_support   = <span class="code-keyword">true</span></div>
-      <div>}</div>
+      <div><span class="code-comment"># CMMC Level 2 Gap Analysis — Acme Defense LLC</span></div>
+      <div><span class="code-comment"># Assessment date: 2026-04-14</span></div>
       <div>&nbsp;</div>
-      <div><span class="code-comment"># deny all inbound/outbound on default security group</span></div>
-      <div><span class="code-keyword">resource</span> <span class="code-string">"aws_default_security_group"</span> <span class="code-string">"default"</span> {</div>
-      <div>&nbsp;&nbsp;vpc_id = <span class="code-fn">aws_vpc.main.id</span></div>
-      <div>&nbsp;&nbsp;<span class="code-comment"># no ingress or egress rules</span></div>
-      <div>}</div>
+      <div><span class="code-keyword">Controls Assessed:</span>    <span class="code-string">110</span></div>
+      <div><span class="code-keyword">Fully Implemented:</span>    <span class="code-string">&nbsp;74</span></div>
+      <div><span class="code-keyword">Partially Implemented:</span><span class="code-string">&nbsp;18</span></div>
+      <div><span class="code-keyword">Not Implemented:</span>      <span class="code-string">&nbsp;18</span></div>
       <div>&nbsp;</div>
-      <div><span class="code-comment"># flow logs to CloudWatch for network visibility</span></div>
-      <div><span class="code-keyword">resource</span> <span class="code-string">"aws_flow_log"</span> <span class="code-string">"vpc"</span> {</div>
-      <div>&nbsp;&nbsp;vpc_id          = <span class="code-fn">aws_vpc.main.id</span></div>
-      <div>&nbsp;&nbsp;traffic_type    = <span class="code-string">"ALL"</span></div>
-      <div>&nbsp;&nbsp;iam_role_arn    = <span class="code-fn">aws_iam_role.flow_log.arn</span></div>
-      <div>&nbsp;&nbsp;log_destination = <span class="code-fn">aws_cloudwatch_log_group.vpc_flow.arn</span></div>
-      <div>}</div>
+      <div><span class="code-keyword">SPRS Score:</span>           <span style="color:#f59e0b">-122</span>  <span class="code-comment"># target: 110</span></div>
+      <div>&nbsp;</div>
+      <div><span class="code-comment"># HIGH PRIORITY GAPS</span></div>
+      <div><span class="code-fn">AC.2.006</span>  <span class="code-comment">MFA not enforced on CUI systems</span></div>
+      <div><span class="code-fn">AU.2.041</span>  <span class="code-comment">Audit log review undocumented</span></div>
+      <div><span class="code-fn">IA.3.083</span>  <span class="code-comment">Privileged account MFA missing</span></div>
+      <div><span class="code-fn">SC.3.177</span>  <span class="code-comment">FIPS encryption not implemented</span></div>
+      <div>&nbsp;</div>
+      <div><span class="t-success" style="color:#22c55e">Estimated remediation: 90 days</span></div>
     </div>
   </div>
 </div>
 
-<!-- DETECTION / SECURITY POSTURE SECTION -->
-<section class="speed-section">
-  <div class="speed-inner">
-    <div>
-      <div class="section-label">security posture</div>
-      <h2 class="section-title">Detection From<br><span>Day One.</span></h2>
-      <p class="section-desc" style="margin-top:16px">Every environment ships with a detection pipeline. Threats are logged, routed, and alerted before anything reaches production. No retroactive bolting-on.</p>
-      <div style="display:flex;gap:32px;margin-top:36px">
-        <div>
-          <div style="font-size:32px;font-weight:600;letter-spacing:-0.04em;color:var(--white);line-height:1;font-family:var(--font-mono)">14</div>
-          <div style="font-size:12px;color:var(--muted);margin-top:4px">CIS controls enforced</div>
-        </div>
-        <div>
-          <div style="font-size:32px;font-weight:600;letter-spacing:-0.04em;color:var(--white);line-height:1;font-family:var(--font-mono)">&lt;5m</div>
-          <div style="font-size:12px;color:var(--muted);margin-top:4px">Mean detection time</div>
-        </div>
-        <div>
-          <div style="font-size:32px;font-weight:600;letter-spacing:-0.04em;color:var(--white);line-height:1;font-family:var(--font-mono)">0</div>
-          <div style="font-size:12px;color:var(--muted);margin-top:4px">Public subnets by default</div>
-        </div>
-      </div>
-    </div>
-    <div class="speed-visual">
-      <div style="margin-bottom:20px;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em">security control coverage</div>
-      <div class="speed-bar-row">
-        <div class="speed-bar-label">Network</div>
-        <div class="speed-bar-track"><div class="speed-bar-fill" style="width:95%"></div></div>
-        <div class="speed-bar-value">CIS L2</div>
-      </div>
-      <div class="speed-bar-row">
-        <div class="speed-bar-label">IAM</div>
-        <div class="speed-bar-track"><div class="speed-bar-fill" style="width:90%"></div></div>
-        <div class="speed-bar-value">least-priv</div>
-      </div>
-      <div class="speed-bar-row">
-        <div class="speed-bar-label">Encryption</div>
-        <div class="speed-bar-track"><div class="speed-bar-fill" style="width:100%"></div></div>
-        <div class="speed-bar-value">at rest+transit</div>
-      </div>
-      <div class="speed-bar-row">
-        <div class="speed-bar-label">Detection</div>
-        <div class="speed-bar-track"><div class="speed-bar-fill" style="width:85%"></div></div>
-        <div class="speed-bar-value">GuardDuty</div>
-      </div>
-      <div class="speed-bar-row">
-        <div class="speed-bar-label">Logging</div>
-        <div class="speed-bar-track"><div class="speed-bar-fill" style="width:92%"></div></div>
-        <div class="speed-bar-value">CloudTrail</div>
-      </div>
-      <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border-solid);display:flex;align-items:center;justify-content:space-between">
-        <span style="color:var(--muted);font-size:11px">evaluated against CIS AWS Benchmark v1.5</span>
-        <span style="color:#22c55e;font-size:11px;font-weight:600">passing</span>
-      </div>
-    </div>
-  </div>
-</section>
 
-<!-- PROJECTS -->
-<section class="products-section">
-  <div class="products-header">
-    <div>
-      <div class="section-label">work</div>
-      <h2 class="section-title">Technical Depth</h2>
-    </div>
-    <p class="section-desc">Real infrastructure built and documented. The same skills applied to client engagements - not just for show.</p>
-  </div>
-  <div class="products-grid">
-    <div class="product-card">
-      <div class="product-tag">
-        <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1L1 3.5v3L5 9l4-2.5v-3L5 1z" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/></svg>
-        Infrastructure
-      </div>
-      <h3>AWS Security Baseline</h3>
-      <p>Terraform module deploying a production-ready VPC with GuardDuty, CloudTrail, Config Rules, and encrypted S3. No public subnets. No NAT gateway unless required.</p>
-      <a href="#" class="product-link">
-        View project
-        <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5h6M5.5 2L8 5l-2.5 2.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
-    </div>
-    <div class="product-card">
-      <div class="product-tag">
-        <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="3.5" stroke="currentColor" stroke-width="1.1"/><path d="M5 3v2.5l1.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
-        Detection
-      </div>
-      <h3>GuardDuty + CloudTrail Pipeline</h3>
-      <p>Detection pipeline from scratch - GuardDuty findings routed through EventBridge to SNS with structured alert payloads. Findings documented with MITRE ATT&CK mapping.</p>
-      <a href="#" class="product-link">
-        View project
-        <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5h6M5.5 2L8 5l-2.5 2.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
-    </div>
-    <div class="product-card">
-      <div class="product-tag">
-        <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><rect x="1.5" y="2" width="7" height="6" rx="1" stroke="currentColor" stroke-width="1.1"/><path d="M3.5 5h3M5 3.5v3" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
-        Container Security
-      </div>
-      <h3>Kubernetes Hardening Playbook</h3>
-      <p>CIS Kubernetes Benchmark applied to a self-managed cluster. Network policies, RBAC least-privilege, pod security standards, and Falco runtime detection configured end-to-end.</p>
-      <a href="#" class="product-link">
-        View project
-        <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5h6M5.5 2L8 5l-2.5 2.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
-    </div>
-    <div class="product-card">
-      <div class="product-tag">
-        <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 7l2-4 2 2 2-4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Observability
-      </div>
-      <h3>Security Dashboard - Grafana + Prometheus</h3>
-      <p>Prometheus exporters feeding security metrics into Grafana. Failed auth attempts, anomalous API call rates, and CIS compliance scores visualized in real time.</p>
-      <a href="#" class="product-link">
-        View project
-        <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5h6M5.5 2L8 5l-2.5 2.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
-    </div>
-  </div>
-</section>
 
-<!-- WRITING / FOCUS AREAS -->
-<section class="customers-section">
-  <div>
-    <div class="section-label">writing</div>
-    <h2 class="section-title">Original Analysis.<br><span>No Fluff.</span></h2>
-  </div>
-  <div class="customers-grid">
-    <div class="customer-card">
-      <div class="customer-logo">infrastructure</div>
-      <p class="customer-quote">This module deploys a VPC with three private subnets, enables VPC Flow Logs to CloudWatch, and locks down the default security group. No public subnets. No NAT gateway unless you need one.</p>
-      <div class="customer-author">terraform-provisioned aws security baseline</div>
-    </div>
-    <div class="customer-card">
-      <div class="customer-logo">detection</div>
-      <p class="customer-quote">GuardDuty fires a finding. EventBridge picks it up. SNS routes it to a Lambda that normalizes the payload and posts to PagerDuty. The whole pipeline is Terraform - no ClickOps, no drift.</p>
-      <div class="customer-author">guardduty + cloudtrail: detection pipeline from scratch</div>
-    </div>
-    <div class="customer-card">
-      <div class="customer-logo">architecture</div>
-      <p class="customer-quote">AWS-only was a deliberate call. One control plane, one permission model, one billing boundary. Multi-cloud sounds good in a blog post. In practice, it is complexity that compounds at every layer.</p>
-      <div class="customer-author">why I went AWS-only</div>
-    </div>
-  </div>
-</section>
 
 <!-- FINAL CTA -->
 <section class="cta-section">
@@ -1095,9 +905,7 @@
         <h4>Work</h4>
         <ul>
           <li><a href="/services/">Services</a></li>
-          <li><a href="/projects/">Projects</a></li>
-          <li><a href="/certifications/">Certifications</a></li>
-          <li><a href="#">Writing</a></li>
+          <li><a href="/about/">About</a></li>
         </ul>
       </div>
       <div class="footer-col">
