@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About - Kumo Security</title>
+  <link rel="icon" type="image/png" href="../brand_assets/Kumo%20Security%20Logo%20-%20Black%20Text.png" />
+  <link rel="stylesheet" href="../styles/brand.css" />
+  <link rel="stylesheet" href="../styles/components.css" />
+  <style>
+    /* ── PAGE-SPECIFIC ── */
+
+    .page-header {
+      padding: 72px 24px 64px;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: end;
+      border-bottom: 1px solid var(--border);
+    }
+    .page-header h1 {
+      font-size: clamp(36px, 4.5vw, 60px);
+      font-weight: 600;
+      letter-spacing: -0.04em;
+      line-height: 1.0;
+      color: var(--white);
+    }
+    .page-header h1 span { color: var(--muted); }
+    .page-header-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .page-header-meta p {
+      font-size: 15px;
+      color: var(--body-text);
+      line-height: 1.75;
+    }
+    .availability-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-family: var(--font-mono);
+      color: var(--muted);
+    }
+    .availability-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #22c55e;
+      flex-shrink: 0;
+    }
+
+    /* STORY SECTION */
+    .story-section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 72px 24px;
+      display: grid;
+      grid-template-columns: 1fr 360px;
+      gap: 80px;
+      align-items: start;
+      border-bottom: 1px solid var(--border);
+    }
+    .story-body {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+    .story-body p {
+      font-size: 16px;
+      color: var(--body-text);
+      line-height: 1.8;
+    }
+    .story-body p strong {
+      color: var(--white);
+      font-weight: 500;
+    }
+    .story-pull {
+      font-size: 22px;
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      color: var(--white);
+      line-height: 1.3;
+      padding: 24px 0;
+      border-top: 1px solid var(--border-solid);
+      border-bottom: 1px solid var(--border-solid);
+      margin: 8px 0;
+    }
+    .story-pull span { color: var(--muted); }
+
+    /* SIDEBAR */
+    .story-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      position: sticky;
+      top: 88px;
+    }
+    .sidebar-card {
+      background: var(--navy-card);
+      border: 1px solid var(--border-solid);
+      border-radius: 4px;
+      padding: 20px;
+      margin-bottom: 2px;
+    }
+    .sidebar-card:last-child { margin-bottom: 0; }
+    .sidebar-label {
+      font-size: 10px;
+      font-family: var(--font-mono);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+    .sidebar-card p {
+      font-size: 13px;
+      color: var(--body-text);
+      line-height: 1.65;
+    }
+    .lang-row {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .lang-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .lang-name {
+      font-size: 13px;
+      color: var(--white);
+      font-weight: 500;
+    }
+    .lang-level {
+      font-size: 10.5px;
+      font-family: var(--font-mono);
+      color: var(--muted);
+      background: var(--navy);
+      border: 1px solid var(--border-solid);
+      padding: 2px 8px;
+      border-radius: 2px;
+    }
+    .target-row {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .target-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12.5px;
+      color: var(--body-text);
+    }
+    .target-item svg { opacity: 0.4; flex-shrink: 0; }
+
+    /* TIMELINE */
+    .timeline-section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 72px 24px 80px;
+    }
+    .timeline {
+      margin-top: 40px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 8px;
+      bottom: 8px;
+      width: 1px;
+      background: var(--border-solid);
+    }
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 32px;
+      padding: 0 0 40px 0;
+      position: relative;
+    }
+    .timeline-item:last-child { padding-bottom: 0; }
+    .timeline-dot {
+      position: absolute;
+      left: -4px;
+      top: 8px;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--navy-card);
+      border: 1px solid var(--border-solid);
+    }
+    .timeline-dot.active {
+      background: #22c55e;
+      border-color: #22c55e;
+      box-shadow: 0 0 0 3px rgba(34,197,94,0.15);
+    }
+    .timeline-left {
+      text-align: right;
+      padding-right: 24px;
+    }
+    .timeline-date {
+      font-size: 11px;
+      font-family: var(--font-mono);
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .timeline-right {
+      padding-left: 24px;
+    }
+    .timeline-role {
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--white);
+      margin-bottom: 2px;
+    }
+    .timeline-company {
+      font-size: 12.5px;
+      color: var(--muted);
+      margin-bottom: 10px;
+      font-family: var(--font-mono);
+    }
+    .timeline-desc {
+      font-size: 13.5px;
+      color: var(--body-text);
+      line-height: 1.65;
+    }
+
+    /* CTA */
+    .about-cta {
+      border-top: 1px solid var(--border);
+      padding: 80px 24px;
+      text-align: center;
+    }
+    .about-cta h2 {
+      font-size: clamp(24px, 3vw, 38px);
+      font-weight: 600;
+      letter-spacing: -0.035em;
+      color: var(--white);
+      margin-bottom: 14px;
+    }
+    .about-cta p {
+      font-size: 15px;
+      color: var(--muted);
+      margin-bottom: 32px;
+      max-width: 420px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.65;
+    }
+    .cta-buttons {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .page-header { grid-template-columns: 1fr; gap: 32px; }
+      .story-section { grid-template-columns: 1fr; gap: 48px; }
+      .story-sidebar { position: static; }
+      .timeline-item { grid-template-columns: 120px 1fr; gap: 16px; }
+    }
+    @media (max-width: 768px) {
+      .page-header { padding: 48px 20px 48px; }
+      .story-section { padding: 48px 20px; }
+      .timeline-section { padding: 48px 20px 56px; }
+      .about-cta { padding: 56px 20px; }
+      .cta-buttons { flex-direction: column; width: 100%; max-width: 280px; margin: 0 auto; }
+      .cta-buttons .btn-primary,
+      .cta-buttons .btn-secondary { width: 100%; justify-content: center; }
+      .timeline-item { grid-template-columns: 1fr; gap: 6px; }
+      .timeline-left { text-align: left; padding-right: 0; padding-left: 24px; }
+      .timeline-right { padding-left: 24px; }
+      .timeline::before { left: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav class="nav">
+  <div class="nav-left">
+    <a href="../" class="nav-logo">
+      <img src="../brand_assets/Kumo%20Security%20Logo%20-%20White%20Text.png" alt="Kumo Security" />
+    </a>
+    <ul class="nav-links">
+      <li><a href="../projects/">Projects</a></li>
+      <li><a href="../certifications/">Certifications</a></li>
+      <li><a href="#">Writing</a></li>
+      <li><a href="#">Stack</a></li>
+      <li><a href="../about/" style="color:var(--white)">About</a></li>
+    </ul>
+  </div>
+  <div class="nav-right">
+    <a href="https://github.com/devonbooker" target="_blank" rel="noopener" class="nav-link-plain">GitHub</a>
+    <a href="https://www.linkedin.com/in/devonbookerr/" target="_blank" rel="noopener" class="nav-link-plain">LinkedIn</a>
+    <a href="mailto:devon@kumosecurity.com" class="btn-primary">
+      Contact
+      <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2.5 6h7M6.5 3l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+  <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="../projects/">Projects</a>
+  <a href="../certifications/">Certifications</a>
+  <a href="#">Writing</a>
+  <a href="#">Stack</a>
+  <a href="../about/">About</a>
+  <div class="mobile-divider"></div>
+  <a href="https://github.com/devonbooker" target="_blank" rel="noopener">GitHub</a>
+  <a href="https://www.linkedin.com/in/devonbookerr/" target="_blank" rel="noopener">LinkedIn</a>
+  <a href="mailto:devon@kumosecurity.com" class="btn-primary">Contact</a>
+</div>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div>
+    <div class="section-label" style="margin-bottom:20px">about</div>
+    <h1>Devon Booker.<br><span>Infrastructure Security Engineer.</span></h1>
+  </div>
+  <div class="page-header-meta">
+    <div class="availability-row">
+      <span class="availability-dot"></span>
+      Available for roles - SF / San Jose / Remote
+    </div>
+    <p>22 years old. Security+ at 17. Full-time in IT since 18. I've been building toward infrastructure security for four years - I just didn't know it until eight months ago.</p>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <a href="mailto:devon@kumosecurity.com" class="btn-primary" style="font-size:13px;padding:8px 16px">Get in Touch</a>
+      <a href="/resume.pdf" target="_blank" class="btn-secondary" style="font-size:13px;padding:8px 16px">View Resume</a>
+    </div>
+  </div>
+</div>
+
+<!-- STORY -->
+<div class="story-section">
+  <div class="story-body">
+
+    <p>I got my Security+ senior year of high school. I was 17. Nobody told me to - I just wanted to understand how things worked. That curiosity has driven every job I've taken since.</p>
+
+    <p>I've been working in IT full-time since I was 18. Help desk, field technician, systems administration, security analyst. Four years of hands-on work across every layer of enterprise technology. And for most of that time, I was good at it without really understanding what I was building toward.</p>
+
+    <div class="story-pull">
+      Eight months ago, <span>that changed.</span>
+    </div>
+
+    <p>I was a lead sysadmin managing infrastructure for 75+ enterprise clients when it finally clicked. I started noticing a pattern in the people around me in security: <strong>they were chasing certifications, chasing titles, chasing six-figure salaries.</strong> But they had no foundation. No understanding of how the infrastructure underneath their alerts actually worked. No longevity.</p>
+
+    <p>I didn't want that. I wanted to go a layer deeper. The infrastructure is what everything is built on - it's the foundation - and I kept meeting security people who had completely skipped it. I decided I wasn't going to be one of them.</p>
+
+    <p>Around the same time I started paying close attention to AI. Not the hype - the trajectory. AI isn't new. It's been building for decades. What's new is the accessibility. And when I thought about where it was heading - the infrastructure it runs on, the security of that infrastructure, the engineers who build and own it - I knew exactly where I needed to position myself.</p>
+
+    <div class="story-pull">
+      Cloud security is where <span>AI meets infrastructure meets security.</span> That intersection is where I'm building my career.
+    </div>
+
+    <p>I'll be honest about something: I skipped a layer on the way up. Infrastructure, software engineering, the code layer. I went from help desk to field tech to sysadmin to security analyst without ever really building anything from scratch. <strong>Infrastructure security is how I'm closing that gap</strong> - learning to provision, secure, and ship real systems end to end. Not just operate and monitor them.</p>
+
+    <p>I'm targeting San Francisco and San Jose. Not because of the money - because of the people. I want to be in rooms where I'm being pushed every day, learning from engineers who've already solved problems I'm just starting to work on. The startup ecosystem there moves fast, new companies are being funded constantly, and the intersection of AI and cloud security is happening right in that environment. I want to build my career and my network there. Whatever comes after, that foundation will serve me for the rest of my life.</p>
+
+    <p>One more thing. I'm a native Japanese speaker - grew up bilingual. I'm actively working to get back to full conversational fluency, and at some point I want to work overseas. Tech is global. Infrastructure has no borders. Neither do I.</p>
+
+  </div>
+
+  <!-- SIDEBAR -->
+  <div class="story-sidebar">
+
+    <div class="sidebar-card">
+      <div class="sidebar-label">Languages</div>
+      <div class="lang-row">
+        <div class="lang-item">
+          <span class="lang-name">English</span>
+          <span class="lang-level">Native</span>
+        </div>
+        <div class="lang-item">
+          <span class="lang-name">Japanese</span>
+          <span class="lang-level">Native / Bilingual</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar-card">
+      <div class="sidebar-label">Targeting</div>
+      <div class="target-row">
+        <div class="target-item">
+          <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M6 1a3.5 3.5 0 0 1 3.5 3.5C9.5 7.5 6 11 6 11S2.5 7.5 2.5 4.5A3.5 3.5 0 0 1 6 1z" stroke="currentColor" stroke-width="1.3"/><circle cx="6" cy="4.5" r="1" fill="currentColor"/></svg>
+          SF / San Jose / Remote
+        </div>
+        <div class="target-item">
+          <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><rect x="1.5" y="3" width="9" height="7" rx="1" stroke="currentColor" stroke-width="1.3"/><path d="M4 3V2a2 2 0 0 1 4 0v1" stroke="currentColor" stroke-width="1.3"/></svg>
+          Startups preferred
+        </div>
+        <div class="target-item">
+          <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 9L6 3l4 6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M3.5 7h5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+          Cloud Security Engineer
+        </div>
+        <div class="target-item">
+          <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 9L6 3l4 6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M3.5 7h5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+          Security Infrastructure Engineer
+        </div>
+        <div class="target-item">
+          <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 9L6 3l4 6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M3.5 7h5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+          DevSecOps Engineer
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar-card">
+      <div class="sidebar-label">Education</div>
+      <p>BS Cybersecurity &amp; Information Assurance<br>Western Governors University<br>Expected Sept 2026</p>
+    </div>
+
+    <div class="sidebar-card">
+      <div class="sidebar-label">Currently Building</div>
+      <p>Terraform-provisioned AWS security baseline. Week 2 of 5. Tests written in Go with Terratest.</p>
+    </div>
+
+  </div>
+</div>
+
+<!-- TIMELINE -->
+<div class="timeline-section">
+  <div class="section-label">experience</div>
+  <h2 class="section-title" style="margin-top:12px">Four years.<br><span>Every layer of the stack.</span></h2>
+
+  <div class="timeline">
+
+    <div class="timeline-item">
+      <div class="timeline-dot active"></div>
+      <div class="timeline-left">
+        <div class="timeline-date">Nov 2025<br>Present</div>
+      </div>
+      <div class="timeline-right">
+        <div class="timeline-role">Security Analyst</div>
+        <div class="timeline-company">Arctic Wolf</div>
+        <p class="timeline-desc">Investigating 50+ daily security alerts across endpoint, cloud, and network infrastructure. MITRE ATT&CK mapping, cloud sensor debugging, and incident runbook development across a multi-tenant SOC environment.</p>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-left">
+        <div class="timeline-date">Mar 2024<br>Oct 2025</div>
+      </div>
+      <div class="timeline-right">
+        <div class="timeline-role">Lead System Administrator</div>
+        <div class="timeline-company">Resonant Technology Partners</div>
+        <p class="timeline-desc">Owned infrastructure for 75+ enterprise clients. Hybrid identity, Conditional Access, 50+ firewalls, 4,000+ endpoints. Built custom STAR detection rules, led NIST SP 800-171 audits, and deployed SentinelOne EDR at scale. This is where everything clicked.</p>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-left">
+        <div class="timeline-date">Dec 2022<br>Dec 2023</div>
+      </div>
+      <div class="timeline-right">
+        <div class="timeline-role">Field Technician</div>
+        <div class="timeline-company">Cherokee Federal</div>
+        <p class="timeline-desc">Infrastructure deployment of MHS Genesis across 8 federal healthcare facilities under DoD compliance requirements. Endpoint hardening, STIG-compliant Group Policies, and 99.5% SLA adherence in a mission-critical environment.</p>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-left">
+        <div class="timeline-date">Apr 2022<br>Dec 2022</div>
+      </div>
+      <div class="timeline-right">
+        <div class="timeline-role">Desktop Support</div>
+        <div class="timeline-company">Apex Systems</div>
+        <p class="timeline-desc">Active Directory administration for 200,000+ DoD users. Provisioning, access control, Group Policy enforcement. Reduced over-privileged accounts by 30% through quarterly access reviews.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="about-cta">
+  <h2>Let's talk.</h2>
+  <p>If you're building something in cloud security, infrastructure, or DevSecOps - I want to hear about it.</p>
+  <div class="cta-buttons">
+    <a href="mailto:devon@kumosecurity.com" class="btn-primary" style="font-size:14px;padding:11px 22px">
+      devon@kumosecurity.com
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 6h7M6.5 3l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+    <a href="https://www.linkedin.com/in/devonbookerr/" target="_blank" rel="noopener" class="btn-secondary" style="font-size:14px;padding:11px 22px">LinkedIn</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <img src="../brand_assets/Kumo%20Security%20Logo%20-%20White%20Text.png" alt="Kumo Security" />
+        </div>
+        <p class="footer-brand-desc">devonbooker // cloud security<br><br>Building Secure Infrastructure<br>From First Commit to Production.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Work</h4>
+        <ul>
+          <li><a href="../projects/">Projects</a></li>
+          <li><a href="#">Writing</a></li>
+          <li><a href="#">Architecture Diagrams</a></li>
+          <li><a href="../certifications/">Certifications</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Stack</h4>
+        <ul>
+          <li><a href="#">AWS</a></li>
+          <li><a href="#">Terraform</a></li>
+          <li><a href="#">Kubernetes</a></li>
+          <li><a href="#">Golang</a></li>
+          <li><a href="#">GitHub Actions</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="https://github.com/devonbooker" target="_blank" rel="noopener">GitHub</a></li>
+          <li><a href="https://www.linkedin.com/in/devonbookerr/" target="_blank" rel="noopener">LinkedIn</a></li>
+          <li><a href="mailto:devon@kumosecurity.com">Email</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Site</h4>
+        <ul>
+          <li><a href="../about/">About</a></li>
+          <li><a href="mailto:devon@kumosecurity.com">Contact</a></li>
+          <li><a href="#">RSS Feed</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Kumo Security. All rights reserved.</p>
+      <div class="footer-bottom-links">
+        <a href="#">Privacy</a>
+        <a href="mailto:devon@kumosecurity.com">Contact</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+  });
+  mobileMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.classList.remove('open');
+      mobileMenu.classList.remove('open');
+    });
+  });
+</script>
+
+</body>
+</html>
