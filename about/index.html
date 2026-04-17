@@ -3,32 +3,53 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>About - Kumo Security</title>
-  <meta name="description" content="Kumo Security builds cloud security tools for SaaS startups. Kumo Assess is our agentic SOC 2 compliance assessment product." />
+  <title>About - Devon Booker</title>
+  <meta name="description" content="I'm Devon Booker, a security engineer running a boutique SOC 2 consulting practice for AWS-native startups. I build the tools I use." />
   <link rel="icon" type="image/png" href="/brand_assets/Kumo%20Security%20Logo%20-%20Black%20Text.png" />
   <link rel="stylesheet" href="/styles/brand.css" />
   <link rel="stylesheet" href="/styles/components.css" />
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
   <style>
     .about-content {
-      max-width: 680px;
+      max-width: 720px;
       margin: 0 auto;
       padding: 72px 24px 96px;
     }
-    .about-content h1 {
-      font-size: clamp(28px, 4vw, 42px);
-      font-weight: 700;
-      letter-spacing: -0.03em;
-      color: var(--text);
-      margin-bottom: 16px;
-    }
-    .about-content .lead {
-      font-size: 17px;
-      color: var(--text-secondary);
-      line-height: 1.7;
+    .about-header {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 32px;
       margin-bottom: 48px;
       padding-bottom: 48px;
       border-bottom: 1px solid var(--border);
+      align-items: start;
+    }
+    .about-header-photo {
+      width: 180px;
+      aspect-ratio: 1 / 1;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-card);
+      overflow: hidden;
+    }
+    .about-header-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .about-header-text h1 {
+      font-size: clamp(28px, 4vw, 40px);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      margin-bottom: 12px;
+      line-height: 1.15;
+    }
+    .about-header-text .lead {
+      font-size: 16px;
+      color: var(--text-secondary);
+      line-height: 1.7;
     }
     .about-section { margin-bottom: 48px; padding-bottom: 48px; border-bottom: 1px solid var(--border); }
     .about-section:last-of-type { border-bottom: none; }
@@ -42,9 +63,10 @@
     .about-section p {
       font-size: 14px;
       color: var(--text-secondary);
-      line-height: 1.7;
+      line-height: 1.75;
       margin-bottom: 12px;
     }
+    .about-section p a { color: var(--accent); font-weight: 500; }
     .about-section ul {
       list-style: none;
       display: flex;
@@ -83,31 +105,12 @@
       display: flex;
       gap: 12px;
       margin-top: 20px;
+      flex-wrap: wrap;
     }
-    .roadmap-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px 0;
-      border-bottom: 1px solid var(--border);
-      font-size: 13px;
-    }
-    .roadmap-row:last-child { border-bottom: none; }
-    .roadmap-status {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      font-weight: 600;
-      padding: 2px 7px;
-      border-radius: var(--radius-badge);
-      flex-shrink: 0;
-    }
-    .roadmap-status.active   { background: var(--pass-bg);    color: var(--pass);    border: 1px solid var(--pass-border); }
-    .roadmap-status.planned  { background: var(--bg);         color: var(--text-muted); border: 1px solid var(--border); }
-    .roadmap-name { color: var(--text); font-weight: 500; }
-    .roadmap-desc { color: var(--text-muted); margin-left: auto; font-size: 12px; }
     @media (max-width: 768px) {
       .about-content { padding: 56px 20px 72px; }
-      .roadmap-desc { display: none; }
+      .about-header { grid-template-columns: 1fr; gap: 20px; }
+      .about-header-photo { max-width: 160px; }
     }
   </style>
 </head>
@@ -120,13 +123,14 @@
       <img src="/brand_assets/Kumo%20Security%20Logo%20-%20Black%20Text.png" alt="Kumo Security" />
     </a>
     <ul class="nav-links">
-      <li><a href="/#features">Products</a></li>
+      <li><a href="/#pricing">Pricing</a></li>
+      <li><a href="/#faq">FAQ</a></li>
       <li><a href="/about/" style="color:var(--text);">About</a></li>
     </ul>
   </div>
   <div class="nav-right">
     <a href="https://calendly.com/devon-kumosecurity/30min" target="_blank" rel="noopener" class="btn-primary">
-      Book a Call
+      Book a scoping call
       <i data-lucide="arrow-right" style="width:14px;height:14px;"></i>
     </a>
   </div>
@@ -135,25 +139,34 @@
   </button>
 </nav>
 <div class="mobile-menu" id="mobileMenu">
-  <a href="/#features">Products</a>
+  <a href="/#pricing">Pricing</a>
+  <a href="/#faq">FAQ</a>
   <a href="/about/">About</a>
   <div class="mobile-divider"></div>
-  <a href="https://calendly.com/devon-kumosecurity/30min" target="_blank" rel="noopener" class="btn-primary">Book a Call</a>
+  <a href="https://calendly.com/devon-kumosecurity/30min" target="_blank" rel="noopener" class="btn-primary">Book a scoping call</a>
 </div>
 
 <div class="about-content">
 
-  <h1>About Kumo Security</h1>
-  <p class="lead">Kumo Security builds cloud security tooling for SaaS startups. The first product is Kumo Assess — an agentic SOC 2 compliance assessment that connects to your AWS account and runs a full control gap analysis in hours, not months.</p>
+  <div class="about-header">
+    <div class="about-header-photo">
+      <img src="https://placehold.co/360x360/E2E8F0/64748B?text=Devon" alt="Devon Booker" />
+    </div>
+    <div class="about-header-text">
+      <h1>Devon Booker</h1>
+      <p class="lead">Security engineer. I run a boutique SOC 2 readiness practice for AWS-native startups, using tools I built myself to move faster than traditional consultants.</p>
+    </div>
+  </div>
 
   <div class="about-section">
     <h2>Background</h2>
+    <p>I've been in IT for four years and currently work as a security analyst. My day-to-day is AWS, Terraform, and cloud security - the same work I do for clients. I'm not a consultant watching from the outside; I'm a practitioner who ships.</p>
     <ul>
-      <li>Cloud and infrastructure security — AWS, Terraform, Ansible, Docker, Kubernetes</li>
-      <li>Security engineering — container security, WAF, TLS/PKI, authentication and authorization</li>
-      <li>Compliance frameworks — SOC 2, ISO 27001, CMMC, GDPR in cloud environments</li>
-      <li>Observability and CI/CD — Grafana, Prometheus, GitHub Actions</li>
-      <li>Languages — Go, TypeScript; AI tooling built on Anthropic/Claude</li>
+      <li>Cloud and infrastructure security - AWS, Terraform, Ansible, Docker, Kubernetes</li>
+      <li>Security engineering - container security, WAF, TLS/PKI, authentication and authorization</li>
+      <li>Compliance frameworks - SOC 2, ISO 27001, CMMC, GDPR in cloud environments</li>
+      <li>Observability and CI/CD - Grafana, Prometheus, GitHub Actions</li>
+      <li>Languages - Go, TypeScript; AI tooling built on Anthropic / Claude APIs</li>
     </ul>
     <div style="margin-top:16px;">
       <span class="stack-tag">AWS</span>
@@ -175,38 +188,19 @@
   </div>
 
   <div class="about-section">
-    <h2>What We're Building</h2>
-    <p>Kumo Assess is an agentic compliance system. Claude agents collect evidence from your AWS environment, score each SOC 2 control, and generate specific remediation guidance — all in a single guided session. Currently covers SOC 2 CC6 (Logical Access) and CC7 (System Operations).</p>
-    <p>Kumo Assess is not a checkbox tool. It's built on direct AWS API calls, not heuristics. The assessment logic is transparent and inspectable.</p>
-    <div style="margin-top:20px;border:1px solid var(--border);border-radius:var(--radius-card);overflow:hidden;">
-      <div class="roadmap-row" style="padding:10px 16px;background:var(--bg);border-bottom:1px solid var(--border);">
-        <span style="font-size:11px;font-family:var(--font-mono);color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;">Framework</span>
-        <span class="roadmap-desc">Status</span>
-      </div>
-      <div class="roadmap-row" style="padding:10px 16px;">
-        <span class="roadmap-status active">Active</span>
-        <span class="roadmap-name">SOC 2</span>
-        <span class="roadmap-desc">CC6 + CC7 (AWS)</span>
-      </div>
-      <div class="roadmap-row" style="padding:10px 16px;">
-        <span class="roadmap-status planned">Planned</span>
-        <span class="roadmap-name">ISO 27001</span>
-        <span class="roadmap-desc">AWS controls mapping</span>
-      </div>
-      <div class="roadmap-row" style="padding:10px 16px;">
-        <span class="roadmap-status planned">Planned</span>
-        <span class="roadmap-name">CMMC</span>
-        <span class="roadmap-desc">Level 2 (NIST SP 800-171)</span>
-      </div>
-    </div>
+    <h2>The practice</h2>
+    <p>I help AWS-native startups get SOC 2 ready without the $50k readiness-assessment treadmill. The work is fixed scope, fixed price, delivered in weeks.</p>
+    <p>The edge is a tool I built called <strong>kumo-assess</strong> - a four-tier Claude agent pipeline plus a deterministic rules engine that runs a full CC6 + CC7 scan of your AWS environment in about thirty minutes. It's read-only by construction. Zero mutating API calls exist in any collector. The whole codebase is on my GitHub and covered by automated tests.</p>
+    <p>That tool handles the evidence collection and gap analysis that consultants usually do by hand. It lets me spend my time on the remediation work that actually matters - writing Terraform, reviewing IaC, fixing the things the tool finds.</p>
+    <p>Covered today: CC6 (Logical Access, Boundary Protection, Data Protection, Change Detection) and CC7 (System Operations). Additional families (CC1, CC2, CC8, A1, C1) expanding quarterly. Other frameworks - CMMC, ISO 27001, PCI DSS, HIPAA - on the roadmap.</p>
   </div>
 
   <div class="about-section">
     <h2>Contact</h2>
-    <p>If you're a SaaS startup working toward SOC 2 and want to run a Kumo Assess scan on your AWS environment, book a 30-minute call.</p>
+    <p>If you're a SaaS startup working toward SOC 2 on AWS and want someone who can scan your environment and deliver the fixes, book a 30-minute scoping call. You'll leave with a fixed price and a start date.</p>
     <div style="display:flex;gap:12px;margin-top:20px;flex-wrap:wrap;">
       <a href="https://calendly.com/devon-kumosecurity/30min" target="_blank" rel="noopener" class="btn-primary" style="font-size:13px;padding:9px 18px;">
-        Book a Call
+        Book a scoping call
         <i data-lucide="arrow-right" style="width:14px;height:14px;"></i>
       </a>
       <a href="mailto:devon@kumosecurity.com" class="btn-secondary" style="font-size:13px;padding:9px 18px;">
@@ -225,7 +219,8 @@
         <img src="/brand_assets/Kumo%20Security%20Logo%20-%20Black%20Text.png" alt="Kumo Security" />
       </a>
       <ul class="footer-nav">
-        <li><a href="/#features">Products</a></li>
+        <li><a href="/#pricing">Pricing</a></li>
+        <li><a href="/#faq">FAQ</a></li>
         <li><a href="/about/">About</a></li>
         <li><a href="https://github.com/devonbooker" target="_blank" rel="noopener">GitHub</a></li>
         <li><a href="https://www.linkedin.com/in/devonbookerr/" target="_blank" rel="noopener">LinkedIn</a></li>
