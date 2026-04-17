@@ -250,6 +250,103 @@
       .features-grid { grid-template-columns: 1fr; }
       .features-section { padding: 56px 20px; }
     }
+
+    /* ── HOW IT WORKS ── */
+    .hiw-section {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 80px 24px;
+    }
+    .hiw-inner {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .hiw-steps {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-top: 40px;
+    }
+    .hiw-step {
+      flex: 1;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-card);
+      padding: 24px;
+    }
+    .step-num {
+      font-size: 12px;
+      font-weight: 600;
+      font-family: var(--font-mono);
+      color: var(--accent);
+      margin-bottom: 10px;
+      letter-spacing: 0.04em;
+    }
+    .hiw-step h3 {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: -0.01em;
+      margin-bottom: 6px;
+    }
+    .hiw-step p {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.65;
+    }
+    .hiw-arrow {
+      padding-top: 28px;
+      flex-shrink: 0;
+    }
+
+    /* ── CREDIBILITY ── */
+    .cred-section {
+      padding: 80px 24px;
+      background: var(--bg);
+    }
+    .cred-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .cred-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .cred-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-card);
+      padding: 20px;
+    }
+    .cred-card h4 {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: -0.01em;
+      margin-bottom: 6px;
+    }
+    .cred-card p {
+      font-size: 12.5px;
+      color: var(--text-secondary);
+      line-height: 1.65;
+    }
+
+    @media (max-width: 768px) {
+      .hiw-steps { flex-direction: column; gap: 12px; }
+      .hiw-arrow { display: none; }
+      .hiw-section { padding: 56px 20px; }
+      .cred-inner { grid-template-columns: 1fr; gap: 40px; }
+      .cred-section { padding: 56px 20px; }
+    }
+    @media (max-width: 480px) {
+      .cred-grid { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
@@ -411,7 +508,71 @@
   </div>
 </section>
 
-<!-- PLACEHOLDER: how it works, credibility, CTA, footer (Tasks 5–6) -->
+<!-- HOW IT WORKS -->
+<section class="hiw-section" id="how-it-works">
+  <div class="hiw-inner">
+    <div class="section-label">How it works</div>
+    <h2 class="section-title">Three steps to your<br>compliance posture.</h2>
+    <div class="hiw-steps">
+      <div class="hiw-step">
+        <div class="step-num">01</div>
+        <div class="step-content">
+          <h3>Connect AWS</h3>
+          <p>Add a read-only IAM role. Kumo Assess never modifies your environment.</p>
+        </div>
+      </div>
+      <div class="hiw-arrow"><i data-lucide="arrow-right" style="width:20px;height:20px;stroke:var(--border-strong);"></i></div>
+      <div class="hiw-step">
+        <div class="step-num">02</div>
+        <div class="step-content">
+          <h3>Run a Scan</h3>
+          <p>Select your control family (CC6, CC7). Agents collect evidence across 47 services.</p>
+        </div>
+      </div>
+      <div class="hiw-arrow"><i data-lucide="arrow-right" style="width:20px;height:20px;stroke:var(--border-strong);"></i></div>
+      <div class="hiw-step">
+        <div class="step-num">03</div>
+        <div class="step-content">
+          <h3>Review &amp; Fix</h3>
+          <p>Get your score, control breakdown, and specific remediation steps.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CREDIBILITY -->
+<section class="cred-section">
+  <div class="cred-inner">
+    <div class="cred-left">
+      <div class="section-label">Why Kumo Security</div>
+      <h2 class="section-title">Built by an engineer.<br><span>Not a compliance<br>checkbox factory.</span></h2>
+      <p class="section-desc" style="margin-top:16px;">Kumo Assess is an agentic system — Claude-powered agents interpret evidence in context, not regex against config files. Every finding maps to a specific AWS API call.</p>
+    </div>
+    <div class="cred-right">
+      <div class="cred-grid">
+        <div class="cred-card">
+          <h4>Read-Only by Design</h4>
+          <p>Scoped IAM policy. Kumo Assess observes your environment. It never touches it.</p>
+        </div>
+        <div class="cred-card">
+          <h4>Agentic, Not Scripted</h4>
+          <p>Claude agents interpret evidence in context — not regex against config files.</p>
+        </div>
+        <div class="cred-card">
+          <h4>AWS-Native</h4>
+          <p>Every collector maps to a real AWS API call. No gray-area inference or guesswork.</p>
+        </div>
+        <div class="cred-card">
+          <h4>Open Architecture</h4>
+          <p>The assessment logic is transparent. You can inspect exactly what was checked and why.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PLACEHOLDER: CTA, footer (Task 6) -->
 
 <script>
   lucide.createIcons();
