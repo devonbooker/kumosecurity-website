@@ -347,6 +347,39 @@
     @media (max-width: 480px) {
       .cred-grid { grid-template-columns: 1fr; }
     }
+    /* ── FINAL CTA ── */
+    .cta-section {
+      background: var(--navy);
+      padding: 96px 24px;
+      text-align: center;
+    }
+    .cta-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: var(--radius-btn);
+      margin-bottom: 24px;
+    }
+    .cta-section h2 {
+      font-size: clamp(28px, 3.5vw, 44px);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: #FFFFFF;
+      margin-bottom: 12px;
+    }
+    .cta-section p {
+      font-size: 16px;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 32px;
+    }
+
+    @media (max-width: 768px) {
+      .cta-section { padding: 72px 20px; }
+    }
   </style>
 </head>
 <body>
@@ -572,7 +605,42 @@
   </div>
 </section>
 
-<!-- PLACEHOLDER: CTA, footer (Task 6) -->
+<!-- FINAL CTA -->
+<section class="cta-section">
+  <div class="cta-icon">
+    <i data-lucide="arrow-right" style="width:20px;height:20px;stroke:#fff;"></i>
+  </div>
+  <h2>Ready to see your compliance posture?</h2>
+  <p>Book a call. We'll run your first Kumo Assess scan together.</p>
+  <a href="https://calendly.com/devon-kumosecurity/30min" target="_blank" rel="noopener" class="btn-primary" style="font-size:14px;padding:11px 24px;">
+    Book a Call
+    <i data-lucide="arrow-right" style="width:14px;height:14px;"></i>
+  </a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <a href="/" class="footer-logo">
+        <img src="brand_assets/Kumo%20Security%20Logo%20-%20Black%20Text.png" alt="Kumo Security" />
+      </a>
+      <ul class="footer-nav">
+        <li><a href="#features">Products</a></li>
+        <li><a href="/about/">About</a></li>
+        <li><a href="https://github.com/devonbooker" target="_blank" rel="noopener">GitHub</a></li>
+        <li><a href="https://www.linkedin.com/in/devonbookerr/" target="_blank" rel="noopener">LinkedIn</a></li>
+        <li><a href="mailto:devon@kumosecurity.com">Email</a></li>
+      </ul>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Kumo Security.</p>
+      <div class="footer-bottom-links">
+        <a href="mailto:devon@kumosecurity.com">Contact</a>
+      </div>
+    </div>
+  </div>
+</footer>
 
 <script>
   lucide.createIcons();
