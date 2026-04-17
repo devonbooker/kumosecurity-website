@@ -3,617 +3,159 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kumo Security - CMMC Readiness for MSPs & Defense Contractors</title>
-  <meta name="description" content="Gap analysis, technical remediation, and audit prep for MSPs and DoD contractors. An engineer who implements the controls, not just documents them." />
+  <title>Kumo Security - Automated SOC 2 Compliance for SaaS Startups</title>
+  <meta name="description" content="Kumo Assess connects to your AWS account and runs a full SOC 2 compliance scan — automated evidence collection, gap scoring, and remediation guidance." />
   <link rel="icon" type="image/png" href="/brand_assets/Kumo%20Security%20Logo%20-%20Black%20Text.png" />
   <link rel="stylesheet" href="styles/brand.css" />
   <link rel="stylesheet" href="styles/components.css" />
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
   <style>
-    /* ── PAGE-SPECIFIC STYLES (index.html only) ── */
-
-    /* HERO */
+    /* ── HERO ── */
     .hero {
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
-      padding: 80px 24px 0;
-      overflow: hidden;
-      position: relative;
+      padding: 88px 24px 0;
+      max-width: 760px;
+      margin: 0 auto;
     }
     .hero-badge {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      background: var(--navy-card);
-      border: 1px solid var(--border-solid);
-      border-radius: 3px;
-      padding: 5px 12px 5px 10px;
-      font-size: 12px;
+      background: var(--accent-bg);
+      border: 1px solid var(--accent-border);
+      border-radius: var(--radius-badge);
+      padding: 4px 12px;
+      font-size: 11px;
       font-family: var(--font-mono);
-      color: var(--muted);
-      margin-bottom: 28px;
-    }
-    .hero-badge-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: #22c55e;
-      flex-shrink: 0;
+      color: var(--accent);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
     }
     .hero h1 {
-      font-size: clamp(36px, 5.5vw, 66px);
-      font-weight: 600;
-      letter-spacing: -0.04em;
+      font-size: clamp(36px, 5.5vw, 60px);
+      font-weight: 700;
+      letter-spacing: -0.03em;
       line-height: 1.05;
-      color: var(--white);
-      max-width: 820px;
+      color: var(--text);
       margin-bottom: 20px;
     }
-    .hero h1 span { color: var(--muted); }
+    .hero h1 span { color: var(--text-muted); }
     .hero p {
       font-size: 17px;
-      color: var(--body-text);
-      max-width: 500px;
+      color: var(--text-secondary);
+      max-width: 480px;
       line-height: 1.65;
       margin-bottom: 32px;
-      font-weight: 400;
     }
     .hero-ctas {
       display: flex;
       align-items: center;
       gap: 12px;
-      margin-bottom: 64px;
+      margin-bottom: 56px;
     }
-    .hero-ctas .btn-primary {
-      font-size: 14px;
-      padding: 10px 20px;
-    }
-    .hero-ctas .btn-secondary {
-      font-size: 14px;
-      padding: 10px 20px;
-    }
+    .hero-ctas .btn-primary  { font-size: 14px; padding: 10px 20px; }
+    .hero-ctas .btn-secondary { font-size: 14px; padding: 10px 20px; }
 
-    /* TERMINAL VISUAL */
-    .terminal-wrapper {
+    /* Dashboard card */
+    .dashboard-card {
       width: 100%;
-      max-width: 780px;
-      margin: 0 auto;
-      background: #060e21;
-      border: 1px solid var(--border-solid);
-      border-radius: 4px;
+      max-width: 720px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-card);
       overflow: hidden;
-      box-shadow: 0 24px 64px rgba(0,0,0,0.4);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.07);
     }
-    .terminal-header {
-      padding: 11px 16px;
-      border-bottom: 1px solid var(--border-solid);
+    .dashboard-header {
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg);
       display: flex;
       align-items: center;
       gap: 8px;
-      background: #0a1630;
     }
-    .terminal-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-    }
-    .terminal-title {
-      margin-left: 8px;
+    .dashboard-title {
       font-size: 12px;
       font-family: var(--font-mono);
-      color: var(--muted);
+      color: var(--text-muted);
+      margin-left: 4px;
     }
-    .terminal-body {
-      padding: 20px 24px;
-      font-family: var(--font-mono);
-      font-size: 12.5px;
-      color: var(--body-text);
-      line-height: 1.9;
-      text-align: left;
+    .dashboard-body { padding: 16px 20px 20px; }
+    .stat-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-bottom: 12px;
     }
-    .t-prompt { color: #22c55e; }
-    .t-cmd { color: var(--white); }
-    .t-comment { color: #4a5f80; }
-    .t-key { color: #7ec8e3; }
-    .t-val { color: #a8e6cf; }
-    .t-success { color: #22c55e; }
-    .t-info { color: var(--muted); }
-    .t-blank { display: block; height: 0.5em; }
-
-    /* TECH STACK STRIP */
-    .stack-section {
-      padding: 40px 24px;
+    .stat-card {
+      border-radius: var(--radius-btn);
+      padding: 10px 12px;
       text-align: center;
-      border-top: 1px solid var(--border);
+      border: 1px solid;
     }
-    .stack-section p {
+    .stat-card.stat-score   { background: var(--pass-bg);    border-color: var(--pass-border); }
+    .stat-card.stat-pass    { background: var(--pass-bg);    border-color: var(--pass-border); }
+    .stat-card.stat-fail    { background: var(--fail-bg);    border-color: var(--fail-border); }
+    .stat-card.stat-partial { background: var(--partial-bg); border-color: var(--partial-border); }
+    .stat-number {
+      font-size: 22px;
+      font-weight: 700;
+      font-family: var(--font-mono);
+      line-height: 1;
+      margin-bottom: 3px;
+    }
+    .stat-card.stat-score .stat-number,
+    .stat-card.stat-pass .stat-number  { color: var(--pass); }
+    .stat-card.stat-fail .stat-number    { color: var(--fail); }
+    .stat-card.stat-partial .stat-number { color: var(--partial); }
+    .stat-label {
       font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--muted);
-      margin-bottom: 20px;
-      font-weight: 500;
+      color: var(--text-secondary);
     }
-    .stack-row {
-      display: flex;
-      align-items: flex-start;
-      justify-content: center;
-      gap: 48px;
-      flex-wrap: wrap;
-    }
-    .stack-item {
+    .control-list {
       display: flex;
       flex-direction: column;
+      gap: 6px;
+    }
+    .control-row {
+      display: flex;
       align-items: center;
       gap: 10px;
-      opacity: 0.6;
-      transition: opacity 0.2s;
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-btn);
+      border-left-width: 3px;
     }
-    .stack-item:hover { opacity: 1; }
-    .stack-item img {
-      width: 52px;
-      height: 52px;
-      object-fit: contain;
-    }
-    .stack-item span {
-      font-size: 11px;
-      font-family: var(--font-mono);
-      color: var(--muted);
-      letter-spacing: 0.03em;
-    }
-
-    /* DIVIDER */
-    .divider {
-      border: none;
-      border-top: 1px solid var(--border);
-    }
-
-    /* SECTION STYLES */
-    .section {
-      padding: 80px 24px;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    .section-label {
-      font-size: 11px;
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--muted);
-      margin-bottom: 12px;
-      font-family: var(--font-mono);
-    }
-    .section-title {
-      font-size: clamp(26px, 3.2vw, 42px);
-      font-weight: 600;
-      letter-spacing: -0.03em;
-      line-height: 1.1;
-      color: var(--white);
-      max-width: 560px;
-      margin-bottom: 16px;
-    }
-    .section-title span { color: var(--muted); }
-    .section-desc {
-      font-size: 15px;
-      color: var(--body-text);
-      line-height: 1.7;
-      max-width: 480px;
-    }
-
-    /* CAPABILITIES INNER */
-    .capabilities-inner {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      align-items: start;
-    }
-
-    /* FEATURE GRID */
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1px;
-      background: var(--border-solid);
-      border: 1px solid var(--border-solid);
-      border-radius: 4px;
-      overflow: hidden;
-      margin-top: 48px;
-    }
-    .feature-card {
-      background: var(--navy);
-      padding: 32px;
-      position: relative;
-      transition: background 0.15s;
-    }
-    .feature-card:hover { background: var(--navy-card); }
-    .feature-icon {
-      width: 34px;
-      height: 34px;
-      border-radius: 3px;
-      background: var(--navy-card);
-      border: 1px solid var(--border-solid);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 16px;
-    }
-    .feature-card h3 {
-      font-size: 14px;
-      font-weight: 600;
-      letter-spacing: -0.015em;
-      margin-bottom: 6px;
-      color: var(--white);
-    }
-    .feature-card p {
+    .control-row.control-pass    { border-left-color: var(--pass); }
+    .control-row.control-fail    { border-left-color: var(--fail); }
+    .control-row.control-partial { border-left-color: var(--partial); }
+    .control-id {
       font-size: 13px;
-      color: var(--muted);
-      line-height: 1.65;
-    }
-
-    /* METRICS SECTION */
-    .metrics-section {
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      background: var(--navy-card);
-      padding: 64px 24px;
-    }
-    .metrics-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 64px;
-      align-items: center;
-    }
-    .metrics-stats {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 32px;
-    }
-    .metric-number {
-      font-size: 44px;
       font-weight: 600;
-      letter-spacing: -0.04em;
-      color: var(--white);
-      line-height: 1;
-      margin-bottom: 4px;
       font-family: var(--font-mono);
-    }
-    .metric-label {
-      font-size: 13px;
-      color: var(--muted);
-      line-height: 1.5;
-    }
-
-    /* PROJECTS SECTION */
-    .products-section {
-      padding: 80px 24px;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    .products-header {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 48px;
-      margin-bottom: 48px;
-      align-items: end;
-    }
-    .products-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1px;
-      background: var(--border-solid);
-      border: 1px solid var(--border-solid);
-      border-radius: 4px;
-      overflow: hidden;
-    }
-    .product-card {
-      background: var(--navy);
-      padding: 40px;
-      position: relative;
-      min-height: 200px;
-      transition: background 0.15s;
-    }
-    .product-card:hover { background: var(--navy-card); }
-    .product-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 10px;
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--muted);
-      background: var(--navy-card);
-      border: 1px solid var(--border-solid);
-      padding: 3px 8px;
-      border-radius: 2px;
-      margin-bottom: 16px;
-      font-family: var(--font-mono);
-    }
-    .product-card h3 {
-      font-size: 19px;
-      font-weight: 600;
-      letter-spacing: -0.025em;
-      margin-bottom: 8px;
-      color: var(--white);
-    }
-    .product-card p {
-      font-size: 13.5px;
-      color: var(--muted);
-      line-height: 1.65;
-    }
-    .product-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      margin-top: 16px;
-      font-size: 12.5px;
-      color: var(--body-text);
-      font-weight: 500;
-      transition: color 0.15s;
-    }
-    .product-link:hover { color: var(--white); }
-
-    /* WORKFLOW / DETECTION SECTION */
-    .speed-section {
-      padding: 80px 24px;
-      background: #060e21;
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-    }
-    .speed-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      align-items: center;
-    }
-    .speed-section .section-label { color: var(--muted); }
-    .speed-section .section-title { color: var(--white); }
-    .speed-section .section-title span { color: var(--muted); }
-    .speed-section .section-desc { color: var(--body-text); }
-    .speed-visual {
-      background: #0a1630;
-      border: 1px solid var(--border-solid);
-      border-radius: 4px;
-      padding: 28px;
-      font-family: var(--font-mono);
-      font-size: 12px;
-    }
-    .speed-bar-row {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 14px;
-    }
-    .speed-bar-row:last-child { margin-bottom: 0; }
-    .speed-bar-label {
-      width: 100px;
-      font-size: 11px;
-      color: var(--muted);
+      color: var(--text);
       flex-shrink: 0;
     }
-    .speed-bar-track {
-      flex: 1;
-      height: 5px;
-      background: var(--navy-card);
-      border-radius: 2px;
-      overflow: hidden;
-    }
-    .speed-bar-fill {
-      height: 100%;
-      border-radius: 2px;
-      background: var(--white);
-    }
-    .speed-bar-value {
-      font-size: 11px;
-      color: var(--body-text);
-      width: 44px;
-      text-align: right;
-      flex-shrink: 0;
-    }
-
-    /* WORKFLOW CARD */
-    .workflow-section {
-      padding: 80px 24px;
-      background: var(--navy);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-    }
-    .workflow-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr 1.4fr;
-      gap: 80px;
-      align-items: start;
-    }
-    .workflow-steps {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-    }
-    .workflow-step {
-      display: flex;
-      gap: 16px;
-      padding: 20px 0;
-      border-bottom: 1px solid var(--border);
-      cursor: pointer;
-    }
-    .workflow-step:last-child { border-bottom: none; }
-    .step-num {
-      width: 22px;
-      height: 22px;
-      border-radius: 2px;
-      background: var(--navy-card);
-      border: 1px solid var(--border-solid);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 10px;
-      font-weight: 600;
-      font-family: var(--font-mono);
-      color: var(--muted);
-      flex-shrink: 0;
-      margin-top: 2px;
-    }
-    .step-content h3 {
-      font-size: 14px;
-      font-weight: 600;
-      letter-spacing: -0.015em;
-      margin-bottom: 4px;
-      color: var(--white);
-    }
-    .step-content p {
+    .control-desc {
       font-size: 13px;
-      color: var(--muted);
-      line-height: 1.65;
+      color: var(--text-muted);
+      margin-left: auto;
     }
 
-    /* CODE BLOCK */
-    .code-block {
-      background: #060e21;
-      border: 1px solid var(--border-solid);
-      border-radius: 4px;
-      padding: 20px;
-      font-family: var(--font-mono);
-      font-size: 12.5px;
-      color: var(--body-text);
-      line-height: 1.75;
-    }
-    .code-comment { color: #3a4f70; }
-    .code-keyword { color: #7ec8e3; }
-    .code-string { color: #a8e6cf; }
-    .code-fn { color: #e0d68a; }
-
-    /* FOCUS AREAS / CAPABILITIES */
-    .customers-section {
-      padding: 32px 24px 80px;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    .customers-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1px;
-      background: var(--border-solid);
-      border: 1px solid var(--border-solid);
-      border-radius: 4px;
-      overflow: hidden;
-      margin-top: 28px;
-    }
-    .customer-card {
-      background: var(--navy);
-      padding: 32px;
-      transition: background 0.15s;
-    }
-    .customer-card:hover { background: var(--navy-card); }
-    .customer-logo {
-      font-size: 12px;
-      font-weight: 500;
-      font-family: var(--font-mono);
-      margin-bottom: 16px;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-    }
-    .customer-quote {
-      font-size: 14px;
-      color: var(--body-text);
-      line-height: 1.7;
-      margin-bottom: 20px;
-    }
-    .customer-author {
-      font-size: 12px;
-      color: var(--muted);
-      font-family: var(--font-mono);
-    }
-
-    /* DEPLOY CTA */
-    .cta-section {
-      padding: 100px 24px;
-      text-align: center;
-      border-top: 1px solid var(--border);
-    }
-    .cta-icon {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 44px;
-      height: 44px;
-      background: var(--navy-card);
-      border: 1px solid var(--border-solid);
-      border-radius: 3px;
-      margin-bottom: 24px;
-    }
-    .cta-section h2 {
-      font-size: clamp(28px, 3.5vw, 48px);
-      font-weight: 600;
-      letter-spacing: -0.035em;
-      color: var(--white);
-      margin-bottom: 16px;
-    }
-    .cta-section p {
-      font-size: 16px;
-      color: var(--muted);
-      margin-bottom: 32px;
-    }
-
-    /* RESPONSIVE — page-specific overrides */
+    /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
-      /* Hero */
-      .hero { padding: 56px 20px 0; }
+      .hero { padding: 64px 20px 0; }
       .hero h1 { font-size: 36px; }
       .hero p { font-size: 15px; }
       .hero-ctas { flex-direction: column; width: 100%; }
       .hero-ctas .btn-primary,
       .hero-ctas .btn-secondary { width: 100%; justify-content: center; }
-      .terminal-body { font-size: 11px; padding: 16px; overflow-x: auto; }
-
-      /* Stack */
-      .stack-row { gap: 28px; }
-      .stack-item img { width: 40px; height: 40px; }
-
-      /* Capabilities inner */
-      .capabilities-inner { grid-template-columns: 1fr; gap: 32px; }
-
-      /* Features grid */
-      .features-grid { grid-template-columns: 1fr; }
-      .feature-card { padding: 24px; }
-
-      /* Metrics */
-      .metrics-inner { grid-template-columns: 1fr; gap: 40px; }
-      .metrics-section { padding: 48px 20px; }
-
-      /* Products */
-      .products-header { grid-template-columns: 1fr; gap: 16px; }
-      .products-grid { grid-template-columns: 1fr; }
-      .product-card { padding: 28px 24px; }
-      .products-section { padding: 56px 20px; }
-
-      /* Speed / Detection */
-      .speed-inner { grid-template-columns: 1fr; gap: 40px; }
-      .speed-section { padding: 56px 20px; }
-
-      /* Workflow */
-      .workflow-inner { grid-template-columns: 1fr; gap: 40px; }
-      .workflow-section { padding: 56px 20px; }
-      .code-block { font-size: 11px; overflow-x: auto; }
-
-      /* Capabilities */
-      .customers-grid { grid-template-columns: 1fr; }
-      .customer-card { padding: 24px; }
-      .customers-section { padding: 24px 20px 56px; }
-
-      /* CTA */
-      .cta-section { padding: 72px 20px; }
-    }
-
-    @media (max-width: 480px) {
-      .metrics-stats { grid-template-columns: 1fr 1fr; }
+      .stat-row { grid-template-columns: repeat(2, 1fr); }
+      .control-desc { display: none; }
     }
   </style>
 </head>
@@ -622,20 +164,18 @@
 <!-- NAVIGATION -->
 <nav class="nav">
   <div class="nav-left">
-    <a href="#" class="nav-logo">
-      <img src="brand_assets/Kumo%20Security%20Logo%20-%20White%20Text.png" alt="Kumo Security" />
+    <a href="/" class="nav-logo">
+      <img src="brand_assets/Kumo%20Security%20Logo%20-%20Black%20Text.png" alt="Kumo Security" />
     </a>
     <ul class="nav-links">
-      <li><a href="/services/">Services</a></li>
+      <li><a href="#features">Products</a></li>
       <li><a href="/about/">About</a></li>
     </ul>
   </div>
   <div class="nav-right">
-    <a href="https://github.com/devonbooker" target="_blank" rel="noopener" class="nav-link-plain">GitHub</a>
-    <a href="https://www.linkedin.com/in/devonbookerr/" target="_blank" rel="noopener" class="nav-link-plain">LinkedIn</a>
-    <a href="mailto:devon@kumosecurity.com" class="btn-primary">
-      Contact
-      <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2.5 6h7M6.5 3l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <a href="https://calendly.com/devon-kumosecurity/30min" target="_blank" rel="noopener" class="btn-primary">
+      Book a Call
+      <i data-lucide="arrow-right" style="width:14px;height:14px;"></i>
     </a>
   </div>
   <button class="nav-hamburger" id="hamburger" aria-label="Menu">
@@ -645,298 +185,78 @@
 
 <!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobileMenu">
-  <a href="/services/">Services</a>
+  <a href="#features">Products</a>
   <a href="/about/">About</a>
   <div class="mobile-divider"></div>
-  <a href="https://github.com/devonbooker" target="_blank" rel="noopener">GitHub</a>
-  <a href="https://www.linkedin.com/in/devonbookerr/" target="_blank" rel="noopener">LinkedIn</a>
-  <a href="mailto:devon@kumosecurity.com" class="btn-primary">Contact</a>
+  <a href="https://calendly.com/devon-kumosecurity/30min" target="_blank" rel="noopener" class="btn-primary">Book a Call</a>
 </div>
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-badge">
-    <span class="hero-badge-dot"></span>
-    Phase 2 enforcement: November 2026
-  </div>
-  <h1>CMMC Readiness for<br><span>MSPs &amp; Defense Contractors.</span></h1>
-  <p>Gap analysis, remediation, and audit prep for MSPs and DoD contractors. An engineer who implements the controls, not just documents them.</p>
+  <div class="hero-badge">Agentic SOC 2 Compliance</div>
+  <h1>Know your SOC 2 posture<br><span>in hours, not months.</span></h1>
+  <p>Kumo Assess connects to your AWS account and runs a full CC6+CC7 compliance scan — automated evidence collection, gap scoring, and remediation guidance.</p>
   <div class="hero-ctas">
-    <a href="mailto:devon@kumosecurity.com" class="btn-primary">
-      Book a Discovery Call
-      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 6h7M6.5 3l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <a href="https://calendly.com/devon-kumosecurity/30min" target="_blank" rel="noopener" class="btn-primary">
+      Book a Call
+      <i data-lucide="arrow-right" style="width:14px;height:14px;"></i>
     </a>
-    <a href="/services/" class="btn-secondary">View Services</a>
-  </div>
-
-  <!-- Terminal Visual -->
-  <div class="terminal-wrapper">
-    <div class="terminal-header">
-      <div class="terminal-dot" style="background:#ff5f57"></div>
-      <div class="terminal-dot" style="background:#febc2e"></div>
-      <div class="terminal-dot" style="background:#28c840"></div>
-      <span class="terminal-title">kumosecurity // gap-analysis</span>
-    </div>
-    <div class="terminal-body">
-      <div><span class="t-prompt">$ </span><span class="t-cmd">cmmc-scan --framework nist-800-171 --level 2</span></div>
-      <div class="t-blank"></div>
-      <div><span class="t-info">Loading 110 controls across 17 domains...</span></div>
-      <div class="t-blank"></div>
-      <div><span class="t-key">AC</span> <span class="t-comment">Access Control &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <span class="t-val">18 pass</span> <span class="t-info">&nbsp;14 fail</span></div>
-      <div><span class="t-key">AU</span> <span class="t-comment">Audit &amp; Accountability &nbsp;</span> <span class="t-val">&nbsp;4 pass</span> <span class="t-info">&nbsp; 5 fail</span></div>
-      <div><span class="t-key">CM</span> <span class="t-comment">Config Management &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <span class="t-val">&nbsp;6 pass</span> <span class="t-info">&nbsp; 5 fail</span></div>
-      <div><span class="t-key">IA</span> <span class="t-comment">Identification &amp; Auth &nbsp;&nbsp;</span> <span class="t-val">&nbsp;7 pass</span> <span class="t-info">&nbsp; 4 fail</span></div>
-      <div><span class="t-key">SC</span> <span class="t-comment">System &amp; Comms Protect &nbsp;</span> <span class="t-val">&nbsp;8 pass</span> <span class="t-info">&nbsp; 8 fail</span></div>
-      <div class="t-blank"></div>
-      <div><span class="t-info">SPRS Score: &nbsp;</span><span style="color:#f59e0b;font-weight:600">-147</span><span class="t-info"> &nbsp;[target: 110]</span></div>
-      <div><span class="t-info">Gaps found: &nbsp;</span><span class="t-val">36 controls</span></div>
-      <div><span class="t-info">POA&amp;M items: </span><span class="t-val">29 remediation tasks</span></div>
-      <div class="t-blank"></div>
-      <div><span class="t-success">Report written to gap_analysis_report.pdf</span></div>
-      <div class="t-blank"></div>
-      <div><span class="t-prompt">$ </span><span class="t-info">_</span></div>
-    </div>
-  </div>
-</section>
-
-
-<!-- CORE CAPABILITIES -->
-<section class="section">
-  <div class="capabilities-inner">
-    <div>
-      <div class="section-label">what I do</div>
-      <h2 class="section-title">CMMC implementation, <span>not just documentation.</span></h2>
-      <p class="section-desc" style="margin-top:16px">Most CMMC consultants write the SSP and hand it back. I implement what I assess - CUI enclave architecture, access control configuration, audit logging, drift monitoring. Then I document it.</p>
-      <a href="/services/" style="display:inline-flex;align-items:center;gap:6px;margin-top:24px;font-size:13px;color:var(--body-text);font-weight:500;border-bottom:1px solid var(--border-solid);padding-bottom:3px;font-family:var(--font-mono)">
-        view services
-        <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2.5 6h7M6.5 3l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
-    </div>
-    <div class="deploy-visual">
-      <div class="deploy-header">
-        <div class="deploy-dot" style="background:#ff5f57"></div>
-        <div class="deploy-dot" style="background:#febc2e"></div>
-        <div class="deploy-dot" style="background:#28c840"></div>
-        <span style="font-size:12px;color:var(--muted);margin-left:8px;font-family:var(--font-mono)">cmmc-readiness // engagement checklist</span>
-      </div>
-      <div class="deploy-body">
-        <div class="deploy-line"><span class="deploy-check">✓</span><span style="color:var(--body-text)">CUI boundary scoped &amp; documented</span></div>
-        <div class="deploy-line"><span class="deploy-check">✓</span><span style="color:var(--body-text)">110-control gap analysis complete</span></div>
-        <div class="deploy-line"><span class="deploy-check">✓</span><span style="color:var(--body-text)">SPRS score calculated: -147 → 110</span></div>
-        <div class="deploy-line"><span class="deploy-check">✓</span><span style="color:var(--body-text)">SSP + POA&amp;M drafted</span></div>
-        <div class="deploy-line"><div class="deploy-pending"></div><span style="color:var(--body-text)">Technical remediation: in progress</span></div>
-        <div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--border-solid)">
-          <span style="color:#22c55e;font-weight:600;font-family:var(--font-mono)">4/5 pre-assessment milestones done</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="features-grid">
-    <div class="feature-card">
-      <div class="feature-icon">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2L2 5v4c0 3 2.5 5.5 6 6.5C12 14.5 14 12 14 9V5L8 2z" stroke="var(--body-text)" stroke-width="1.5" stroke-linejoin="round"/></svg>
-      </div>
-      <h3>CUI Enclave Architecture</h3>
-      <p>Terraform-provisioned AWS environments scoped to CUI. Private subnets, encryption at rest and in transit, boundary enforcement built into the infrastructure.</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="10" rx="1.5" stroke="var(--body-text)" stroke-width="1.5"/><path d="M5 7h6M5 10h4" stroke="var(--body-text)" stroke-width="1.3" stroke-linecap="round"/></svg>
-      </div>
-      <h3>Audit Logging &amp; Evidence</h3>
-      <p>CloudTrail, VPC Flow Logs, and CloudWatch configured to meet CMMC AC and AU domain requirements. Evidence organized and mapped to controls.</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="5.5" stroke="var(--body-text)" stroke-width="1.5"/><path d="M8 5v3.5l2 2" stroke="var(--body-text)" stroke-width="1.5" stroke-linecap="round"/></svg>
-      </div>
-      <h3>Container &amp; Workload Hardening</h3>
-      <p>Docker and Kubernetes hardened to CIS benchmarks. Relevant for defense contractors running containerized workloads that touch CUI.</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M8 3v10" stroke="var(--body-text)" stroke-width="1.5" stroke-linecap="round"/><rect x="1.5" y="1.5" width="13" height="13" rx="2" stroke="var(--body-text)" stroke-width="1.3"/></svg>
-      </div>
-      <h3>Access Control &amp; Least Privilege</h3>
-      <p>Least-privilege IAM policies scoped to CUI access. Role-based access control mapped to CMMC AC domain requirements. No wildcard actions.</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M14 8A6 6 0 112 8a6 6 0 0112 0z" stroke="var(--body-text)" stroke-width="1.5"/><path d="M8 2c-1.5 2-2 4-2 6s.5 4 2 6M2 8h12" stroke="var(--body-text)" stroke-width="1.4" stroke-linecap="round"/></svg>
-      </div>
-      <h3>System Security Plan (SSP)</h3>
-      <p>Complete SSP documentation with control implementation statements, evidence mapping, and revision history. Written to pass a C3PAO assessment, not just to exist.</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 10l3-5 3 4 2-3 4 4" stroke="var(--body-text)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </div>
-      <h3>Continuous Compliance Monitoring</h3>
-      <p>Drift detection, evidence collection, and SPRS score tracking after the initial engagement. Compliance doesn't end at certification.</p>
-    </div>
-  </div>
-</section>
-
-<!-- METRICS -->
-<div class="metrics-section">
-  <div class="metrics-inner">
-    <div>
-      <div class="section-label">the market</div>
-      <h2 class="section-title">The problem is urgent.<br><span>The window is closing.</span></h2>
-      <p class="section-desc" style="margin-top:16px">CMMC Phase 2 enforcement starts November 2026. C3PAO assessors are already booking into 2028. Companies that don't have a compliance roadmap today are already behind.</p>
-    </div>
-    <div class="metrics-stats">
-      <div class="metric-item">
-        <div class="metric-number">80,000</div>
-        <div class="metric-label">DoD contractors need Level 2 certification</div>
-      </div>
-      <div class="metric-item">
-        <div class="metric-number">1%</div>
-        <div class="metric-label">are currently audit-ready</div>
-      </div>
-      <div class="metric-item">
-        <div class="metric-number">18mo+</div>
-        <div class="metric-label">C3PAO wait times as of Q2 2026</div>
-      </div>
-      <div class="metric-item">
-        <div class="metric-number">Nov 2026</div>
-        <div class="metric-label">Phase 2 enforcement deadline</div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- WORKFLOW SECTION -->
-<div class="workflow-section">
-  <div class="workflow-inner">
-    <div>
-      <div class="section-label">how an engagement works</div>
-      <h2 class="section-title">Gap to audit-ready. No hand-waving.</h2>
-      <p class="section-desc" style="margin-top:16px">Every engagement follows the same structure. Assess first, implement second, document last. The SSP reflects what's actually in place - not what someone wishes were in place.</p>
-      <div class="workflow-steps" style="margin-top:36px">
-        <div class="workflow-step">
-          <div class="step-num">01</div>
-          <div class="step-content">
-            <h3>Gap Analysis</h3>
-            <p>Evaluate your current environment against all 110 NIST SP 800-171 controls. Identify what's missing, what's partially implemented, and what's already done. Delivered as a report with your SPRS score.</p>
-          </div>
-        </div>
-        <div class="workflow-step">
-          <div class="step-num">02</div>
-          <div class="step-content">
-            <h3>SSP + POA&amp;M</h3>
-            <p>System Security Plan documenting your environment and how each control is implemented. Plan of Action and Milestones for every gap, with remediation timelines.</p>
-          </div>
-        </div>
-        <div class="workflow-step">
-          <div class="step-num">03</div>
-          <div class="step-content">
-            <h3>Technical Remediation</h3>
-            <p>Implement the missing controls - CUI enclaves, access restrictions, encryption, logging, MFA, configuration baselines. Terraform and Ansible where it makes sense. Documented as it's built.</p>
-          </div>
-        </div>
-        <div class="workflow-step">
-          <div class="step-num">04</div>
-          <div class="step-content">
-            <h3>Evidence &amp; Retainer</h3>
-            <p>Collect and organize the 300-500 evidence artifacts a C3PAO will want to see. Ongoing monthly retainer to maintain compliance, catch drift, and keep your SPRS score accurate.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="code-block">
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border-solid)">
-        <div style="width:10px;height:10px;border-radius:50%;background:#ff5f57"></div>
-        <div style="width:10px;height:10px;border-radius:50%;background:#febc2e"></div>
-        <div style="width:10px;height:10px;border-radius:50%;background:#28c840"></div>
-        <span style="margin-left:8px;color:var(--muted);font-size:11px">gap_analysis_report.txt</span>
-      </div>
-      <div><span class="code-comment"># CMMC Level 2 Gap Analysis — Acme Defense LLC</span></div>
-      <div><span class="code-comment"># Assessment date: 2026-04-14</span></div>
-      <div>&nbsp;</div>
-      <div><span class="code-keyword">Controls Assessed:</span>    <span class="code-string">110</span></div>
-      <div><span class="code-keyword">Fully Implemented:</span>    <span class="code-string">&nbsp;74</span></div>
-      <div><span class="code-keyword">Partially Implemented:</span><span class="code-string">&nbsp;18</span></div>
-      <div><span class="code-keyword">Not Implemented:</span>      <span class="code-string">&nbsp;18</span></div>
-      <div>&nbsp;</div>
-      <div><span class="code-keyword">SPRS Score:</span>           <span style="color:#f59e0b">-122</span>  <span class="code-comment"># target: 110</span></div>
-      <div>&nbsp;</div>
-      <div><span class="code-comment"># HIGH PRIORITY GAPS</span></div>
-      <div><span class="code-fn">AC.2.006</span>  <span class="code-comment">MFA not enforced on CUI systems</span></div>
-      <div><span class="code-fn">AU.2.041</span>  <span class="code-comment">Audit log review undocumented</span></div>
-      <div><span class="code-fn">IA.3.083</span>  <span class="code-comment">Privileged account MFA missing</span></div>
-      <div><span class="code-fn">SC.3.177</span>  <span class="code-comment">FIPS encryption not implemented</span></div>
-      <div>&nbsp;</div>
-      <div><span class="t-success" style="color:#22c55e">Estimated remediation: 90 days</span></div>
-    </div>
-  </div>
-</div>
-
-
-
-
-<!-- FINAL CTA -->
-<section class="cta-section">
-  <div class="cta-icon">
-    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 10h14M10 3l7 7-7 7" stroke="var(--white)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-  </div>
-  <h2>Ready to start your CMMC engagement?</h2>
-  <p>Phase 2 is November 2026. C3PAO slots are booking 18+ months out. The earlier you start, the more options you have.</p>
-  <div style="display:flex;align-items:center;justify-content:center;gap:12px">
-    <a href="mailto:devon@kumosecurity.com" class="btn-primary" style="font-size:14px;padding:11px 22px">
-      Book a Discovery Call
-      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 6h7M6.5 3l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <a href="#how-it-works" class="btn-secondary">
+      See how it works
+      <i data-lucide="chevron-down" style="width:14px;height:14px;"></i>
     </a>
-    <a href="/services/" class="btn-secondary" style="font-size:14px;padding:11px 22px">View Services</a>
+  </div>
+
+  <!-- Dashboard Card -->
+  <div class="dashboard-card">
+    <div class="dashboard-header">
+      <i data-lucide="terminal" style="width:13px;height:13px;color:var(--text-muted);"></i>
+      <span class="dashboard-title">kumo-assess &nbsp;·&nbsp; SOC 2 CC6+CC7 &nbsp;·&nbsp; aws/us-east-1</span>
+    </div>
+    <div class="dashboard-body">
+      <div class="stat-row">
+        <div class="stat-card stat-score">
+          <div class="stat-number">84</div>
+          <div class="stat-label">Score</div>
+        </div>
+        <div class="stat-card stat-pass">
+          <div class="stat-number">18</div>
+          <div class="stat-label">Pass</div>
+        </div>
+        <div class="stat-card stat-fail">
+          <div class="stat-number">4</div>
+          <div class="stat-label">Fail</div>
+        </div>
+        <div class="stat-card stat-partial">
+          <div class="stat-number">2</div>
+          <div class="stat-label">Partial</div>
+        </div>
+      </div>
+      <div class="control-list">
+        <div class="control-row control-fail">
+          <span class="badge badge-fail">FAIL</span>
+          <span class="control-id">CC6.3</span>
+          <span class="control-desc">Privileged access review missing</span>
+        </div>
+        <div class="control-row control-pass">
+          <span class="badge badge-pass">PASS</span>
+          <span class="control-id">CC6.1</span>
+          <span class="control-desc">MFA enforced on all users</span>
+        </div>
+        <div class="control-row control-partial">
+          <span class="badge badge-partial">PARTIAL</span>
+          <span class="control-id">CC7.1</span>
+          <span class="control-desc">Vulnerability scans incomplete</span>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- FOOTER -->
-<footer>
-  <div class="footer-inner">
-    <div class="footer-top">
-      <div class="footer-brand">
-        <div class="footer-logo">
-          <img src="brand_assets/Kumo%20Security%20Logo%20-%20White%20Text.png" alt="Kumo Security" />
-        </div>
-        <p class="footer-brand-desc">devonbooker // cloud security<br><br>CMMC Readiness &amp; Cloud Security<br>for Defense Contractors.</p>
-      </div>
-      <div class="footer-col">
-        <h4>Work</h4>
-        <ul>
-          <li><a href="/services/">Services</a></li>
-          <li><a href="/about/">About</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Connect</h4>
-        <ul>
-          <li><a href="https://github.com/devonbooker" target="_blank" rel="noopener">GitHub</a></li>
-          <li><a href="https://www.linkedin.com/in/devonbookerr/" target="_blank" rel="noopener">LinkedIn</a></li>
-          <li><a href="mailto:devon@kumosecurity.com">Email</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Site</h4>
-        <ul>
-          <li><a href="/about/">About</a></li>
-          <li><a href="mailto:devon@kumosecurity.com">Contact</a></li>
-          <li><a href="#">RSS Feed</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p>© 2026 Kumo Security. All rights reserved.</p>
-      <div class="footer-bottom-links">
-        <a href="#">Privacy</a>
-        <a href="mailto:devon@kumosecurity.com">Contact</a>
-      </div>
-    </div>
-  </div>
-</footer>
+<!-- PLACEHOLDER: social proof, features, how it works, credibility, CTA, footer (Tasks 4–6) -->
 
 <script>
+  lucide.createIcons();
   const hamburger = document.getElementById('hamburger');
   const mobileMenu = document.getElementById('mobileMenu');
   hamburger.addEventListener('click', () => {
@@ -950,6 +270,5 @@
     });
   });
 </script>
-
 </body>
 </html>
