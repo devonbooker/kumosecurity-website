@@ -27,10 +27,10 @@ Kumo Security is the umbrella brand. Individual products and services live benea
 
 | Product / Service | Status | What It Is |
 | :---------------- | :----- | :--------- |
-| **kumo-assess** | Active | Agentic SOC 2 compliance assessment - read-only cloud environment scanning, control gap analysis, and scoring |
+| **Kumo Assess** | Active | Agentic SOC 2 compliance assessment - read-only cloud environment scanning, control gap analysis, and scoring. Repo: `kumo-assess`. |
 | *Additional products* | Planned | Reserved for future additions |
 
-Naming rule: products use lowercase-hyphenated identifiers (`kumo-assess`) in code, technical copy, and UI. Marketing copy may use title case (`Kumo Assess`) where it reads more naturally in running prose, but the lowercase form is canonical.
+Naming rule: the product's marketing name is **Kumo Assess** (title case, two words). The repo is `kumo-assess` (lowercase-hyphenated). Use `Kumo Assess` in all external copy, the website, and UI labels. Use `kumo-assess` only in code, CLI references, and technical documentation.
 
 Product UIs follow product-specific UI guidelines that extend this brand system. See Section 11.
 
@@ -129,7 +129,9 @@ Component-level specifications (cards, tables, form inputs, status badges, dashb
 
 ## 7. Professional Alias & Lockup
 
-When pairing the logo with text, use a monospaced lockup:
+> **Note:** This lockup is retired from kumosecurity.com as of the 2026 redesign. It may still be used on personal profiles (GitHub bio, LinkedIn headline).
+
+When used on personal profiles (not the main website), the monospaced lockup format is:
 
 `[alias] // cloud security`
 
