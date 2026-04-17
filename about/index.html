@@ -3,288 +3,111 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>About - Kumo Security | Devon Booker, Security Engineer</title>
-  <meta name="description" content="Security+ at 17. Four years of DoD and enterprise IT. Running CMMC implementation engagements for MSPs and defense contractors." />
-  <link rel="icon" type="image/png" href="../brand_assets/Kumo%20Security%20Logo%20-%20Black%20Text.png" />
-  <link rel="stylesheet" href="../styles/brand.css" />
-  <link rel="stylesheet" href="../styles/components.css" />
+  <title>About - Kumo Security</title>
+  <meta name="description" content="Kumo Security builds cloud security tools for SaaS startups. Kumo Assess is our agentic SOC 2 compliance assessment product." />
+  <link rel="icon" type="image/png" href="/brand_assets/Kumo%20Security%20Logo%20-%20Black%20Text.png" />
+  <link rel="stylesheet" href="/styles/brand.css" />
+  <link rel="stylesheet" href="/styles/components.css" />
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
   <style>
-    /* ── PAGE-SPECIFIC ── */
-
-    .page-header {
-      padding: 72px 24px 64px;
-      max-width: 1200px;
+    .about-content {
+      max-width: 680px;
       margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      align-items: end;
-      border-bottom: 1px solid var(--border);
+      padding: 72px 24px 96px;
     }
-    .page-header h1 {
-      font-size: clamp(36px, 4.5vw, 60px);
-      font-weight: 600;
-      letter-spacing: -0.04em;
-      line-height: 1.0;
-      color: var(--white);
-    }
-    .page-header h1 span { color: var(--muted); }
-    .page-header-meta {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-    .page-header-meta p {
-      font-size: 15px;
-      color: var(--body-text);
-      line-height: 1.75;
-    }
-    .availability-row {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 12px;
-      font-family: var(--font-mono);
-      color: var(--muted);
-    }
-    .availability-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: #22c55e;
-      flex-shrink: 0;
-    }
-
-    /* STORY SECTION */
-    .story-section {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 72px 24px;
-      display: grid;
-      grid-template-columns: 1fr 360px;
-      gap: 80px;
-      align-items: start;
-      border-bottom: 1px solid var(--border);
-    }
-    .story-body {
-      display: flex;
-      flex-direction: column;
-      gap: 28px;
-    }
-    .story-body p {
-      font-size: 16px;
-      color: var(--body-text);
-      line-height: 1.8;
-    }
-    .story-body p strong {
-      color: var(--white);
-      font-weight: 500;
-    }
-    .story-pull {
-      font-size: 22px;
-      font-weight: 600;
+    .about-content h1 {
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 700;
       letter-spacing: -0.03em;
-      color: var(--white);
-      line-height: 1.3;
-      padding: 24px 0;
-      border-top: 1px solid var(--border-solid);
-      border-bottom: 1px solid var(--border-solid);
-      margin: 8px 0;
+      color: var(--text);
+      margin-bottom: 16px;
     }
-    .story-pull span { color: var(--muted); }
-
-    /* SIDEBAR */
-    .story-sidebar {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-      position: sticky;
-      top: 88px;
+    .about-content .lead {
+      font-size: 17px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 48px;
+      padding-bottom: 48px;
+      border-bottom: 1px solid var(--border);
     }
-    .sidebar-card {
-      background: var(--navy-card);
-      border: 1px solid var(--border-solid);
-      border-radius: 4px;
-      padding: 20px;
-      margin-bottom: 2px;
+    .about-section { margin-bottom: 48px; padding-bottom: 48px; border-bottom: 1px solid var(--border); }
+    .about-section:last-of-type { border-bottom: none; }
+    .about-section h2 {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: -0.01em;
+      margin-bottom: 16px;
     }
-    .sidebar-card:last-child { margin-bottom: 0; }
-    .sidebar-label {
-      font-size: 10px;
-      font-family: var(--font-mono);
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--muted);
+    .about-section p {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.7;
       margin-bottom: 12px;
     }
-    .sidebar-card p {
-      font-size: 13px;
-      color: var(--body-text);
-      line-height: 1.65;
-    }
-    .lang-row {
+    .about-section ul {
+      list-style: none;
       display: flex;
       flex-direction: column;
       gap: 8px;
     }
-    .lang-item {
+    .about-section ul li {
+      font-size: 14px;
+      color: var(--text-secondary);
       display: flex;
-      align-items: center;
-      justify-content: space-between;
+      align-items: flex-start;
+      gap: 8px;
+      line-height: 1.6;
     }
-    .lang-name {
-      font-size: 13px;
-      color: var(--white);
+    .about-section ul li::before {
+      content: "—";
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .stack-tag {
+      display: inline-flex;
+      align-items: center;
+      font-family: var(--font-mono);
+      font-size: 12px;
       font-weight: 500;
+      padding: 3px 8px;
+      border-radius: var(--radius-badge);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      margin: 2px;
     }
-    .lang-level {
-      font-size: 10.5px;
-      font-family: var(--font-mono);
-      color: var(--muted);
-      background: var(--navy);
-      border: 1px solid var(--border-solid);
-      padding: 2px 8px;
-      border-radius: 2px;
-    }
-    .target-row {
+    .about-links {
       display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-    .target-item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 12.5px;
-      color: var(--body-text);
-    }
-    .target-item svg { opacity: 0.4; flex-shrink: 0; }
-
-    /* TIMELINE */
-    .timeline-section {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 72px 24px 80px;
-    }
-    .timeline {
-      margin-top: 40px;
-      display: flex;
-      flex-direction: column;
-      position: relative;
-    }
-    .timeline::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 8px;
-      bottom: 8px;
-      width: 1px;
-      background: var(--border-solid);
-    }
-    .timeline-item {
-      display: grid;
-      grid-template-columns: 160px 1fr;
-      gap: 32px;
-      padding: 0 0 40px 0;
-      position: relative;
-    }
-    .timeline-item:last-child { padding-bottom: 0; }
-    .timeline-dot {
-      position: absolute;
-      left: -4px;
-      top: 8px;
-      width: 9px;
-      height: 9px;
-      border-radius: 50%;
-      background: var(--navy-card);
-      border: 1px solid var(--border-solid);
-    }
-    .timeline-dot.active {
-      background: #22c55e;
-      border-color: #22c55e;
-      box-shadow: 0 0 0 3px rgba(34,197,94,0.15);
-    }
-    .timeline-left {
-      text-align: right;
-      padding-right: 24px;
-    }
-    .timeline-date {
-      font-size: 11px;
-      font-family: var(--font-mono);
-      color: var(--muted);
-      line-height: 1.5;
-    }
-    .timeline-right {
-      padding-left: 24px;
-    }
-    .timeline-role {
-      font-size: 15px;
-      font-weight: 600;
-      letter-spacing: -0.02em;
-      color: var(--white);
-      margin-bottom: 2px;
-    }
-    .timeline-company {
-      font-size: 12.5px;
-      color: var(--muted);
-      margin-bottom: 10px;
-      font-family: var(--font-mono);
-    }
-    .timeline-desc {
-      font-size: 13.5px;
-      color: var(--body-text);
-      line-height: 1.65;
-    }
-
-    /* CTA */
-    .about-cta {
-      border-top: 1px solid var(--border);
-      padding: 80px 24px;
-      text-align: center;
-    }
-    .about-cta h2 {
-      font-size: clamp(24px, 3vw, 38px);
-      font-weight: 600;
-      letter-spacing: -0.035em;
-      color: var(--white);
-      margin-bottom: 14px;
-    }
-    .about-cta p {
-      font-size: 15px;
-      color: var(--muted);
-      margin-bottom: 32px;
-      max-width: 420px;
-      margin-left: auto;
-      margin-right: auto;
-      line-height: 1.65;
-    }
-    .cta-buttons {
-      display: flex;
-      align-items: center;
-      justify-content: center;
       gap: 12px;
+      margin-top: 20px;
     }
-
-    /* RESPONSIVE */
-    @media (max-width: 900px) {
-      .page-header { grid-template-columns: 1fr; gap: 32px; }
-      .story-section { grid-template-columns: 1fr; gap: 48px; }
-      .story-sidebar { position: static; }
-      .timeline-item { grid-template-columns: 120px 1fr; gap: 16px; }
+    .roadmap-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
     }
+    .roadmap-row:last-child { border-bottom: none; }
+    .roadmap-status {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 7px;
+      border-radius: var(--radius-badge);
+      flex-shrink: 0;
+    }
+    .roadmap-status.active   { background: var(--pass-bg);    color: var(--pass);    border: 1px solid var(--pass-border); }
+    .roadmap-status.planned  { background: var(--bg);         color: var(--text-muted); border: 1px solid var(--border); }
+    .roadmap-name { color: var(--text); font-weight: 500; }
+    .roadmap-desc { color: var(--text-muted); margin-left: auto; font-size: 12px; }
     @media (max-width: 768px) {
-      .page-header { padding: 48px 20px 48px; }
-      .story-section { padding: 48px 20px; }
-      .timeline-section { padding: 48px 20px 56px; }
-      .about-cta { padding: 56px 20px; }
-      .cta-buttons { flex-direction: column; width: 100%; max-width: 280px; margin: 0 auto; }
-      .cta-buttons .btn-primary,
-      .cta-buttons .btn-secondary { width: 100%; justify-content: center; }
-      .timeline-item { grid-template-columns: 1fr; gap: 6px; }
-      .timeline-left { text-align: left; padding-right: 0; padding-left: 24px; }
-      .timeline-right { padding-left: 24px; }
-      .timeline::before { left: 0; }
+      .about-content { padding: 56px 20px 72px; }
+      .roadmap-desc { display: none; }
     }
   </style>
 </head>
@@ -293,231 +116,125 @@
 <!-- NAVIGATION -->
 <nav class="nav">
   <div class="nav-left">
-    <a href="../" class="nav-logo">
-      <img src="../brand_assets/Kumo%20Security%20Logo%20-%20White%20Text.png" alt="Kumo Security" />
+    <a href="/" class="nav-logo">
+      <img src="/brand_assets/Kumo%20Security%20Logo%20-%20Black%20Text.png" alt="Kumo Security" />
     </a>
     <ul class="nav-links">
-      <li><a href="../services/">Services</a></li>
-      <li><a href="../about/" style="color:var(--white)">About</a></li>
+      <li><a href="/#features">Products</a></li>
+      <li><a href="/about/" style="color:var(--text);">About</a></li>
     </ul>
   </div>
   <div class="nav-right">
-    <a href="https://github.com/devonbooker" target="_blank" rel="noopener" class="nav-link-plain">GitHub</a>
-    <a href="https://www.linkedin.com/in/devonbookerr/" target="_blank" rel="noopener" class="nav-link-plain">LinkedIn</a>
-    <a href="mailto:devon@kumosecurity.com" class="btn-primary">
-      Contact
-      <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2.5 6h7M6.5 3l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <a href="https://calendly.com/devon-kumosecurity/30min" target="_blank" rel="noopener" class="btn-primary">
+      Book a Call
+      <i data-lucide="arrow-right" style="width:14px;height:14px;"></i>
     </a>
   </div>
   <button class="nav-hamburger" id="hamburger" aria-label="Menu">
     <span></span><span></span><span></span>
   </button>
 </nav>
-
-<!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobileMenu">
-  <a href="../services/">Services</a>
-  <a href="../about/">About</a>
+  <a href="/#features">Products</a>
+  <a href="/about/">About</a>
   <div class="mobile-divider"></div>
-  <a href="https://github.com/devonbooker" target="_blank" rel="noopener">GitHub</a>
-  <a href="https://www.linkedin.com/in/devonbookerr/" target="_blank" rel="noopener">LinkedIn</a>
-  <a href="mailto:devon@kumosecurity.com" class="btn-primary">Contact</a>
+  <a href="https://calendly.com/devon-kumosecurity/30min" target="_blank" rel="noopener" class="btn-primary">Book a Call</a>
 </div>
 
-<!-- PAGE HEADER -->
-<div class="page-header">
-  <div>
-    <div class="section-label" style="margin-bottom:20px">about</div>
-    <h1>Devon Booker.<br><span>Security Engineer.</span></h1>
-  </div>
-  <div class="page-header-meta">
-    <div class="availability-row">
-      <span class="availability-dot"></span>
-      Taking clients - CMMC readiness &amp; cloud security
+<div class="about-content">
+
+  <h1>About Kumo Security</h1>
+  <p class="lead">Kumo Security builds cloud security tooling for SaaS startups. The first product is Kumo Assess — an agentic SOC 2 compliance assessment that connects to your AWS account and runs a full control gap analysis in hours, not months.</p>
+
+  <div class="about-section">
+    <h2>Background</h2>
+    <ul>
+      <li>Cloud and infrastructure security — AWS, Terraform, Ansible, Docker, Kubernetes</li>
+      <li>Security engineering — container security, WAF, TLS/PKI, authentication and authorization</li>
+      <li>Compliance frameworks — SOC 2, ISO 27001, CMMC, GDPR in cloud environments</li>
+      <li>Observability and CI/CD — Grafana, Prometheus, GitHub Actions</li>
+      <li>Languages — Go, TypeScript; AI tooling built on Anthropic/Claude</li>
+    </ul>
+    <div style="margin-top:16px;">
+      <span class="stack-tag">AWS</span>
+      <span class="stack-tag">Go</span>
+      <span class="stack-tag">Terraform</span>
+      <span class="stack-tag">Kubernetes</span>
+      <span class="stack-tag">Claude API</span>
+      <span class="stack-tag">SOC 2</span>
+      <span class="stack-tag">CMMC</span>
     </div>
-    <p>Security+ at 17. Four years of hands-on IT across every layer of enterprise infrastructure. Now running CMMC implementation engagements for MSPs and defense contractors - doing the implementation work that most consultants can't.</p>
-    <div style="display:flex;gap:10px;flex-wrap:wrap">
-      <a href="mailto:devon@kumosecurity.com" class="btn-primary" style="font-size:13px;padding:8px 16px">Get in Touch</a>
-      <a href="/resume.pdf" target="_blank" class="btn-secondary" style="font-size:13px;padding:8px 16px">View Resume</a>
+    <div class="about-links">
+      <a href="https://github.com/devonbooker" target="_blank" rel="noopener" class="btn-secondary" style="font-size:13px;padding:7px 14px;">
+        <i data-lucide="github" style="width:14px;height:14px;"></i> GitHub
+      </a>
+      <a href="https://www.linkedin.com/in/devonbookerr/" target="_blank" rel="noopener" class="btn-secondary" style="font-size:13px;padding:7px 14px;">
+        <i data-lucide="linkedin" style="width:14px;height:14px;"></i> LinkedIn
+      </a>
     </div>
   </div>
+
+  <div class="about-section">
+    <h2>What We're Building</h2>
+    <p>Kumo Assess is an agentic compliance system. Claude agents collect evidence from your AWS environment, score each SOC 2 control, and generate specific remediation guidance — all in a single guided session. Currently covers SOC 2 CC6 (Logical Access) and CC7 (System Operations).</p>
+    <p>Kumo Assess is not a checkbox tool. It's built on direct AWS API calls, not heuristics. The assessment logic is transparent and inspectable.</p>
+    <div style="margin-top:20px;border:1px solid var(--border);border-radius:var(--radius-card);overflow:hidden;">
+      <div class="roadmap-row" style="padding:10px 16px;background:var(--bg);border-bottom:1px solid var(--border);">
+        <span style="font-size:11px;font-family:var(--font-mono);color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;">Framework</span>
+        <span class="roadmap-desc">Status</span>
+      </div>
+      <div class="roadmap-row" style="padding:10px 16px;">
+        <span class="roadmap-status active">Active</span>
+        <span class="roadmap-name">SOC 2</span>
+        <span class="roadmap-desc">CC6 + CC7 (AWS)</span>
+      </div>
+      <div class="roadmap-row" style="padding:10px 16px;">
+        <span class="roadmap-status planned">Planned</span>
+        <span class="roadmap-name">ISO 27001</span>
+        <span class="roadmap-desc">AWS controls mapping</span>
+      </div>
+      <div class="roadmap-row" style="padding:10px 16px;">
+        <span class="roadmap-status planned">Planned</span>
+        <span class="roadmap-name">CMMC</span>
+        <span class="roadmap-desc">Level 2 (NIST SP 800-171)</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="about-section">
+    <h2>Contact</h2>
+    <p>If you're a SaaS startup working toward SOC 2 and want to run a Kumo Assess scan on your AWS environment, book a 30-minute call.</p>
+    <div style="display:flex;gap:12px;margin-top:20px;flex-wrap:wrap;">
+      <a href="https://calendly.com/devon-kumosecurity/30min" target="_blank" rel="noopener" class="btn-primary" style="font-size:13px;padding:9px 18px;">
+        Book a Call
+        <i data-lucide="arrow-right" style="width:14px;height:14px;"></i>
+      </a>
+      <a href="mailto:devon@kumosecurity.com" class="btn-secondary" style="font-size:13px;padding:9px 18px;">
+        <i data-lucide="mail" style="width:14px;height:14px;"></i>
+        devon@kumosecurity.com
+      </a>
+    </div>
+  </div>
+
 </div>
 
-<!-- STORY -->
-<div class="story-section">
-  <div class="story-body">
-
-    <p>Security+ at 17. Full-time in IT since 18. Four years of hands-on work across help desk, field tech, systems administration, and security analysis - including two roles with direct DoD compliance responsibility before CMMC was on most people's radar.</p>
-
-    <p>At Cherokee Federal I deployed MHS Genesis across eight federal healthcare facilities. STIG-compliant Group Policies, endpoint hardening, 99.5% SLA in a mission-critical DoD environment. That's where I first understood that compliance isn't a checklist - it has to be built into the infrastructure from the start or it doesn't hold.</p>
-
-    <div class="story-pull">
-      Most CMMC consultants have never <span>managed a client's infrastructure.</span>
-    </div>
-
-    <p>At Resonant Technology Partners I was the lead sysadmin for 75+ enterprise clients - hybrid identity, Conditional Access, 50+ firewalls, 4,000+ endpoints. I ran NIST SP 800-171 audits. I built custom detection rules. I deployed EDR at scale. When CMMC requirements started flowing down from primes to our clients, I was the one dealing with it directly - not reading about it, not documenting it from the outside.</p>
-
-    <p>CMMC is a technical problem that most people treat as a documentation problem. The 110 controls are well-documented. What's hard is the implementation: scoping your actual environment, identifying what needs to change, and then building those changes so they survive a C3PAO assessment. Most consultants write the SSP and leave. I build the environment first, then document what's actually there.</p>
-
-    <div class="story-pull">
-      I implement what I assess. <span>The SSP reflects what's in place.</span>
-    </div>
-
-    <p>I'm currently a Security Analyst at Arctic Wolf, investigating 50+ daily alerts across cloud, endpoint, and network infrastructure. The SOC work keeps me current on real attack patterns. The CMMC work is where the consulting practice is building - first engagements are running now.</p>
-
-  </div>
-
-  <!-- SIDEBAR -->
-  <div class="story-sidebar">
-
-    <div class="sidebar-card">
-      <div class="sidebar-label">Services</div>
-      <div class="target-row">
-        <div class="target-item">
-          <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 9L6 3l4 6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M3.5 7h5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
-          CMMC Gap Analysis &amp; Remediation
-        </div>
-        <div class="target-item">
-          <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 9L6 3l4 6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M3.5 7h5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
-          MSPs with DIB clients
-        </div>
-        <div class="target-item">
-          <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 9L6 3l4 6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M3.5 7h5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
-          Defense Tech Startups
-        </div>
-        <div class="target-item">
-          <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 9L6 3l4 6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M3.5 7h5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
-          Cloud Security Engineering
-        </div>
-        <div class="target-item">
-          <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M6 1a3.5 3.5 0 0 1 3.5 3.5C9.5 7.5 6 11 6 11S2.5 7.5 2.5 4.5A3.5 3.5 0 0 1 6 1z" stroke="currentColor" stroke-width="1.3"/><circle cx="6" cy="4.5" r="1" fill="currentColor"/></svg>
-          SF / San Jose / Remote
-        </div>
-      </div>
-    </div>
-
-    <div class="sidebar-card">
-      <div class="sidebar-label">Education</div>
-      <p>BS Cybersecurity &amp; Information Assurance<br>Western Governors University<br>Expected Sept 2026</p>
-    </div>
-
-    <div class="sidebar-card">
-      <div class="sidebar-label">Currently Building</div>
-      <p>First CMMC client engagements. Gap analysis methodology being productized into repeatable tooling.</p>
-    </div>
-
-  </div>
-</div>
-
-<!-- TIMELINE -->
-<div class="timeline-section">
-  <div class="section-label">experience</div>
-  <h2 class="section-title" style="margin-top:12px">Four years.<br><span>DoD and enterprise infrastructure.</span></h2>
-
-  <div class="timeline">
-
-    <div class="timeline-item">
-      <div class="timeline-dot active"></div>
-      <div class="timeline-left">
-        <div class="timeline-date">Nov 2025<br>Present</div>
-      </div>
-      <div class="timeline-right">
-        <div class="timeline-role">Security Analyst</div>
-        <div class="timeline-company">Arctic Wolf</div>
-        <p class="timeline-desc">Investigating 50+ daily security alerts across endpoint, cloud, and network infrastructure. MITRE ATT&CK mapping, cloud sensor debugging, and incident runbook development across a multi-tenant SOC environment.</p>
-      </div>
-    </div>
-
-    <div class="timeline-item">
-      <div class="timeline-dot"></div>
-      <div class="timeline-left">
-        <div class="timeline-date">Mar 2024<br>Oct 2025</div>
-      </div>
-      <div class="timeline-right">
-        <div class="timeline-role">Lead System Administrator</div>
-        <div class="timeline-company">Resonant Technology Partners</div>
-        <p class="timeline-desc">Owned infrastructure for 75+ enterprise clients. Hybrid identity, Conditional Access, 50+ firewalls, 4,000+ endpoints. Built custom STAR detection rules, led NIST SP 800-171 audits, and deployed SentinelOne EDR at scale. This is where everything clicked.</p>
-      </div>
-    </div>
-
-    <div class="timeline-item">
-      <div class="timeline-dot"></div>
-      <div class="timeline-left">
-        <div class="timeline-date">Dec 2022<br>Dec 2023</div>
-      </div>
-      <div class="timeline-right">
-        <div class="timeline-role">Field Technician</div>
-        <div class="timeline-company">Cherokee Federal</div>
-        <p class="timeline-desc">Infrastructure deployment of MHS Genesis across 8 federal healthcare facilities under DoD compliance requirements. Endpoint hardening, STIG-compliant Group Policies, and 99.5% SLA adherence in a mission-critical environment.</p>
-      </div>
-    </div>
-
-    <div class="timeline-item">
-      <div class="timeline-dot"></div>
-      <div class="timeline-left">
-        <div class="timeline-date">Apr 2022<br>Dec 2022</div>
-      </div>
-      <div class="timeline-right">
-        <div class="timeline-role">Desktop Support</div>
-        <div class="timeline-company">Apex Systems</div>
-        <p class="timeline-desc">Active Directory administration for 200,000+ DoD users. Provisioning, access control, Group Policy enforcement. Reduced over-privileged accounts by 30% through quarterly access reviews.</p>
-      </div>
-    </div>
-
-  </div>
-</div>
-
-<!-- CTA -->
-<div class="about-cta">
-  <h2>Let's talk.</h2>
-  <p>Running a CMMC engagement for the first time or need to get audit-ready before November? Book a discovery call. 20 minutes, no pitch.</p>
-  <div class="cta-buttons">
-    <a href="mailto:devon@kumosecurity.com" class="btn-primary" style="font-size:14px;padding:11px 22px">
-      devon@kumosecurity.com
-      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 6h7M6.5 3l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </a>
-    <a href="https://www.linkedin.com/in/devonbookerr/" target="_blank" rel="noopener" class="btn-secondary" style="font-size:14px;padding:11px 22px">LinkedIn</a>
-  </div>
-</div>
-
-<!-- FOOTER -->
 <footer>
   <div class="footer-inner">
     <div class="footer-top">
-      <div class="footer-brand">
-        <div class="footer-logo">
-          <img src="../brand_assets/Kumo%20Security%20Logo%20-%20White%20Text.png" alt="Kumo Security" />
-        </div>
-        <p class="footer-brand-desc">devonbooker // cloud security<br><br>CMMC Readiness &amp; Cloud Security<br>for Defense Contractors.</p>
-      </div>
-      <div class="footer-col">
-        <h4>Work</h4>
-        <ul>
-          <li><a href="../services/">Services</a></li>
-          <li><a href="../about/">About</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Connect</h4>
-        <ul>
-          <li><a href="https://github.com/devonbooker" target="_blank" rel="noopener">GitHub</a></li>
-          <li><a href="https://www.linkedin.com/in/devonbookerr/" target="_blank" rel="noopener">LinkedIn</a></li>
-          <li><a href="mailto:devon@kumosecurity.com">Email</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Site</h4>
-        <ul>
-          <li><a href="../about/">About</a></li>
-          <li><a href="mailto:devon@kumosecurity.com">Contact</a></li>
-          <li><a href="#">RSS Feed</a></li>
-        </ul>
-      </div>
+      <a href="/" class="footer-logo">
+        <img src="/brand_assets/Kumo%20Security%20Logo%20-%20Black%20Text.png" alt="Kumo Security" />
+      </a>
+      <ul class="footer-nav">
+        <li><a href="/#features">Products</a></li>
+        <li><a href="/about/">About</a></li>
+        <li><a href="https://github.com/devonbooker" target="_blank" rel="noopener">GitHub</a></li>
+        <li><a href="https://www.linkedin.com/in/devonbookerr/" target="_blank" rel="noopener">LinkedIn</a></li>
+        <li><a href="mailto:devon@kumosecurity.com">Email</a></li>
+      </ul>
     </div>
     <div class="footer-bottom">
-      <p>© 2026 Kumo Security. All rights reserved.</p>
+      <p>© 2026 Kumo Security.</p>
       <div class="footer-bottom-links">
-        <a href="#">Privacy</a>
         <a href="mailto:devon@kumosecurity.com">Contact</a>
       </div>
     </div>
@@ -525,6 +242,7 @@
 </footer>
 
 <script>
+  lucide.createIcons();
   const hamburger = document.getElementById('hamburger');
   const mobileMenu = document.getElementById('mobileMenu');
   hamburger.addEventListener('click', () => {
@@ -538,6 +256,5 @@
     });
   });
 </script>
-
 </body>
 </html>
