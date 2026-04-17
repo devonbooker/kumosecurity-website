@@ -157,6 +157,100 @@
       .stat-row { grid-template-columns: repeat(2, 1fr); }
       .control-desc { display: none; }
     }
+
+    /* ── SOCIAL PROOF STRIP ── */
+    .proof-strip {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 28px 24px;
+      margin-top: 48px;
+    }
+    .proof-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .proof-stat { text-align: center; }
+    .proof-number {
+      font-size: 20px;
+      font-weight: 700;
+      font-family: var(--font-mono);
+      color: var(--text);
+      letter-spacing: -0.02em;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .proof-stat--accent .proof-number { color: var(--accent); }
+    .proof-label {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    .proof-divider {
+      width: 1px;
+      height: 32px;
+      background: var(--border);
+      flex-shrink: 0;
+    }
+
+    /* ── FEATURES ── */
+    .features-section {
+      padding: 80px 24px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .features-inner { }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 40px;
+    }
+    .feature-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-card);
+      padding: 24px;
+      transition: border-color var(--transition);
+    }
+    .feature-card:hover { border-color: var(--border-strong); }
+    .feature-icon {
+      width: 32px;
+      height: 32px;
+      background: var(--accent-bg);
+      border: 1px solid var(--accent-border);
+      border-radius: var(--radius-btn);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 14px;
+    }
+    .feature-card h3 {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+    .feature-card p {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.65;
+    }
+
+    @media (max-width: 900px) {
+      .features-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 768px) {
+      .proof-divider { display: none; }
+      .proof-inner { gap: 24px; }
+      .features-grid { grid-template-columns: 1fr; }
+      .features-section { padding: 56px 20px; }
+    }
   </style>
 </head>
 <body>
@@ -253,7 +347,72 @@
   </div>
 </section>
 
-<!-- PLACEHOLDER: social proof, features, how it works, credibility, CTA, footer (Tasks 4–6) -->
+<!-- SOCIAL PROOF STRIP -->
+<div class="proof-strip">
+  <div class="proof-inner">
+    <div class="proof-stat">
+      <div class="proof-number">$30–80k</div>
+      <div class="proof-label">avg SOC 2 audit cost</div>
+    </div>
+    <div class="proof-divider"></div>
+    <div class="proof-stat">
+      <div class="proof-number">6–12 mo</div>
+      <div class="proof-label">typical time to SOC 2</div>
+    </div>
+    <div class="proof-divider"></div>
+    <div class="proof-stat proof-stat--accent">
+      <div class="proof-number">&lt;24 hrs</div>
+      <div class="proof-label">Kumo Assess turnaround</div>
+    </div>
+    <div class="proof-divider"></div>
+    <div class="proof-stat">
+      <div class="proof-number">47</div>
+      <div class="proof-label">AWS services scanned</div>
+    </div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section class="features-section" id="features">
+  <div class="features-inner">
+    <div class="section-label">What you get</div>
+    <h2 class="section-title">Evidence collection. Gap scoring.<br>Remediation guidance.</h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon"><i data-lucide="database" style="width:16px;height:16px;stroke:var(--accent);"></i></div>
+        <h3>Automated Evidence</h3>
+        <p>Collects from 47 AWS services. No manual screenshots or CSV exports.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i data-lucide="check-circle" style="width:16px;height:16px;stroke:var(--accent);"></i></div>
+        <h3>Control Scoring</h3>
+        <p>Each SOC 2 control scored PASS / FAIL / PARTIAL with evidence citations.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i data-lucide="wrench" style="width:16px;height:16px;stroke:var(--accent);"></i></div>
+        <h3>Remediation Guidance</h3>
+        <p>Every gap gets a specific fix — not "implement MFA," but exactly which IAM policy to change.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i data-lucide="shield" style="width:16px;height:16px;stroke:var(--accent);"></i></div>
+        <h3>Read-Only by Design</h3>
+        <p>Assessment only. No agents writing to your infrastructure. Ever.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i data-lucide="clock" style="width:16px;height:16px;stroke:var(--accent);"></i></div>
+        <h3>Scan History</h3>
+        <p>Run scans over time. Track your score improving as you remediate gaps.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i data-lucide="file-text" style="width:16px;height:16px;stroke:var(--accent);"></i></div>
+        <h3>Downloadable Report</h3>
+        <p>Export a full markdown report. Share with your auditor or board.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PLACEHOLDER: how it works, credibility, CTA, footer (Tasks 5–6) -->
 
 <script>
   lucide.createIcons();
