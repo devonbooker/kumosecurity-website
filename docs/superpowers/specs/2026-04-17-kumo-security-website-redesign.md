@@ -29,7 +29,7 @@ The primary conversion action is a discovery call booking. Kumo Assess is not ye
 
 - Static HTML (single `index.html` per directory), served via `node serve.mjs`
 - Tailwind CSS via CDN, all styles inline or in `<style>` tag
-- No backend — CTA links to `mailto:devon@kumosecurity.com` or a Calendly URL. **Resolve before build:** confirm which URL to use for "Book a Call" buttons.
+- No backend — all "Book a Call" buttons link to `https://calendly.com/devon-kumosecurity/30min`
 - Mobile-first responsive
 - Must use assets from `brand_assets/` (logos, brand palette)
 
