@@ -209,24 +209,6 @@
       margin-left: auto;
     }
 
-    /* ── STUBBED LINK ── */
-    .link-pending {
-      pointer-events: none;
-      opacity: 0.6;
-    }
-    .link-pending::after {
-      content: "coming soon";
-      font-family: var(--font-mono);
-      font-size: 9px;
-      letter-spacing: 0.08em;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      margin-left: 8px;
-      padding: 2px 6px;
-      border: 1px solid var(--border);
-      border-radius: var(--radius-badge);
-    }
-
     /* ── CASE STUDY HOOK ── */
     .case-study {
       background: var(--surface);
@@ -784,8 +766,9 @@
       Book a scoping call
       <i data-lucide="arrow-right" style="width:14px;height:14px;"></i>
     </a>
-    <a href="/blog/i-ran-this-on-my-own-aws-account" class="btn-secondary link-pending" aria-disabled="true" tabindex="-1">
+    <a href="https://www.kumosecurity.com/blog/i-ran-this-on-my-own-aws-account/" class="btn-secondary">
       See a sample report
+      <i data-lucide="arrow-right" style="width:14px;height:14px;"></i>
     </a>
   </div>
   <a href="https://github.com/kumo-security/kumo-assess" target="_blank" rel="noopener" class="hero-github">
@@ -860,7 +843,7 @@
       <div class="case-study-label">From the field</div>
       <h2>I ran this on my own AWS account.</h2>
       <p>It scored 35 out of 100. I wrote up every finding, the remediation, and what it cost to fix - Terraform diffs included. If you want to see what an honest SOC 2 readiness assessment actually looks like, read the writeup.</p>
-      <a href="/blog/i-ran-this-on-my-own-aws-account" class="case-study-link link-pending" aria-disabled="true" tabindex="-1">
+      <a href="https://www.kumosecurity.com/blog/i-ran-this-on-my-own-aws-account/" class="case-study-link">
         Read the writeup
         <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
       </a>
@@ -1102,7 +1085,7 @@
     </div>
     <div class="faq-item">
       <h3>Can I see a sample report?</h3>
-      <p>Yes - I ran kumo-assess against my own AWS account and wrote up every finding. <a href="/blog/i-ran-this-on-my-own-aws-account" class="link-pending" aria-disabled="true" tabindex="-1">Read the case study</a>.</p>
+      <p>Yes - I ran kumo-assess against my own AWS account and wrote up every finding. <a href="https://www.kumosecurity.com/blog/i-ran-this-on-my-own-aws-account/">Read the case study</a>.</p>
     </div>
     <div class="faq-item">
       <h3>How do I get started?</h3>
