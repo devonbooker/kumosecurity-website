@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>I Ran My SOC 2 Tool Against My Own AWS Account. It Scored 35/100. — Kumo Security</title>
+  <meta name="description" content="A full technical walkthrough of what kumo-assess found when I pointed it at my own AWS environment, and what it would actually take to close the gaps." />
+  <link rel="icon" type="image/png" href="/brand_assets/Kumo%20Security%20Logo%20-%20Black%20Text.png" />
+  <link rel="stylesheet" href="/styles/brand.css" />
+  <link rel="stylesheet" href="/styles/components.css" />
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <style>
+    .blog-content {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 72px 24px 96px;
+    }
+    .blog-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+    .blog-meta .dot { color: var(--border); }
+    .blog-header {
+      margin-bottom: 40px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+    }
+    .blog-header h1 {
+      font-size: clamp(28px, 4vw, 40px);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      margin-bottom: 16px;
+      line-height: 1.15;
+    }
+    .blog-header .lead {
+      font-size: 17px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+    .blog-article h2 {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-top: 48px;
+      margin-bottom: 16px;
+    }
+    .blog-article h3 {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: -0.01em;
+      margin-top: 32px;
+      margin-bottom: 12px;
+    }
+    .blog-article p {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.75;
+      margin-bottom: 16px;
+    }
+    .blog-article a {
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .blog-article strong { color: var(--text); font-weight: 600; }
+    .blog-article ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin: 0 0 20px;
+      padding: 0;
+    }
+    .blog-article ul li {
+      font-size: 15px;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      line-height: 1.6;
+    }
+    .blog-article ul li::before {
+      content: "—";
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .blog-article hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 48px 0;
+    }
+    .blog-article pre {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-card);
+      padding: 16px 18px;
+      overflow-x: auto;
+      margin: 16px 0 24px;
+    }
+    .blog-article pre code {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--text);
+      background: transparent;
+      border: none;
+      padding: 0;
+    }
+    .blog-article code {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1px 6px;
+      color: var(--text);
+    }
+    .blog-cta {
+      margin-top: 56px;
+      padding: 24px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-card);
+      background: var(--bg);
+    }
+    .blog-cta h3 {
+      margin-top: 0;
+      margin-bottom: 8px;
+    }
+    .blog-cta p { margin-bottom: 16px; }
+    .blog-cta-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    @media (max-width: 768px) {
+      .blog-content { padding: 56px 20px 72px; }
+      .blog-article h2 { margin-top: 36px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav class="nav">
+  <div class="nav-left">
+    <a href="/" class="nav-logo">
+      <img src="/brand_assets/Kumo%20Security%20Logo%20-%20Black%20Text.png" alt="Kumo Security" />
+    </a>
+    <ul class="nav-links">
+      <li><a href="/#pricing">Pricing</a></li>
+      <li><a href="/#faq">FAQ</a></li>
+      <li><a href="/about/">About</a></li>
+    </ul>
+  </div>
+  <div class="nav-right">
+    <a href="https://calendly.com/devon-kumosecurity/30min" target="_blank" rel="noopener" class="btn-primary">
+      Book a scoping call
+      <i data-lucide="arrow-right" style="width:14px;height:14px;"></i>
+    </a>
+  </div>
+  <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="/#pricing">Pricing</a>
+  <a href="/#faq">FAQ</a>
+  <a href="/about/">About</a>
+  <div class="mobile-divider"></div>
+  <a href="https://calendly.com/devon-kumosecurity/30min" target="_blank" rel="noopener" class="btn-primary">Book a scoping call</a>
+</div>
+
+<div class="blog-content">
+
+  <div class="blog-header">
+    <div class="blog-meta">
+      <span>April 17, 2026</span>
+      <span class="dot">·</span>
+      <span>Devon Booker</span>
+    </div>
+    <h1>I Ran My SOC 2 Assessment Tool Against My Own AWS Account. It Scored 35/100.</h1>
+    <p class="lead">I spent the last few months building kumo-assess, an agent-driven SOC 2 readiness tool for AWS. Last week, before I pitched it to anyone else, I pointed it at my own account. It gave me a 35 out of 100.</p>
+  </div>
+
+  <article class="blog-article">
+
+    <p>This post is the full walkthrough. What it found, why each finding matters, what the fix looks like, and what it says about the state of SOC 2 readiness in the average startup AWS account.</p>
+
+    <p>If you run AWS and you think you're anywhere close to audit-ready, this post is for you.</p>
+
+    <hr />
+
+    <h2>Why I built the tool in the first place</h2>
+
+    <p>I'm a security analyst. I've watched dozens of Series A and B startups burn six figures getting SOC 2 compliant. The breakdown usually looks like this:</p>
+
+    <ul>
+      <li>$15,000 to $50,000 to a human compliance consultant for a "readiness assessment" that takes 4 to 8 weeks</li>
+      <li>$25,000 and up per year to Vanta, Drata, or Secureframe for continuous evidence collection</li>
+      <li>Another $20,000 to $40,000 to the actual auditor for Type I, then again for Type II</li>
+      <li>Hundreds of engineering hours diverted to remediation</li>
+    </ul>
+
+    <p>The most interesting part to me was always the first bucket. The readiness assessment. That's where a consultant spends weeks reading AWS console screenshots, running <code>aws iam</code> commands, and assembling a markdown report. Most of that work is pattern matching against the same 30 to 50 checks every time.</p>
+
+    <p>It looked like a good job for an agent.</p>
+
+    <p>So I built one. The premise: run a read-only scan against any AWS account, collect the control evidence that matters for SOC 2 CC6 (Logical and Physical Access Controls) and CC7 (System Operations), and produce a report that tells you exactly where your gaps are and what to do about them.</p>
+
+    <p>Then I ran it against myself. Here is what it found.</p>
+
+    <hr />
+
+    <h2>How the scan actually works</h2>
+
+    <p>Before we get to the findings, a quick architecture note. This matters because "AI does the audit" is not a trust-building statement. You want to know what the tool is actually doing in your account.</p>
+
+    <p>The scan runs in four stages:</p>
+
+    <p><strong>1. Collectors.</strong> Pure Go, read-only. Each collector hits one AWS service (IAM, CloudTrail, S3, Security Hub, Config) and pulls the state that matters for compliance. No mutating API calls exist anywhere in the collector code. You can audit this yourself; the repo is public.</p>
+
+    <p><strong>2. Deterministic rules engine.</strong> Before any AI gets involved, a hand-written rules engine evaluates the collector output against every SOC 2 check I care about. Is root MFA on? Does the password policy require 14 characters? Is CloudTrail multi-region and actively logging? Each check produces a PASS, FAIL, or PARTIAL with evidence attached. Fourteen automated tests cover this layer.</p>
+
+    <p><strong>3. Claude agents.</strong> Only after the rules engine has rendered a verdict does Claude enter the picture. A sub-agent per control reads the raw evidence and the rules engine's findings, then produces a narrative summary and specific remediation steps. Claude cannot override a PASS or FAIL; it can only translate the deterministic findings into readable language.</p>
+
+    <p><strong>4. Synthesis.</strong> A lead agent rolls up the control family. An orchestrator produces the executive summary. A PM agent produces a sales-readiness score and a sprint plan for closing the gaps.</p>
+
+    <p>The total scan took about 90 seconds against my account. A human consultant doing the same work would have spent a week.</p>
+
+    <hr />
+
+    <h2>What it found</h2>
+
+    <p>My account is a working development environment. It has an IAM admin user, a CloudTrail trail pointed at an S3 bucket, a Terraform state bucket, and not much else. I have not attempted to harden it. This is intentional; it represents roughly the baseline state of a pre-seed or seed stage startup AWS account.</p>
+
+    <p>Here are the five findings that mattered most.</p>
+
+    <h3>Finding 1 — CC6.3 FAILED: AdministratorAccess attached directly to an IAM user</h3>
+
+    <p><strong>What the tool saw:</strong> My IAM user <code>iamadmin</code> has the AWS managed policy <code>AdministratorAccess</code> attached directly. No groups, no scoped role, no break-glass pattern. Just full admin on a long-lived identity.</p>
+
+    <p><strong>Why it matters:</strong> This is the finding every SOC 2 auditor will flag on day one. The control is CC6.3, which requires "logical access to information assets is restricted to authorized users." Giving one identity full control fails both the least privilege and the role-based access expectations.</p>
+
+    <p><strong>What the fix looks like:</strong></p>
+
+<pre><code># Replace the directly attached AdministratorAccess with an assumable admin role
+resource "aws_iam_role" "admin" {
+  name                 = "admin-role"
+  assume_role_policy   = data.aws_iam_policy_document.admin_trust.json
+  max_session_duration = 3600
+}
+
+resource "aws_iam_role_policy_attachment" "admin" {
+  role       = aws_iam_role.admin.name
+  policy_arn = "arn:aws:iam::aws:policy/AdministratorAccess"
+}</code></pre>
+
+    <p>Better yet, move humans off long-lived IAM users entirely. Use IAM Identity Center (formerly SSO) with federation. This is typically a two-day project for a founder who has never done it before; about 90 minutes for someone who has.</p>
+
+    <h3>Finding 2 — CC6.1 PARTIAL: No account password policy configured</h3>
+
+    <p><strong>What the tool saw:</strong> A 404 from <code>aws iam get-account-password-policy</code>. Which in AWS-speak means no password policy exists at all.</p>
+
+    <p><strong>Why it matters:</strong> Every enterprise security questionnaire on earth asks about password policy. Minimum length, complexity, rotation, reuse. If you can't produce a policy, you cannot answer those questions honestly, which means you cannot sell to regulated buyers.</p>
+
+    <p><strong>What the fix looks like:</strong></p>
+
+<pre><code>aws iam update-account-password-policy \
+  --minimum-password-length 14 \
+  --require-symbols \
+  --require-numbers \
+  --require-uppercase-characters \
+  --require-lowercase-characters \
+  --max-password-age 90 \
+  --password-reuse-prevention 24</code></pre>
+
+    <p>Ten seconds of work. Permanently resolves one of the most commonly asked-about controls in every SOC 2 assessment. Nobody does it until an auditor forces them.</p>
+
+    <h3>Finding 3 — CC6.6 PARTIAL: CloudTrail without log file validation or KMS encryption</h3>
+
+    <p><strong>What the tool saw:</strong> A multi-region trail is actively logging. Good. But log file validation is off, and the logs are not KMS encrypted at rest.</p>
+
+    <p><strong>Why it matters:</strong> CloudTrail is your audit trail. It is the single most important forensic tool in your AWS account. If an attacker (or a disgruntled admin) tampers with the logs, you need to know. Log file validation uses SHA-256 hash chains to detect tampering. Without it, your audit trail is only as trustworthy as your S3 bucket access controls, which is not very.</p>
+
+    <p>KMS encryption matters for a different reason: if a reader with raw S3 read access but no KMS decrypt permission shows up in your account, they cannot read the logs. That separation of concerns is the whole point of defense in depth.</p>
+
+    <p><strong>What the fix looks like:</strong></p>
+
+<pre><code># Enable log file validation
+aws cloudtrail update-trail \
+  --name primary-trail \
+  --enable-log-file-validation
+
+# KMS encryption requires a CMK; create one with a trail-appropriate policy
+aws cloudtrail update-trail \
+  --name primary-trail \
+  --kms-key-id arn:aws:kms:us-east-1:ACCOUNT:key/KEY_ID</code></pre>
+
+    <p>Maybe 45 minutes of work if you have the KMS key policy already written. Two hours if not.</p>
+
+    <h3>Finding 4 — CC6.7 PARTIAL: Unencrypted Terraform state bucket</h3>
+
+    <p><strong>What the tool saw:</strong> My Terraform state bucket (in a different region than the scan's home region, which is actually how I found a region bug in my own collector) has no server-side encryption and no Block Public Access configured.</p>
+
+    <p><strong>Why it matters:</strong> Your Terraform state file is often the single highest-value target in your AWS account. It can contain:</p>
+
+    <ul>
+      <li>Plaintext database passwords (if any module passes <code>password = var.db_password</code> through unencrypted)</li>
+      <li>Cloud provider tokens for third-party services</li>
+      <li>Secret values from <code>aws_secretsmanager_secret_version</code> resources if not marked sensitive correctly</li>
+      <li>A complete map of your infrastructure</li>
+    </ul>
+
+    <p>Leaving this bucket unencrypted with no public access block is the AWS equivalent of leaving a filing cabinet of passwords in the parking lot.</p>
+
+    <p><strong>What the fix looks like:</strong></p>
+
+<pre><code>resource "aws_s3_bucket_server_side_encryption_configuration" "tf_state" {
+  bucket = aws_s3_bucket.tf_state.id
+  rule {
+    apply_server_side_encryption_by_default {
+      sse_algorithm     = "aws:kms"
+      kms_master_key_id = aws_kms_key.tf_state.arn
+    }
+  }
+}
+
+resource "aws_s3_bucket_public_access_block" "tf_state" {
+  bucket                  = aws_s3_bucket.tf_state.id
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
+}
+
+resource "aws_s3_bucket_versioning" "tf_state" {
+  bucket = aws_s3_bucket.tf_state.id
+  versioning_configuration {
+    status = "Enabled"
+  }
+}</code></pre>
+
+    <p>Thirty minutes if you have your Terraform setup dialed in. Two hours if you're also setting up the KMS key and bucket lifecycle policies at the same time.</p>
+
+    <h3>Finding 5 — CC6.8 FAILED: AWS Config and Security Hub entirely disabled</h3>
+
+    <p><strong>What the tool saw:</strong> AWS Config recorder is not running. No delivery channels. Security Hub returned an InvalidAccessException meaning it was never enabled. Zero continuous monitoring, zero drift detection, zero security standards evaluation.</p>
+
+    <p><strong>Why it matters:</strong> Preventive controls (IAM policies, password policy, MFA) only get you so far. Detective controls (Config, Security Hub, GuardDuty) are what catch the things preventive controls missed. If your preventive controls fail and your detective controls were never enabled, you will not know anything is wrong until a customer, auditor, or attacker tells you.</p>
+
+    <p>Beyond that, "Security Hub not enabled" is a table-stakes expectation on every SOC 2 vendor questionnaire I have ever seen. Buyers will fail you on this one check before they even get to the rest.</p>
+
+    <p><strong>What the fix looks like:</strong> Enable Config with a delivery channel, subscribe to Security Hub, enable CIS AWS Foundations Benchmark and AWS Foundational Security Best Practices standards, optionally enable GuardDuty for threat detection.</p>
+
+    <p>There's a well-known Terraform module for this (cloudposse/aws-config + cloudposse/security-hub or similar) that makes it a one-day project for a founder, a few hours for an engineer with AWS experience.</p>
+
+    <hr />
+
+    <h2>What it would actually cost to close every gap</h2>
+
+    <p>For the record: closing every gap the scan flagged would take me (the person who built the tool) about one full day of focused work. For a founder without AWS experience, probably two to three days spread across a week. For a compliance consultant billing $250 per hour, probably $3,000 to $6,000 of work.</p>
+
+    <p>Plus two weeks of sustained operation so the controls are actually auditable (Config needs history, Security Hub needs findings to triage, CloudTrail needs logs written under the new config).</p>
+
+    <p>Total calendar time from "nothing hardened" to "CC6 audit-ready": 3 to 4 weeks. Not 6 to 12 months. Not $30,000. The scanning part is the easy part. The remediation is where the work actually lives.</p>
+
+    <hr />
+
+    <h2>The bigger lesson</h2>
+
+    <p>The state of my own AWS account is not unusual. It's close to median for an early-stage startup. Most founders I've talked to would score somewhere between 30 and 50 out of 100 on a CC6 scan if you ran one right now.</p>
+
+    <p>The compliance market sold startups the idea that SOC 2 is a huge, expensive, many-month endeavor. For the AWS-technical part, that's mostly wrong. Most of the gaps are small, well-understood, and fixable with an afternoon of Terraform work per finding. What makes it expensive is the long-tail interpretation problem: what does this specific finding mean in the context of your specific environment, and what's the right fix for your specific architecture?</p>
+
+    <p>That interpretation is where a human practitioner adds value. Not the scanning. Not the list of findings. The judgment call about what order to fix things in, which controls are genuinely load-bearing for your business, and what the Terraform should actually look like for your stack.</p>
+
+    <p>That's the business I'm building.</p>
+
+    <hr />
+
+    <h2>Technical appendix</h2>
+
+    <p>The full scrubbed scan report is <a href="https://github.com/kumo-security/kumo-assess/blob/main/examples/sample-cc6-report.md" target="_blank" rel="noopener">available here as markdown</a>. The tool is at <a href="https://github.com/kumo-security/kumo-assess" target="_blank" rel="noopener">github.com/kumo-security/kumo-assess</a>.</p>
+
+    <p>Architecture: Go collectors and scan engine, React and TypeScript UI, SQLite for persistence, Claude Sonnet 4.6 for sub-agents, Claude Opus 4.7 for lead/orchestrator/PM synthesis. Read-only by construction. Fourteen evaluator tests covering the deterministic rules engine. Contributions welcome.</p>
+
+    <div class="blog-cta">
+      <h3>Thinking about SOC 2 for your AWS environment?</h3>
+      <p>I run scoped readiness engagements for AWS-native startups. Scan, walkthrough, remediation delivery, fixed price. If that fits what you need, book a 30-minute scoping call and you'll leave with a fixed price and a start date.</p>
+      <div class="blog-cta-actions">
+        <a href="https://calendly.com/devon-kumosecurity/30min" target="_blank" rel="noopener" class="btn-primary" style="font-size:13px;padding:9px 18px;">
+          Book a scoping call
+          <i data-lucide="arrow-right" style="width:14px;height:14px;"></i>
+        </a>
+        <a href="mailto:devon@kumosecurity.com" class="btn-secondary" style="font-size:13px;padding:9px 18px;">
+          <i data-lucide="mail" style="width:14px;height:14px;"></i>
+          devon@kumosecurity.com
+        </a>
+      </div>
+    </div>
+
+  </article>
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <a href="/" class="footer-logo">
+        <img src="/brand_assets/Kumo%20Security%20Logo%20-%20Black%20Text.png" alt="Kumo Security" />
+      </a>
+      <ul class="footer-nav">
+        <li><a href="/#pricing">Pricing</a></li>
+        <li><a href="/#faq">FAQ</a></li>
+        <li><a href="/about/">About</a></li>
+        <li><a href="https://github.com/devonbooker" target="_blank" rel="noopener">GitHub</a></li>
+        <li><a href="https://www.linkedin.com/in/devonbookerr/" target="_blank" rel="noopener">LinkedIn</a></li>
+        <li><a href="mailto:devon@kumosecurity.com">Email</a></li>
+      </ul>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Kumo Security.</p>
+      <div class="footer-bottom-links">
+        <a href="mailto:devon@kumosecurity.com">Contact</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  lucide.createIcons();
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+  });
+  mobileMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.classList.remove('open');
+      mobileMenu.classList.remove('open');
+    });
+  });
+</script>
+</body>
+</html>
