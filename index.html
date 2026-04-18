@@ -86,7 +86,7 @@
     /* Hero visual: photo + dashboard split */
     .hero-visual {
       display: grid;
-      grid-template-columns: 40fr 60fr;
+      grid-template-columns: 30fr 70fr;
       gap: 16px;
       width: 100%;
       max-width: 1080px;
@@ -797,7 +797,10 @@
   <!-- Hero visual: photo + dashboard -->
   <div class="hero-visual">
     <div class="hero-photo">
-      <img src="brand_assets/devon-booker-headshot.jpg" alt="Devon Booker" />
+      <picture>
+        <source srcset="brand_assets/devon-booker-headshot.webp" type="image/webp" />
+        <img src="brand_assets/devon-booker-headshot.jpg" alt="Devon Booker" />
+      </picture>
       <div class="hero-photo-caption"><strong>Devon Booker</strong> - security engineer, AWS-native</div>
     </div>
     <div class="dashboard-card">
@@ -1043,7 +1046,10 @@
 <section class="about-section-home" id="about-devon">
   <div class="about-inner">
     <div class="about-photo">
-      <img src="brand_assets/devon-booker-headshot.jpg" alt="Devon Booker" />
+      <picture>
+        <source srcset="brand_assets/devon-booker-headshot.webp" type="image/webp" />
+        <img src="brand_assets/devon-booker-headshot.jpg" alt="Devon Booker" />
+      </picture>
     </div>
     <div class="about-copy">
       <div class="section-label">About</div>
