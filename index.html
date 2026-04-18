@@ -49,6 +49,15 @@
       color: var(--text-secondary);
       max-width: 640px;
       line-height: 1.65;
+      margin-bottom: 12px;
+    }
+    .hero p.lead-punch {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--text);
+      max-width: 640px;
+      line-height: 1.55;
+      letter-spacing: -0.01em;
       margin-bottom: 32px;
     }
     .hero-ctas {
@@ -56,9 +65,21 @@
       align-items: center;
       justify-content: center;
       gap: 12px;
-      margin-bottom: 56px;
+      margin-bottom: 16px;
       flex-wrap: wrap;
     }
+    .hero-github {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 48px;
+      font-size: 12.5px;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      letter-spacing: -0.01em;
+      transition: color var(--transition);
+    }
+    .hero-github:hover { color: var(--accent); }
     .hero-ctas .btn-primary  { font-size: 14px; padding: 10px 20px; }
     .hero-ctas .btn-secondary { font-size: 14px; padding: 10px 20px; }
 
@@ -756,7 +777,8 @@
 <section class="hero">
   <div class="hero-badge">SOC 2 consulting for AWS startups</div>
   <h1>SOC 2 readiness for AWS startups.<br><span>In weeks, not months.</span></h1>
-  <p class="lead">I'm Devon, a security engineer. I'll assess your AWS environment, show you exactly where your SOC 2 gaps are, and deliver the remediation code that closes them. Powered by agents I built. Shipped by someone who actually reads your Terraform.</p>
+  <p class="lead">I'm Devon, a security engineer. I'll assess your AWS environment, show you exactly where your SOC 2 gaps are, and deliver the remediation code that closes them.</p>
+  <p class="lead-punch">Powered by agents I built. Shipped by someone who actually reads your Terraform.</p>
   <div class="hero-ctas">
     <a href="https://calendly.com/devon-kumosecurity/30min" target="_blank" rel="noopener" class="btn-primary">
       Book a scoping call
@@ -766,6 +788,11 @@
       See a sample report
     </a>
   </div>
+  <a href="https://github.com/devonbooker/kumo-assess" target="_blank" rel="noopener" class="hero-github">
+    <i data-lucide="github" style="width:13px;height:13px;"></i>
+    The tool is open source. View kumo-assess on GitHub
+    <i data-lucide="arrow-right" style="width:12px;height:12px;"></i>
+  </a>
 
   <!-- Hero visual: photo + dashboard -->
   <div class="hero-visual">
@@ -785,15 +812,15 @@
             <div class="stat-label">Score</div>
           </div>
           <div class="stat-card stat-pass">
-            <div class="stat-number">12</div>
+            <div class="stat-number">0</div>
             <div class="stat-label">Pass</div>
           </div>
           <div class="stat-card stat-fail">
-            <div class="stat-number">11</div>
+            <div class="stat-number">2</div>
             <div class="stat-label">Fail</div>
           </div>
           <div class="stat-card stat-partial">
-            <div class="stat-number">3</div>
+            <div class="stat-number">4</div>
             <div class="stat-label">Partial</div>
           </div>
         </div>
@@ -801,17 +828,17 @@
           <div class="control-row control-fail">
             <span class="badge badge-fail">FAIL</span>
             <span class="control-id">CC6.3</span>
-            <span class="control-desc">Privileged access review missing</span>
-          </div>
-          <div class="control-row control-pass">
-            <span class="badge badge-pass">PASS</span>
-            <span class="control-id">CC6.1</span>
-            <span class="control-desc">MFA enforced on all users</span>
+            <span class="control-desc">Privileged access review not implemented</span>
           </div>
           <div class="control-row control-partial">
             <span class="badge badge-partial">PARTIAL</span>
-            <span class="control-id">CC7.1</span>
-            <span class="control-desc">Vulnerability scans incomplete</span>
+            <span class="control-id">CC6.7</span>
+            <span class="control-desc">KMS key rotation inconsistent</span>
+          </div>
+          <div class="control-row control-partial">
+            <span class="badge badge-partial">PARTIAL</span>
+            <span class="control-id">CC7.2</span>
+            <span class="control-desc">CloudTrail alerting gaps</span>
           </div>
         </div>
       </div>
