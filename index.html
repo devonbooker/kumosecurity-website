@@ -1055,23 +1055,23 @@
   <div class="faq-list">
     <div class="faq-item">
       <h3>Is this a replacement for Vanta or Drata?</h3>
-      <p>No. Vanta and Drata are full compliance platforms that handle policies, training, employee onboarding, and evidence collection across multiple systems. I handle the AWS-technical portion of SOC 2, which is where most startups actually have gaps. Think of me as the specialist you hire alongside or instead of a compliance platform, depending on your stage.</p>
+      <p>No, and that's the point. Vanta and Drata are how you prove SOC 2 to auditors - they weren't built to find graph-based AWS attack paths. I work alongside them: I find the IAM and infrastructure paths an attacker could chain; you keep using Vanta/Drata for evidence collection and policy management.</p>
     </div>
     <div class="faq-item">
       <h3>How is this different from hiring a traditional compliance consultant?</h3>
-      <p>Speed. A traditional readiness assessment takes 2 to 6 weeks. My scan takes 30 minutes. The agent-driven tool handles the data collection and analysis that consultants do manually, which means I can spend my time on the remediation work that actually matters. Same caliber output, delivered faster and at lower cost.</p>
+      <p>Speed and focus. A traditional readiness assessment takes 2 to 6 weeks and produces slide decks. My scan takes 30 minutes and produces Terraform. The agent-driven tool handles the data collection and analysis that consultants do manually, which means I can spend my time on the remediation work that actually matters.</p>
     </div>
     <div class="faq-item">
-      <h3>Is the tool open source?</h3>
-      <p>Yes. The full kumo-assess codebase is on <a href="https://github.com/kumo-security/kumo-assess" target="_blank" rel="noopener">GitHub</a>. You can run it yourself if you prefer. Most customers hire me because they want the remediation work done, not because they can't run the tool.</p>
+      <h3>How do I know I can trust you with read-only AWS access?</h3>
+      <p>Two ways. First, the sample report shows every step of the methodology end-to-end - I ran it on my own AWS account and wrote up every finding. Second, you create a read-only IAM role and I send you the Terraform for it before the engagement starts. The tool can only observe your environment; zero mutating API calls exist in any collector.</p>
     </div>
     <div class="faq-item">
       <h3>Do you have access to my AWS account?</h3>
-      <p>You create a read-only IAM role. The tool cannot modify anything in your environment - zero mutating API calls exist in the collectors. I can send you the relevant Terraform for the IAM role before the scan so you can review it.</p>
+      <p>You create a read-only IAM role. The tool cannot modify anything in your environment - zero mutating API calls exist in any collector. I send you the Terraform for the role before the engagement starts so you can audit exactly what I can see.</p>
     </div>
     <div class="faq-item">
       <h3>What happens if I need a framework other than SOC 2?</h3>
-      <p>CMMC, ISO 27001, PCI DSS, and HIPAA are on the roadmap. If you have an immediate need, <a href="mailto:devon@kumosecurity.com">email me directly</a>. Many controls map across frameworks, so I may be able to help already.</p>
+      <p>AWS attack paths are framework-agnostic - they're real risk regardless of what you're certifying. Findings map to SOC 2 (CC6, CC7), PCI, ISO 27001, and CMMC controls. If you have a specific framework need, <a href="mailto:devon@kumosecurity.com">email me directly</a>.</p>
     </div>
     <div class="faq-item">
       <h3>What environments do you support?</h3>
