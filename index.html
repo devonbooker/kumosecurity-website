@@ -904,31 +904,31 @@
 <!-- WHAT'S COVERED -->
 <section class="covered-section">
   <div class="section-label">What's covered</div>
-  <h2 class="section-title">The AWS-technical part of SOC 2,<br>where most startups fail.</h2>
+  <h2 class="section-title">What kumo-assess looks for.</h2>
   <div class="covered-list">
     <div class="covered-row">
       <span class="covered-id">CC6</span>
-      <span class="covered-desc">Logical Access</span>
-      <span class="covered-scope">IAM · MFA · password policy · least privilege</span>
+      <span class="covered-desc">Privilege escalation</span>
+      <span class="covered-scope">IAM · MFA · least privilege · PassRole abuse</span>
     </div>
     <div class="covered-row">
       <span class="covered-id">CC6.6</span>
-      <span class="covered-desc">Boundary Protection</span>
-      <span class="covered-scope">CloudTrail</span>
+      <span class="covered-desc">Audit trail integrity</span>
+      <span class="covered-scope">CloudTrail coverage · tamper resistance</span>
     </div>
     <div class="covered-row">
       <span class="covered-id">CC6.7</span>
-      <span class="covered-desc">Data Protection</span>
+      <span class="covered-desc">Data exposure paths</span>
       <span class="covered-scope">S3 · KMS</span>
     </div>
     <div class="covered-row">
       <span class="covered-id">CC6.8</span>
-      <span class="covered-desc">Change Detection</span>
+      <span class="covered-desc">Change detection coverage</span>
       <span class="covered-scope">Config · Security Hub</span>
     </div>
     <div class="covered-row">
       <span class="covered-id">CC7</span>
-      <span class="covered-desc">System Operations</span>
+      <span class="covered-desc">Detection &amp; response</span>
       <span class="covered-scope">monitoring · incident response</span>
     </div>
     <div class="covered-row pending">
@@ -937,7 +937,7 @@
       <span class="covered-scope">expanding quarterly</span>
     </div>
   </div>
-  <p class="covered-footnote">Built on direct AWS API calls, not heuristics. Five collectors today: IAM, CloudTrail, S3, Security Hub, Config. The assessment logic is transparent and open source.</p>
+  <p class="covered-footnote">Built on direct AWS API calls, not heuristics. Five collectors today: IAM, CloudTrail, S3, Security Hub, Config. Read-only by construction. Methodology documented in the sample report.</p>
 </section>
 
 <!-- PACKAGING / PRICING -->
