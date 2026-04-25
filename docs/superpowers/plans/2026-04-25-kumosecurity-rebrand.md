@@ -6,7 +6,7 @@
 
 **Architecture:** Single-pass surgical Edit operations against `C:/Users/Devon/Documents/kumosecurity-website/index.html`. CSS untouched. Same nav, footer, and dashboard mockup HTML structure. Verification via grep (old strings gone, new strings present) plus screenshot QA on localhost per the website repo's `CLAUDE.md` workflow.
 
-**Tech Stack:** Static HTML, inline CSS in `<style>`, Tailwind not used here, Lucide icons via CDN. Local dev server via `node serve.mjs` on port 3000. Screenshot tool via `node screenshot.mjs <url>`.
+**Tech Stack:** Static HTML, inline CSS in `<style>`, Tailwind not used here, Lucide icons via CDN. Verification is grep-only — Devon will eyeball the final result manually in a browser. The `serve.mjs`/`screenshot.mjs` tooling referenced in the website's `CLAUDE.md` does not actually exist in the repo and is not used here.
 
 **Source spec:** `docs/superpowers/specs/2026-04-25-kumosecurity-rebrand-design.md`
 
@@ -21,49 +21,28 @@
 
 **Reference (read-only):**
 - `C:/Users/Devon/Documents/kumosecurity-website/CLAUDE.md` — defines the screenshot QA loop the engineer will use
-- `C:/Users/Devon/Documents/kumosecurity-website/serve.mjs` — local server entry
-- `C:/Users/Devon/Documents/kumosecurity-website/screenshot.mjs` — screenshot tool entry
 - `C:/Users/Devon/Documents/kumosecurity-website/docs/superpowers/specs/2026-04-25-kumosecurity-rebrand-design.md` — the spec being executed
 
 ---
 
-## Task 0: Setup and baseline
+## Task 0: Setup
 
 **Files:**
-- Read: `C:/Users/Devon/Documents/kumosecurity-website/CLAUDE.md`
 - Read: `C:/Users/Devon/Documents/kumosecurity-website/index.html`
 
-- [ ] **Step 1: Read the website repo's CLAUDE.md to confirm screenshot workflow**
+**Note on screenshot QA:** The website's `CLAUDE.md` references `node serve.mjs` and `node screenshot.mjs` but those tools do not exist in this repo. Verification across all tasks uses `grep` only. Devon will eyeball the final result in a browser after Task 12. No dev server is started.
+
+- [ ] **Step 1: Confirm working tree is clean and on main**
 
 ```bash
-cat C:/Users/Devon/Documents/kumosecurity-website/CLAUDE.md
+cd C:/Users/Devon/Documents/kumosecurity-website && git status && git branch --show-current
 ```
 
-Expected: file describes `node serve.mjs` to start dev server and `node screenshot.mjs http://localhost:3000` to take screenshots saved to `temporary screenshots/`.
+Expected: `nothing to commit, working tree clean`, branch is `main`. Per Devon's explicit consent, commits land directly on main.
 
-- [ ] **Step 2: Confirm working tree is clean**
+- [ ] **Step 2: Read `index.html` start-to-finish**
 
-```bash
-cd C:/Users/Devon/Documents/kumosecurity-website && git status
-```
-
-Expected: `nothing to commit, working tree clean` (the spec from the prior commit is already landed).
-
-- [ ] **Step 3: Start the dev server in the background**
-
-```bash
-cd C:/Users/Devon/Documents/kumosecurity-website && node serve.mjs &
-```
-
-Expected: server logs that it's listening on port 3000. Leave it running for the rest of this plan.
-
-- [ ] **Step 4: Take a baseline screenshot of the current site**
-
-```bash
-cd C:/Users/Devon/Documents/kumosecurity-website && node screenshot.mjs http://localhost:3000 baseline-pre-rebrand
-```
-
-Expected: file written to `temporary screenshots/screenshot-N-baseline-pre-rebrand.png`. This is the "before" image for the QA pass at Task 13.
+Use Read tool against `C:/Users/Devon/Documents/kumosecurity-website/index.html`. This grounds the line numbers referenced throughout the plan and confirms no drift from the spec's snapshot.
 
 ---
 
@@ -176,15 +155,7 @@ Expected:
 - `<p class="lead">` line shows the new lead
 - `hero-github` returns NO matches (block deleted)
 
-- [ ] **Step 7: Re-screenshot and visual sanity check**
-
-```bash
-cd C:/Users/Devon/Documents/kumosecurity-website && node screenshot.mjs http://localhost:3000 hero-rewrite
-```
-
-Open the screenshot. Confirm: badge text is the new hook, h1 is the new headline, no GitHub link below the CTAs, dashboard mockup still visible (it's the next task).
-
-- [ ] **Step 8: Commit**
+- [ ] **Step 7: Commit**
 
 ```bash
 cd C:/Users/Devon/Documents/kumosecurity-website && git add index.html && git commit -m "rebrand: hero badge, h1, lead — attack-path framing; remove GitHub link"
@@ -308,15 +279,7 @@ grep -n "KMS key rotation\|CloudTrail alerting gaps\|Privileged access review no
 
 Expected: zero matches.
 
-- [ ] **Step 5: Re-screenshot and visual check**
-
-```bash
-cd C:/Users/Devon/Documents/kumosecurity-website && node screenshot.mjs http://localhost:3000 hero-dashboard
-```
-
-Open the screenshot. Confirm: dashboard header reads "AWS attack-path scan", four stat cards (Score / Critical paths / Path to root / Total findings), three rows showing PATH-01/02/03 with arrow chains. CC tags should be small muted text inline. If CC tag wraps awkwardly, that's acceptable — content is what matters.
-
-- [ ] **Step 6: Commit**
+- [ ] **Step 5: Commit**
 
 ```bash
 cd C:/Users/Devon/Documents/kumosecurity-website && git add index.html && git commit -m "rebrand: hero dashboard mockup — attack-path findings"
@@ -416,15 +379,9 @@ grep -n "they're mostly dashboards\|Compliance SaaS\|Traditional readiness\|Six 
 
 Expected: first grep returns 4 matches; second returns ZERO matches (all old anti-Vanta language is gone).
 
-- [ ] **Step 4: Re-screenshot and visual check**
+**Note on "The wedge" stat:** Per the spec, that stat field is a label rather than a dollar value. If the implementer notices the CSS will obviously break the card visual, fall back to `$2k-$10k` and the body copy stays. Use the label first; only fall back if a quick file inspection of `styles/components.css` for `.problem-stat` width or font-sizing makes the breakage clear.
 
-```bash
-cd C:/Users/Devon/Documents/kumosecurity-website && node screenshot.mjs http://localhost:3000 problem-section
-```
-
-Confirm: section title is "There's a gap between compliance and security", three cards render correctly, "The wedge" stat label displays without breaking the card visually (per spec, fall back to `$2k-$10k` as the stat if the label-as-stat looks broken — but try the label first).
-
-- [ ] **Step 5: Commit**
+- [ ] **Step 4: Commit**
 
 ```bash
 cd C:/Users/Devon/Documents/kumosecurity-website && git add index.html && git commit -m "rebrand: problem section — feeder posture, no anti-Vanta language"
@@ -980,61 +937,36 @@ grep -n "attack path\|attack-path\|attack paths" C:/Users/Devon/Documents/kumose
 
 Expected: at least 8 matches across hero, dashboard, case study, what's covered, FAQ, and final CTA.
 
-- [ ] **Step 5: Take final desktop screenshot**
+- [ ] **Step 5: Spot-check key copy via grep**
+
+Verify each of the following lands on its expected line. The exact line numbers will have shifted from the original spec; just confirm one match per query:
 
 ```bash
-cd C:/Users/Devon/Documents/kumosecurity-website && node screenshot.mjs http://localhost:3000 final-rebrand-desktop
+grep -n "Compliant but still vulnerable" C:/Users/Devon/Documents/kumosecurity-website/index.html
+grep -n "Find the AWS attack paths" C:/Users/Devon/Documents/kumosecurity-website/index.html
+grep -n "There's a gap between" C:/Users/Devon/Documents/kumosecurity-website/index.html
+grep -n "Agent-driven attack-path scan" C:/Users/Devon/Documents/kumosecurity-website/index.html
+grep -n "What kumo-assess looks for" C:/Users/Devon/Documents/kumosecurity-website/index.html
+grep -n "Scan + remediation roadmap" C:/Users/Devon/Documents/kumosecurity-website/index.html
+grep -n "How do I know I can trust you with read-only AWS access" C:/Users/Devon/Documents/kumosecurity-website/index.html
+grep -n "Ready to see your AWS attack paths" C:/Users/Devon/Documents/kumosecurity-website/index.html
 ```
 
-- [ ] **Step 6: Take final mobile screenshot**
+Expected: one match per grep, all eight present.
 
-If `screenshot.mjs` supports a viewport flag, use it. Otherwise resize the headless viewport in `screenshot.mjs` temporarily to 375x812 (iPhone) before this step, then restore. Read the README in the website repo for the supported invocation.
-
-```bash
-cd C:/Users/Devon/Documents/kumosecurity-website && node screenshot.mjs http://localhost:3000 final-rebrand-mobile
-```
-
-- [ ] **Step 7: Visual review against the spec**
-
-Open `temporary screenshots/screenshot-N-final-rebrand-desktop.png` and `temporary screenshots/screenshot-N-baseline-pre-rebrand.png` side by side. Confirm:
-- Hero badge reads "Compliant but still vulnerable"
-- Hero h1 reads "Find the AWS attack paths your compliance tool misses." (line break per spec)
-- Lead reads "Before they hit production. Built for engineers, priced for startups, works alongside Vanta and Drata."
-- Punch line "Powered by agents I built..." still present
-- No GitHub trust link below the CTA buttons
-- Dashboard mockup shows PATH-01/02/03 with arrow chains and CC tags
-- Problem section title is "There's a gap between compliance and security."
-- Three problem cards show "Compliance tools / Enterprise CNAPP / What's missing"
-- Approach Step 01 reads "Agent-driven attack-path scan"
-- What's covered section title is "What kumo-assess looks for."
-- Pricing tier titles read "Attack-path scan / Scan + remediation roadmap / Full remediation engagement"
-- Why-me Card 2 no longer mentions GitHub
-- FAQ #3 is the trust question, not the OSS question
-- Final CTA h2 reads "Ready to see your AWS attack paths?"
-
-If any item is off, return to the relevant task and fix.
-
-- [ ] **Step 8: Stop the dev server**
-
-Find and stop the `node serve.mjs` background process.
-
-- [ ] **Step 9: Confirm clean working tree (all changes committed)**
+- [ ] **Step 6: Confirm clean working tree (all changes committed)**
 
 ```bash
 cd C:/Users/Devon/Documents/kumosecurity-website && git status && git log --oneline -15
 ```
 
-Expected: working tree clean. `git log` shows ~12 rebrand commits since the spec commit (one per task above), each prefixed `rebrand:`.
+Expected: working tree clean. `git log` shows 12 rebrand commits since the spec commit (one per task above), each prefixed `rebrand:`.
 
-- [ ] **Step 10: Final commit if any QA fix-ups happened**
+- [ ] **Step 7: Hand off to Devon for browser eyeball**
 
-If Step 7 surfaced visual issues that needed fix-up, commit with:
+Devon will open `index.html` directly in his browser (or via a local server of his choosing) and confirm the visual design holds. If anything looks broken, that becomes a follow-up task — not this implementer's scope.
 
-```bash
-cd C:/Users/Devon/Documents/kumosecurity-website && git add index.html && git commit -m "rebrand: QA fixups from screenshot pass"
-```
-
-If no fixups needed, skip this step.
+Report back the git log and a one-line summary of all 13 grep verifications. Do not commit anything else from this task.
 
 ---
 
