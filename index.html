@@ -783,7 +783,7 @@
     <div class="dashboard-card">
       <div class="dashboard-header">
         <i data-lucide="terminal" style="width:13px;height:13px;color:var(--text-muted);"></i>
-        <span class="dashboard-title">kumo-assess &nbsp;·&nbsp; SOC 2 CC6+CC7 &nbsp;·&nbsp; aws/us-east-1</span>
+        <span class="dashboard-title">kumo-assess &nbsp;·&nbsp; AWS attack-path scan &nbsp;·&nbsp; aws/us-east-1</span>
       </div>
       <div class="dashboard-body">
         <div class="stat-row">
@@ -791,34 +791,34 @@
             <div class="stat-number">35</div>
             <div class="stat-label">Score</div>
           </div>
-          <div class="stat-card stat-pass">
-            <div class="stat-number">0</div>
-            <div class="stat-label">Pass</div>
+          <div class="stat-card stat-fail">
+            <div class="stat-number">3</div>
+            <div class="stat-label">Critical paths</div>
           </div>
           <div class="stat-card stat-fail">
-            <div class="stat-number">2</div>
-            <div class="stat-label">Fail</div>
+            <div class="stat-number">1</div>
+            <div class="stat-label">Path to root</div>
           </div>
           <div class="stat-card stat-partial">
-            <div class="stat-number">4</div>
-            <div class="stat-label">Partial</div>
+            <div class="stat-number">7</div>
+            <div class="stat-label">Total findings</div>
           </div>
         </div>
         <div class="control-list">
           <div class="control-row control-fail">
-            <span class="badge badge-fail">FAIL</span>
-            <span class="control-id">CC6.3</span>
-            <span class="control-desc">Privileged access review not implemented</span>
+            <span class="badge badge-fail">CRITICAL</span>
+            <span class="control-id">PATH-01</span>
+            <span class="control-desc">developer-role &rarr; iam:PassRole &rarr; admin-role <span style="color:var(--text-muted);font-family:var(--font-mono);font-size:11px;">(CC6.3)</span></span>
           </div>
           <div class="control-row control-partial">
-            <span class="badge badge-partial">PARTIAL</span>
-            <span class="control-id">CC6.7</span>
-            <span class="control-desc">KMS key rotation inconsistent</span>
+            <span class="badge badge-partial">HIGH</span>
+            <span class="control-id">PATH-02</span>
+            <span class="control-desc">ec2-instance-profile &rarr; s3:* on cust-data-prod <span style="color:var(--text-muted);font-family:var(--font-mono);font-size:11px;">(CC6.7)</span></span>
           </div>
           <div class="control-row control-partial">
-            <span class="badge badge-partial">PARTIAL</span>
-            <span class="control-id">CC7.2</span>
-            <span class="control-desc">CloudTrail alerting gaps</span>
+            <span class="badge badge-partial">HIGH</span>
+            <span class="control-id">PATH-03</span>
+            <span class="control-desc">ci-deploy-role &rarr; AssumeRole * &rarr; unrestricted <span style="color:var(--text-muted);font-family:var(--font-mono);font-size:11px;">(CC6.3, CC7.2)</span></span>
           </div>
         </div>
       </div>
